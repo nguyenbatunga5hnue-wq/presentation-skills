@@ -1,0 +1,164 @@
+
+<main id="viewport"><div id="stage">
+
+<section class="slide dark" data-title="Map Labelling" style="justify-content:center"><h1>Map Labelling</h1></section>
+
+<section class="slide" id="sScore" data-title="Bảng điểm nhóm">
+ <div class="hdr"><h2>Bảng điểm nhóm</h2>
+  <div class="tools"><button class="b pri" id="scBack" hidden>↩ Quay lại</button><button class="b sm" data-act="sc-add">+ Thêm nhóm</button><button class="b sm" data-act="sc-del">− Bớt nhóm</button><button class="b sm" data-act="sc-reset">Về 0</button></div></div>
+ <div class="board" id="board"></div>
+</section>
+
+<!-- HOOK -->
+<section class="slide" id="sHook" data-title="Bản đồ quanh ta" data-steps="6">
+ <div class="hdr"><h2>Bản đồ ở quanh ta</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="hookgrid">
+  <div class="hk" data-photo="gmaps"><div class="ph"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4c-8 0-14 6-14 14 0 11 14 26 14 26s14-15 14-26c0-8-6-14-14-14z" fill="#E9925A"/><circle cx="24" cy="18" r="5" fill="#fff"/></svg></div><b>Google Maps</b><span>tìm quán cà phê, bệnh viện</span></div>
+  <div class="hk" data-photo="mall"><div class="ph"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="8" width="36" height="32" rx="3" fill="none" stroke="#3E6FD8" stroke-width="3"/><path d="M6 22h20M26 8v32M26 30h16" stroke="#3E6FD8" stroke-width="3"/></svg></div><b>Sơ đồ tầng</b><span>trung tâm thương mại, siêu thị</span></div>
+  <div class="hk" data-photo="campus"><div class="ph"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 20 24 8l18 12v20H6z" fill="none" stroke="#8E6CC8" stroke-width="3"/><path d="M18 40V28h12v12" stroke="#8E6CC8" stroke-width="3" fill="none"/></svg></div><b>Khuôn viên</b><span>trường đại học, bệnh viện</span></div>
+  <div class="hk" data-photo="exit"><div class="ph"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="10" width="36" height="28" rx="3" fill="#18794E"/><path d="M14 24h14m-5-6 6 6-6 6" stroke="#fff" stroke-width="3" fill="none"/><circle cx="34" cy="17" r="3" fill="#fff"/></svg></div><b>Lối thoát hiểm</b><span>bảng chỉ dẫn trong toà nhà</span></div>
+  <div class="hk" data-photo="metro"><div class="ph"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="10" cy="34" r="4" fill="#D46A6A"/><circle cx="24" cy="18" r="4" fill="#D46A6A"/><circle cx="38" cy="30" r="4" fill="#D46A6A"/><path d="M10 34 24 18l14 12" stroke="#D46A6A" stroke-width="3" fill="none"/></svg></div><b>Xe buýt, metro</b><span>Hà Nội, TP. Hồ Chí Minh</span></div>
+ </div>
+ <div class="bigq">Bạn đã bao giờ chỉ đường cho người lạ chưa?<br><span>Bạn đã dùng những từ nào?</span></div>
+</section>
+
+<section class="slide dark" data-title="Cách đọc bản đồ" style="justify-content:center"><h1>Cách đọc một bản đồ</h1></section>
+
+<!-- 6 STEPS on a real-looking map -->
+<section class="slide" id="sSteps" data-title="6 bước" data-steps="6">
+ <div class="hdr"><h2>Sáu bước, làm lần lượt</h2><div class="tools"><button class="b pri" data-act="step">Bước tiếp ▸</button></div></div>
+ <div class="steps2">
+  <div class="col" style="gap:.9cqi;min-width:0">
+   <ol class="stepper" id="stepper">
+    <li><span><b>Đọc đề</b>: điền tên hay chữ cái? bao nhiêu từ?</span></li>
+    <li><span><b>Đọc bản đồ</b>: G (cho sẵn) và D (cần tìm)</span></li>
+    <li><span><b>Tìm điểm xuất phát</b>: “You are here”</span></li>
+    <li><span><b>Xác định hướng</b> từ điểm xuất phát</span></li>
+    <li><span><b>Nghe</b>, đi theo người nói</span></li>
+    <li><span><b>Kiểm tra</b>: chữ cái, chính tả, số từ</span></li>
+   </ol>
+   <div class="qcard" id="stepQ"><div class="qhd">Label the map. Write the correct letter, A–E.</div>
+    <div class="ql"><span>Q1</span>Library<b class="slot" data-v="C">?</b></div>
+    <div class="ql"><span>Q2</span>Café<b class="slot" data-v="B">?</b></div>
+    <div class="ql"><span>Q3</span>Bookshop<b class="slot" data-v="E">?</b></div></div>
+  </div>
+  <div class="tmapbox"><svg class="tmap" id="stepMap" aria-label="Bản đồ thị trấn có các toà nhà đánh chữ A–E"></svg><div class="stepnote" id="stepNote"></div></div>
+ </div>
+</section>
+
+<section class="slide dark" data-title="Từ vựng" style="justify-content:center"><h1>Phương hướng, giới từ, địa điểm</h1></section>
+
+<!-- 3D POV: left/right follow the walker -->
+<section class="slide" id="sFace" data-title="Trái, phải theo người đi">
+ <div class="hdr"><h2>Trái, phải theo hướng người đi</h2>
+  <div class="tools"><button class="b" data-turn="left">↺ Quay trái</button><button class="b" data-turn="right">Quay phải ↻</button>
+   <span class="lbl2" style="align-self:center">Nhìn về:</span><button class="b sm on" data-face="N">Bắc</button><button class="b sm" data-face="E">Đông</button><button class="b sm" data-face="S">Nam</button><button class="b sm" data-face="W">Tây</button></div></div>
+ <div class="povwrap">
+  <div class="pov" id="pov">
+   <span class="sl top">TRƯỚC MẶT ↑</span><span class="sl bot">↓ SAU LƯNG</span><span class="sl lft">← BÊN TRÁI</span><span class="sl rgt">BÊN PHẢI →</span>
+   <div class="plane" id="plane"></div>
+  </div>
+  <div class="col" style="gap:1.2cqi">
+   <div class="facing" id="facing">Đang nhìn về <b>phía Bắc</b></div>
+   <div class="facelist big" id="faceList"></div>
+   <p class="warn">Lỗi hay gặp nhất ở band 3.0: lấy trái/phải theo tờ bản đồ, không theo người nói.</p>
+  </div>
+ </div>
+</section>
+
+<!-- IN / ON / AT -->
+<section class="slide" id="sPrep" data-title="IN · ON · AT và giới từ khác">
+ <div class="hdr"><h2>IN · ON · AT và các giới từ khác</h2></div>
+ <div class="prep2">
+  <div class="prepcol" id="prepBtns"></div>
+  <div class="col" style="gap:.8cqi;min-height:0">
+   <div class="tmapbox"><svg class="tmap" id="prepMap" aria-label="Bản đồ minh hoạ giới từ"></svg></div>
+   <div class="prepcap" id="prepCap"><b>Bấm một cấu trúc</b> để xem trên bản đồ.</div>
+  </div>
+ </div>
+</section>
+
+<!-- DIRECTION VERBS -->
+<section class="slide" id="sWalk" data-title="Cụm chỉ đường">
+ <div class="hdr"><h2>Cụm chỉ đường</h2></div>
+ <div class="prepwrap">
+  <div class="prepbtns" id="walkBtns"></div>
+  <div class="col" style="gap:1cqi;min-height:0">
+   <div class="prepscene" id="walkScene">
+    <svg viewBox="0 0 800 420" aria-label="Lưới đường phố với một người đi">
+     <rect width="800" height="420" fill="#F4F6F8"/>
+     <rect x="0" y="175" width="800" height="70" fill="#C9D1DC"/>
+     <rect x="365" y="0" width="70" height="420" fill="#C9D1DC"/>
+     <rect x="40" y="30" width="130" height="120" rx="8" fill="#E3ECFC" stroke="#1F5FD6" stroke-width="3"/>
+     <rect x="200" y="30" width="130" height="120" rx="8" fill="#FCEBDD" stroke="#C25E0C" stroke-width="3"/>
+     <rect x="470" y="30" width="130" height="120" rx="8" fill="#E1F3EA" stroke="#18794E" stroke-width="3"/>
+     <rect x="630" y="30" width="130" height="120" rx="8" fill="#EFE8FA" stroke="#5B3EA6" stroke-width="3"/>
+     <rect x="40" y="270" width="290" height="120" rx="8" fill="#FFF3C9" stroke="#B7791F" stroke-width="3"/>
+     <rect x="470" y="270" width="290" height="120" rx="8" fill="#FDE7E5" stroke="#B42318" stroke-width="3"/>
+     <path id="walkPath" d="" fill="none" stroke="#1F5FD6" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="10 12"/>
+     <circle id="walker" cx="60" cy="210" r="16" fill="#16213A"/><circle id="walkerDot" cx="60" cy="210" r="6" fill="#F2B84B"/>
+    </svg>
+    <span class="plab" style="left:13%;top:21%">Bank</span><span class="plab" style="left:33%;top:21%">Museum</span><span class="plab" style="left:66.8%;top:21%">Station</span><span class="plab" style="left:86.8%;top:21%">Hotel</span>
+    <span class="plab" style="left:23.1%;top:78.5%">Park</span><span class="plab" style="left:76.8%;top:78.5%">Hospital</span>
+   </div>
+   <div class="prepcap" id="walkCap"><b>Bấm một cụm</b> để xem người đi.</div>
+  </div>
+ </div>
+</section>
+
+<!-- PLACES + BRITISH -->
+<section class="slide" id="sPlaces" data-title="Địa điểm thường gặp">
+ <div class="hdr"><h2>Địa điểm thường gặp</h2><div class="tools"><button class="b" data-act="flip-all">Lật tất cả</button></div></div>
+ <div class="flipgrid" id="flipGrid"></div>
+ <div class="brit"><span class="lbl2">IELTS dùng tiếng Anh-Anh</span><span class="bpair"><b>lift</b> ≠ elevator</span><span class="bpair"><b>chemist</b> ≠ pharmacy</span><span class="bpair"><b>car park</b> ≠ parking lot</span><span class="bpair"><b>toilets</b> ≠ restroom</span><span class="bpair"><b>petrol station</b> ≠ gas station</span></div>
+</section>
+
+<section class="slide dark" data-title="Hoạt động 1" style="justify-content:center"><h1>Hoạt động 1 · Where am I?</h1></section>
+
+<!-- WHERE AM I: free figure + description checker -->
+<section class="slide" id="sWhere" data-title="Where am I?">
+ <div class="hdr"><h2>Where am I?</h2>
+  <div class="tools"><button class="b sm" data-act="w-turn">↻ Hướng xuất phát</button><button class="b sm" data-act="w-hide" id="wHide">Ẩn người</button><button class="b sm" data-act="w-names">Tên đường</button></div></div>
+ <div class="where2">
+  <div class="tmapbox"><svg class="tmap" id="whereMap" aria-label="Bản đồ thị trấn: kéo người và điểm xuất phát"></svg></div>
+  <div class="col wpanel">
+   <label for="wInput" class="lbl2">Học sinh mô tả đường đi (tiếng Anh)</label>
+   <textarea id="wInput" class="winput" placeholder="Go straight on to the first crossroads. Turn right. The bank is on your left."></textarea>
+   <div class="row" style="gap:.5cqi;flex-wrap:wrap"><button class="b pri" data-act="w-go">▶ Đi thử</button><button class="b" data-act="w-clear">Xoá</button><button class="b sm" data-act="w-model">Mô tả mẫu</button></div>
+   <div class="wresult" id="wResult"><p class="sub">Giáo viên kéo <b>người</b> tới một vị trí bất kỳ, kéo <b>điểm xuất phát</b> tới một ngã tư. Học sinh nhập mô tả rồi bấm Đi thử.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="slide dark" data-title="Hoạt động 2" style="justify-content:center"><h1>Hoạt động 2 · Vẽ lại bản đồ</h1></section>
+
+<section class="slide drawslide" data-title="Bản đồ vẽ 1">
+ <div class="hdr"><h2>Bản đồ 1 · Main Street</h2><div class="minitimers"><div class="timer sm2" data-sec="120" data-label="Chuẩn bị"></div><div class="timer sm2" data-sec="180" data-label="Vẽ"></div></div></div>
+ <div class="tmapbox big"><svg class="tmap" data-dmap="S1" aria-label="Bản đồ Main Street"></svg></div>
+</section>
+<section class="slide drawslide" data-title="Bản đồ vẽ 2">
+ <div class="hdr"><h2>Bản đồ 2 · Crossroads</h2><div class="minitimers"><div class="timer sm2" data-sec="120" data-label="Chuẩn bị"></div><div class="timer sm2" data-sec="180" data-label="Vẽ"></div></div></div>
+ <div class="tmapbox big"><svg class="tmap" data-dmap="S2" aria-label="Bản đồ Crossroads"></svg></div>
+</section>
+<section class="slide drawslide" data-title="Bản đồ vẽ 3 và 4">
+ <div class="hdr"><h2>Bản đồ 3 · Riverside &amp; Bản đồ 4 · Office floor</h2><div class="minitimers"><div class="timer sm2" data-sec="120" data-label="Chuẩn bị"></div><div class="timer sm2" data-sec="180" data-label="Vẽ"></div></div></div>
+ <div class="twomaps"><div class="tmapbox"><svg class="tmap" data-dmap="S3" aria-label="Bản đồ Riverside"></svg></div><div class="tmapbox"><svg class="tmap" data-dmap="S4" aria-label="Sơ đồ một tầng văn phòng"></svg></div></div>
+</section>
+
+<section class="slide dark" data-title="Luyện đề" style="justify-content:center"><h1>Luyện đề trong sách</h1></section>
+{{EXERCISES}}
+
+<!-- EXIT TICKET -->
+<section class="slide" id="sExit" data-title="Exit ticket" data-steps="3">
+ <div class="hdr"><h2>Exit ticket · 2 phút</h2><div class="tools"><button class="b pri" data-act="step">Hiện đáp án ▸</button></div></div>
+ <div class="leadwrap">
+  <div class="col" style="gap:1.1cqi">
+   <div class="ex"><b>1</b><div><p>Điểm xuất phát là gì và bạn tìm nó ở đâu?</p><p class="exa">Vị trí bắt đầu đi: “You are here”, “Entrance”, mũi tên lối vào; người nói thường mở đầu bằng “So here we are at…”.</p></div></div>
+   <div class="ex"><b>2</b><div><p>Kể tên hai tín hiệu sửa lỗi.</p><p class="exa">“sorry, I mean…”, “no, wait…”, “actually…”, “let me correct that”.</p></div></div>
+   <div class="ex"><b>3</b><div><p>“The library is next to the car park.” Viết chữ cái (Map 1).</p><p class="exa">F</p></div></div>
+  </div>
+  <div class="map" data-map="m1" data-hide="F" id="exitMap"></div>
+ </div>
+</section>
+
+<section class="slide dark" data-title="Kết thúc" style="justify-content:center"><h1>See you next time!</h1></section>

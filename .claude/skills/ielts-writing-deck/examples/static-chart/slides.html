@@ -1,0 +1,331 @@
+
+<main id="viewport"><div id="stage">
+
+<section class="slide dark" data-title="Writing Task 1 · Static Chart" style="justify-content:center"><h1>Writing Task 1 · Static Chart</h1></section>
+
+<section class="slide" id="sScore" data-title="Bảng điểm nhóm">
+ <div class="hdr"><h2>Bảng điểm nhóm</h2>
+  <div class="tools"><button class="b pri" id="scBack" hidden>↩ Quay lại</button><button class="b sm" data-act="sc-add">+ Thêm nhóm</button><button class="b sm" data-act="sc-del">− Bớt nhóm</button><button class="b sm" data-act="sc-reset">Về 0</button></div></div>
+ <div class="board" id="board"></div>
+</section>
+
+<section class="slide dark" data-title="Phần 1 · Lý thuyết" style="justify-content:center"><h1>Phần 1 · Lý thuyết</h1></section>
+
+<section class="slide" id="sWhat" data-title="Static chart là gì" data-steps="3">
+ <div class="hdr"><h2>Static chart: một thời điểm, không có xu hướng</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="svd">
+  <div class="pane" id="pDyn">
+   <h3><span class="tag2" style="background:var(--ink-2)">Dynamic</span>Có trục thời gian</h3>
+   <svg viewBox="0 0 400 210" aria-label="Biểu đồ đường có các năm 2000 đến 2020">
+    <g stroke="#D9DFE7" stroke-width="1"><line x1="40" y1="20" x2="390" y2="20"/><line x1="40" y1="70" x2="390" y2="70"/><line x1="40" y1="120" x2="390" y2="120"/></g>
+    <line x1="40" y1="170" x2="390" y2="170" stroke="#16213A" stroke-width="2"/><line x1="40" y1="10" x2="40" y2="170" stroke="#16213A" stroke-width="2"/>
+    <g font-size="13" fill="#4A5670" font-family="JetBrains Mono" text-anchor="middle"><text x="60" y="190">2000</text><text x="140" y="190">2005</text><text x="220" y="190">2010</text><text x="300" y="190">2015</text><text x="375" y="190">2020</text></g>
+    <path class="line1 drawline" pathLength="1" d="M60 140 L140 110 L220 60 L300 45 L375 80"/>
+    <path class="line2 drawline" pathLength="1" d="M60 60 L140 85 L220 120 L300 125 L375 128"/>
+   </svg>
+   <div class="chips"><span class="chp">rose</span><span class="chp">fell</span><span class="chp">peaked</span><span class="chp">remained stable</span></div>
+  </div>
+  <div class="pane hide" id="pStat">
+   <h3><span class="tag2" style="background:var(--blue)">Static</span>Một thời điểm: so sánh</h3>
+   <div class="mini2"><div class="drawn" data-mini="gen"></div><div class="drawn" data-mini="or"></div></div>
+   <div class="chips"><span class="chp">accounted for</span><span class="chp">higher than</span><span class="chp">the largest share</span><span class="chp">twice as …</span></div>
+  </div>
+ </div>
+ <div class="chips hide" id="wRule" style="justify-content:center"><span class="chp bad x">increase</span><span class="chp bad x">decrease</span><span class="chp bad x">rise</span><span class="arrowR">→</span><span class="chp good">was higher than</span><span class="chp good">made up</span><span class="chp good">exceeded … by</span></div>
+</section>
+
+<section class="slide" id="sStruct" data-title="Cấu trúc 4 đoạn" data-steps="5">
+ <div class="hdr"><h2>Bốn đoạn, khoảng 170–190 từ</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="struct">
+  <div class="col" style="gap:1.2cqi;justify-content:center">
+   <div class="blocks">
+    <div class="blk2" style="--bc:var(--c1)"><b>Introduction</b><span>Paraphrase đề, không chép nguyên văn</span><em>1 câu</em></div>
+    <div class="blk2" style="--bc:var(--c3)"><b>Overview</b><span>Xu hướng tổng thể, điểm cao / thấp nhất. Không số liệu chi tiết</span><em>2 câu</em></div>
+    <div class="blk2" style="--bc:var(--c2)"><b>Body 1</b><span>2–3 ý chính, mỗi ý có số liệu</span><em>3 câu</em></div>
+    <div class="blk2" style="--bc:var(--c4)"><b>Body 2</b><span>2–3 ý còn lại, mỗi ý có số liệu</span><em>3 câu</em></div>
+   </div>
+   <div class="nolist hide" id="noList"><span class="lbl2">Không viết</span><span class="chp bad x">ý kiến cá nhân</span><span class="chp bad x">nguyên nhân</span><span class="chp bad x">dự đoán</span></div>
+  </div>
+  <div class="wc"><div class="wcn" id="wcN">0</div><div class="wcbar" id="wcBar"><span class="ln150" style="bottom:calc(150/200*100%)">150</span><i style="background:var(--c1)"></i><i style="background:var(--c3)"></i><i style="background:var(--c2)"></i><i style="background:var(--c4)"></i></div><span class="lbl2">số từ</span></div>
+ </div>
+</section>
+
+<section class="slide" id="sOverview" data-title="Overview" data-steps="6">
+ <div class="hdr"><h2>Overview: bức tranh tổng, không số liệu chi tiết</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="two wide">
+  <div class="zw" id="zOv"><div class="zi"><div data-chart="game"></div></div></div>
+  <div class="side">
+   <div class="box"><span class="lbl2">Số liệu → cách nói khái quát</span>
+    <div class="map2" id="ovMap">
+     <span class="n hide">39% + 38%</span><span class="ar hide">→</span><span class="p hide">predominantly young</span>
+     <span class="n hide">72%</span><span class="ar hide">→</span><span class="p hide">the vast majority</span>
+     <span class="n hide">43%</span><span class="ar hide">→</span><span class="p hide">by far the most popular</span>
+     <span class="n hide">7%, 7%</span><span class="ar hide">→</span><span class="p hide">the smallest shares</span>
+    </div></div>
+   <div class="box w sent" id="ovSent"><span class="hide">Overall, players were predominantly young,</span> <span class="hide">and males made up the vast majority.</span> <span class="hide">Action games were by far the most popular genre,</span> <span class="hide">whereas role-playing and educational games attracted the smallest shares.</span></div>
+   <div class="formula hide" id="ovF">Overall, <b>[mục chủ đạo]</b> … while <b>[mục nổi bật thứ hai]</b>.</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" id="sDivide" data-title="2 cách chia thân bài" data-steps="5">
+ <div class="hdr"><h2>Hai cách chia thân bài</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="tree">
+  <div class="troot">Chia thân bài</div>
+  <div class="tbr">
+   <div class="tnode hide"><b>1 · Theo đối tượng</b><span>Mỗi đoạn một đối tượng / một biểu đồ</span><i>Game: Body 1 người chơi (tuổi, giới tính) · Body 2 thể loại game</i></div>
+   <div class="tnode hide"><b>2 · Theo nhóm ngành: gom có chủ đích</b><span>Gom các mục có điểm chung, câu chủ đề nêu rõ tiêu chí gom</span>
+    <div class="tsub">
+     <div class="hide"><b>Độ lớn</b><span>nhóm lớn ↔ nhóm nhỏ</span><i>Cam, chanh: xuất khẩu nhiều nhất</i></div>
+     <div class="hide"><b>Sự chênh lệch</b><span>ngang nhau ↔ áp đảo</span><i>Bưởi: ngang nhau · Loại khác: Mexico áp đảo</i></div>
+     <div class="hide"><b>Tính chất chung</b><span>tổng phải đúng</span><i>7% + 7% + 6% = 20% = Sports</i></div>
+    </div></div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" id="sDivGame" data-title="Chia thân bài: biểu đồ game" data-steps="3">
+ <div class="hdr"><h2>Áp dụng: biểu đồ game điện tử</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="two wide">
+  <div class="zw" id="zDivG"><div class="zi"><div data-chart="game"></div></div></div>
+  <div class="side">
+   <div class="box hide" style="border-left:.5cqi solid var(--blue)"><span class="lbl2">Cách 1 · Theo đối tượng</span><p><b>Body 1:</b> người chơi (tuổi, giới tính) · <b>Body 2:</b> thể loại game</p></div>
+   <div class="box hide" style="border-left:.5cqi solid var(--orange)"><span class="lbl2">Cách 2 · Gom theo độ lớn</span><p>Action (43%) ↔ các thể loại còn lại</p></div>
+   <div class="box y hide"><span class="lbl2">Gom 3 mục nhỏ: tổng phải đúng</span><p class="sent" style="font-size:1.5cqi">7% + 7% + 6% = 20% = Sports</p><p style="font-style:italic;font-family:var(--f-head);font-size:1.4cqi">Taken together, these three smaller categories matched the share of sports games alone.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" id="sDivCit" data-title="Chia thân bài: biểu đồ cam chanh" data-steps="3">
+ <div class="hdr"><h2>Áp dụng: biểu đồ xuất khẩu cam chanh 2012</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="two wide">
+  <div class="zw" id="zDivC"><div class="zi"><div data-chart="citrus"></div></div></div>
+  <div class="side">
+   <div class="box"><span class="lbl2">Cách 2 · Theo nhóm ngành</span><p>Bốn loại quả, gom thành hai cặp có lý do.</p></div>
+   <div class="box hide" style="border-left:.5cqi solid var(--blue)"><b>Body 1 · độ lớn</b><p>Cam và chanh: lượng xuất khẩu lớn nhất, có một nước dẫn đầu rõ</p></div>
+   <div class="box hide" style="border-left:.5cqi solid var(--orange)"><b>Body 2 · sự chênh lệch</b><p>Bưởi: các nước gần ngang nhau ↔ loại khác: Mexico áp đảo</p></div>
+   <div class="box y hide"><span class="lbl2">Zoom: Other citrus fruits</span><p class="sent" style="font-size:1.45cqi">450 ↔ 6 + 4 = 10: chênh lệch lớn nhất cả biểu đồ</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" id="sCompare" data-title="Cấu trúc so sánh">
+ <div class="hdr"><h2>Cấu trúc so sánh</h2>
+  <div class="tools"><div class="tabs" id="cmpTabs"></div><button class="b sm" data-act="cmp-clear">Xoá</button><button class="b pri" data-act="cmp-full" id="cmpFullBtn">Hiện câu đầy đủ</button></div></div>
+ <div class="cmp">
+  <div class="cmpL"><div class="cmpbars" id="cmpBars"></div><textarea class="stuw" id="cmpStu" placeholder="Câu học sinh viết…" aria-label="Câu học sinh viết"></textarea></div>
+  <div class="cmpR" id="cmpOut"></div>
+ </div>
+</section>
+
+<section class="slide" id="sNums" data-title="Số liệu phải đúng" data-steps="6">
+ <div class="hdr"><h2>Số liệu phải đúng</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="nums">
+  <div class="np" id="np1"><h3>Hiệu của hai tỉ lệ %</h3>
+   <div class="bars2"><div class="r2"><i style="--w:86%;background:var(--c1)"></i><em>Action 43%</em></div><div class="r2"><i style="--w:40%;background:var(--c2)"></i><em>Sports 20%</em></div></div>
+   <p class="sent" style="font-size:1.5cqi;text-align:center">43% − 20% = 23</p>
+   <div class="vrd"><div class="no">… by 23 percent</div><div class="ok">… by 23 percentage points</div></div>
+  </div>
+  <div class="np" id="np2"><h3>Tỉ lệ gấp bao nhiêu lần</h3>
+   <div class="bars2"><div class="r2" id="ratioRow"><i style="--w:80%;background:var(--c1)"></i><em>40</em></div><div class="r2"><i style="--w:50%;background:var(--c2)"></i><em>25</em></div></div>
+   <p class="sent" style="font-size:1.5cqi;text-align:center">40 ÷ 25 = 1.6</p>
+   <div class="vrd"><div class="no">… twice as high as</div><div class="ok">… approximately 1.6 times as high as</div></div>
+  </div>
+  <div class="np" id="np3"><h3>Phân số thay cho %</h3>
+   <div class="fracpie"><svg viewBox="0 0 200 200" aria-label="Hình tròn minh hoạ phân số"><circle cx="100" cy="100" r="100" fill="#D9DFE7"/><circle class="fp" id="fracArc" cx="100" cy="100" r="50" pathLength="100" transform="rotate(-90 100 100)"/></svg>
+    <div class="fracw" id="fracW"></div></div>
+   <div class="chips" style="font-size:1.1cqi"><span class="chp">50% half</span><span class="chp">25% a quarter</span><span class="chp">20% a fifth</span><span class="chp">33% a third</span></div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" id="sErr6" data-title="6 lỗi hay gặp">
+ <div class="hdr"><h2>Sáu lỗi hay gặp: bấm để sửa</h2><div class="tools"><button class="b" data-act="flip-all">Lật tất cả</button></div></div>
+ <div class="flipgrid err6" id="errGrid"></div>
+</section>
+
+<section class="slide" id="sBand" data-title="Band 6.0 và 7.0" data-steps="6">
+ <div class="hdr"><h2>Band 6.0 và band 7.0 khác nhau ở đâu</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="bandt" id="bandT">
+  <span></span><span class="h b6">Band 6.0 thường có</span><span></span><span class="h b7">Band 7.0 cần có</span><span class="h">Bài học sinh</span>
+ </div>
+</section>
+
+<section class="slide" id="sUpgrade" data-title="Nâng cấp một câu" data-steps="4">
+ <div class="hdr"><h2>Nâng cấp một câu từ 6.0 lên 7.0</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="two even">
+  <div class="zw" id="zUp"><div class="zi"><div data-chart="gender"></div></div></div>
+  <div class="up">
+   <div class="s6"><span class="lbl6">6.0</span><span class="w6x">There were</span> <span class="w6y">72% males and 28% females</span>.</div>
+   <p class="hide warn" id="upWhy" style="background:var(--orange-soft);color:var(--orange)">“There were” + liệt kê số: chưa so sánh, chưa diễn giải con số.</p>
+   <div class="calc">
+    <span class="m hide">72% ≈ 75%</span><span class="t hide">nearly three-quarters</span>
+    <span class="m hide">72 ÷ 28 ≈ 2.57</span><span class="t hide">roughly two and a half times</span>
+   </div>
+   <div class="s7 hide" id="up7"><span class="lbl7">7.0</span>Males <span class="k7">made up</span> <span class="k7">nearly three-quarters</span> of players, <span class="k7">roughly two and a half times</span> the proportion of females.</div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" id="sRes" data-title="Đề bài: mức nước hồ chứa" data-steps="7">
+ <div class="hdr"><h2>Đề bài: mức nước hồ chứa ở sáu thành phố</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="two wide">
+  <div class="zw" id="zRes"><div class="zi"><div data-chart="res"></div></div></div>
+  <div class="side">
+   <p class="task">The chart shows the water levels in reservoirs of six cities in Australia in October 2009 and October 2010.</p>
+   <div class="kf" id="resKF">
+    <div style="--bc:var(--c1)"><b>2009:</b> Sydney và Canberra cùng cao nhất (75%), Melbourne thấp nhất (25%)</div>
+    <div style="--bc:var(--c2)"><b>2010:</b> 4 / 6 thành phố tăng</div>
+    <div style="--bc:var(--green)"><b>Canberra:</b> tăng mạnh nhất (+23), gần đầy, khoảng 98%</div>
+    <div style="--bc:var(--red)"><b>Darwin:</b> thành phố duy nhất giảm, 45% → 38%</div>
+    <div style="--bc:var(--ink-2)"><b>Brisbane:</b> giữ nguyên 55%</div>
+    <div style="--bc:var(--c3)"><b>2010:</b> Melbourne và Darwin cùng thấp nhất, 38%</div>
+    <div style="--bc:var(--ink)"><b>Overview:</b> 4 tăng · 1 giảm · 1 giữ nguyên. Có 2 mốc thời gian nên được dùng <i>rose, fell, remained unchanged</i>.</div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="slide stu" id="sMP" data-title="Bài 1 · đoạn trích" data-steps="7">
+ <div class="hdr"><h2>Bài 1 · đoạn thân bài</h2><div class="tools"><button class="b sm" data-act="go-band">↩ Bảng 6.0 / 7.0</button><button class="b" data-act="fix">Đoạn sửa</button><button class="b pri" data-act="step">Lỗi tiếp ▸</button></div></div>
+ <div class="stud">
+  <div class="para">
+   <div class="orig"><div class="whoL">Bài của em</div>In October 2009, <span class="er" data-e="0">Melbourne had the lowest water level, compared with 40% in Perth</span>, and both <span class="er" data-e="1">Syden</span> and Canberra had the highest <span class="er" data-e="2">water levels in reservoirs</span>, at 75%. <span class="er" data-e="3">In October 2010, the figure in all cities had risen</span>. <span class="er" data-e="4">Melbourne and Perth surged to 38% and 60%</span>, while Sydney saw a modest rise to 80%. Canberra experienced the most significant growth, <span class="er" data-e="5">which had the highest figure compared to other 6 cities, reached at approximately 98%</span>. <span class="er" data-e="6">[…]</span></div>
+   <div class="fixd"><div class="whoL">Đoạn sửa</div>In October 2009, Melbourne had the lowest <em class="fixm">reservoir level, at 25%, followed by Perth at 40%</em>, while <em class="fixm">Sydney</em> and Canberra jointly recorded the highest figure, at 75% each. <em class="fixm">By October 2010, four of the six cities had seen an increase.</em> <em class="fixm">The figures for</em> Melbourne and Perth surged to 38% and 60% <em class="fixm">respectively</em>, while Sydney saw a modest rise to 80%. Canberra experienced the most significant growth, <em class="fixm">reaching approximately 98%, the highest figure of all six cities</em>. <em class="fixm">By contrast, Darwin was the only city to see a decline, from 45% to 38%, the same level as Melbourne, whereas Brisbane remained unchanged at 55%.</em></div>
+  </div>
+  <div class="cmt"><div class="zw sm" data-zs="1"><div class="zi"><div data-chart="res"></div></div></div><div class="cmtbox empty">Bấm một lỗi được gạch đỏ.</div></div>
+ </div>
+</section>
+
+<section class="slide" id="sMPs" data-title="Bài 1 · điểm">
+ <div class="hdr"><h2>Bài 1 · điểm đoạn trích</h2></div>
+ <div class="scores"><div class="sc4" data-sc="5,5,6,5,5.5"><h3>Đoạn thân bài (trích 1 đoạn, chấm theo đoạn)</h3><div class="bars4"></div>
+  <ul><li><b>TA</b>: sai “all cities had risen”, bỏ sót Darwin và Brisbane, thiếu số của Melbourne</li><li><b>GRA</b>: sai “reached at”, “which” trỏ sai, sai thì “had risen”</li><li><b>LR</b>: surged, modest rise dùng tốt; sai chính tả “Syden”</li><li><b>C&amp;C</b>: thiếu “respectively”, chưa gom các thành phố theo nhóm tăng / giảm</li></ul></div>
+ </div>
+</section>
+
+<section class="slide stu" id="sNMo" data-title="Bài 2 · overview" data-steps="7">
+ <div class="hdr"><h2>Bài 2 · overview</h2><div class="tools"><button class="b sm" data-act="go-band">↩ Bảng 6.0 / 7.0</button><button class="b" data-act="fix">Bản gợi ý</button><button class="b pri" data-act="step">Lỗi tiếp ▸</button></div></div>
+ <div class="stud">
+  <div class="para">
+   <div class="orig"><div class="whoL">Bài của em</div>Overall, <span class="er" data-e="0">it is obvious that</span> <span class="er" data-e="1">the figure for water levels of Melbourne, Perth, Sydney and Canberra</span> in October 2010 <span class="er" data-e="2">was higher than that of 2009</span>, while the opposite was true for Darwin. <span class="er" data-e="3">In addition</span>, the percentage of water levels in reservoirs of Canberra was <span class="er" data-e="4">the highest of all among cities during October 2009 to 2010</span>, whereas <span class="er" data-e="5">that of Melbourne experienced the opposite</span>. <span class="er" data-e="6">[…]</span></div>
+   <div class="fixd"><div class="whoL">Bản gợi ý</div>Overall, <em class="fixm">reservoir levels rose in most cities</em> over the period, with Darwin being the only city to see a decline <em class="fixm">and Brisbane remaining unchanged</em>. Canberra had the highest level <em class="fixm">by October 2010</em>, whereas Melbourne’s reservoirs were <em class="fixm">consistently among the least full</em>.</div>
+  </div>
+  <div class="cmt"><div class="zw sm"><div class="zi"><div data-chart="res"></div></div></div><div class="cmtbox empty">Bấm một lỗi được gạch đỏ.</div></div>
+ </div>
+</section>
+
+<section class="slide stu" id="sNMb" data-title="Bài 2 · body 1" data-steps="7">
+ <div class="hdr"><h2>Bài 2 · body 1 (các thành phố tăng)</h2><div class="tools"><button class="b sm" data-act="go-band">↩ Bảng 6.0 / 7.0</button><button class="b" data-act="fix">Đoạn gợi ý</button><button class="b pri" data-act="step">Lỗi tiếp ▸</button></div></div>
+ <div class="stud">
+  <div class="para">
+   <div class="orig"><div class="whoL">Bài của em</div><span class="er" data-e="0">The percentage of water levels</span> in Sydney <span class="er" data-e="1">grew minimally by 5% from 75% in 2009 to October 2010</span>. <span class="er" data-e="2">During that time, that of Melbourne stood at a quarter, and then increased gradually</span> to approximately 40%. <span class="er" data-e="3">Similarly, there was a significant increase of 20%</span> in <span class="er" data-e="0">the quantity of water levels</span> of Perth, <span class="er" data-e="4">also the percentage of water levels in Canberra</span> saw <span class="er" data-e="5">a drastic growth from 75% to almost the highest at 100%</span> between October 2009 and 2010. <span class="er" data-e="6">[…]</span></div>
+   <div class="fixd"><div class="whoL">Đoạn gợi ý</div>Four of the six cities saw their reservoir levels rise over the period. <em class="fixm">Most notably</em>, Canberra’s figure jumped from 75% to <em class="fixm">almost full capacity, at around 98%</em>, making it <em class="fixm">the highest of all six cities</em> in October 2010. Perth recorded a similarly sharp increase of <em class="fixm">20 percentage points, from 40% to 60%</em>, while Melbourne’s level rose <em class="fixm">considerably</em> from a quarter to just under 40%. <em class="fixm">By contrast</em>, Sydney, which had shared the top position with Canberra in 2009, saw only a <em class="fixm">marginal rise from 75% to 80%</em>.</div>
+  </div>
+  <div class="cmt"><div class="zw sm"><div class="zi"><div data-chart="res"></div></div>
+    <div class="rank" id="rankBox"><span class="lbl2">Xếp theo mức tăng, không theo thứ tự cột</span><div class="rl"></div></div></div>
+   <div class="cmtbox empty">Bấm một lỗi được gạch đỏ.</div></div>
+ </div>
+</section>
+
+<section class="slide" id="sNMs" data-title="Bài 2 · điểm">
+ <div class="hdr"><h2>Bài 2 · điểm và việc cần làm</h2></div>
+ <div class="scores">
+  <div class="sc4" data-sc="6,5,5,6,5.5"><h3>Overview</h3><div class="bars4"></div>
+   <ul><li><b>TA</b>: overview rõ, không nhồi số; thiếu Brisbane</li><li><b>GRA</b>: sai “figure … was”, “during … to”</li><li><b>C&amp;C</b>: “while the opposite was true for” dùng tốt</li></ul></div>
+  <div class="sc4" data-sc="5,5,5,6,5.5"><h3>Body 1</h3><div class="bars4"></div>
+   <ul><li><b>TA</b>: số liệu đúng, biết gom nhóm; chưa nói Canberra cao nhất năm 2010</li><li><b>LR</b>: “a quarter” hay; sai “quantity”, “minimally”, “drastic”</li><li><b>C&amp;C</b>: “Similarly” sai logic, chưa so sánh</li></ul></div>
+ </div>
+</section>
+
+<section class="slide" id="sSurg" data-title="Lỗi lặp nhiều nhất" data-steps="4">
+ <div class="hdr"><h2>Cụm từ lặp sai nhiều nhất</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="surg">
+  <div class="bad" id="surgBad">the percentage of water levels in Sydney</div>
+  <div class="goods">
+   <div class="hide"><b>Sydney’s reservoir level</b><span>Sydney’s reservoir level rose slightly to 80%.</span></div>
+   <div class="hide"><b>the figure for Sydney</b><span>The figure for Sydney was 75% in 2009.</span></div>
+   <div class="hide"><b>Sydney’s reservoirs</b><span>Sydney’s reservoirs were 80% full in October 2010.</span></div>
+  </div>
+ </div>
+</section>
+
+<section class="slide dark" data-title="Phần 3 · Luyện tập" style="justify-content:center"><h1>Phần 3 · Luyện tập</h1></section>
+
+<section class="slide" id="sQuiz" data-title="Đúng hay sai?">
+ <div class="hdr"><h2>Đúng hay sai? Sửa câu sai</h2><div class="minitimers"><div class="timer sm2" data-sec="180" data-label="Thảo luận"></div></div></div>
+ <div class="two">
+  <div class="quiz" id="quiz"></div>
+  <div class="zw" id="zQuiz"><div class="zi"><div data-chart="citrus"></div></div></div>
+ </div>
+</section>
+
+<section class="slide" id="sOvPrac" data-title="Luyện overview" data-steps="10">
+ <div class="hdr"><h2>Viết overview: biểu đồ cam chanh</h2><div class="tools"><div class="minitimers"><div class="timer sm2" data-sec="300" data-label="Viết"></div></div><button class="b pri" data-act="step">Gợi ý ▸</button></div></div>
+ <div class="two wide">
+  <div class="zw" id="zOvP"><div class="zi"><div data-chart="citrus"></div></div></div>
+  <div class="side">
+   <p class="task">The charts below give information about the world’s top three exporters of different fresh citrus fruits in 2012.</p>
+   <div class="qa" id="ovpQA">
+    <div><span class="qq">Oranges: nước nào dẫn đầu?</span><span class="aa">South Africa</span></div>
+    <div><span class="qq">Lemons: nước nào dẫn đầu?</span><span class="aa">Turkey</span></div>
+    <div><span class="qq">Other citrus: có gì đặc biệt?</span><span class="aa">Mexico áp đảo</span></div>
+    <div><span class="qq">Grapefruits: có gì đặc biệt?</span><span class="aa">Mỹ = Nam Phi</span></div>
+   </div>
+   <div class="box y hide" id="ovpSkel"><span class="lbl2">Khung câu</span><p class="sent" style="font-size:1.4cqi">Overall, ___ was the leading exporter of ___ and ___ of ___, while ___ dominated ___. ___ and ___ shared the top position for ___.</p></div>
+   <div class="box g hide" id="ovpModel"><span class="lbl2">Overview mẫu</span><p class="sent" style="font-size:1.4cqi">Overall, South Africa was the leading exporter of oranges and Turkey of lemons, while Mexico dominated the export of other citrus fruits. The United States and South Africa shared the top position for grapefruits.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" id="sBodyPrac" data-title="Luyện thân bài: liên kết" data-steps="12">
+ <div class="hdr"><h2>Viết thân bài: nối các cặp số liệu</h2><div class="tools"><div class="minitimers"><div class="timer sm2" data-sec="600" data-label="Viết"></div></div><button class="b pri" data-act="step">Gợi ý ▸</button></div></div>
+ <div class="two even">
+  <div class="zw" id="zBodyP"><div class="zi"><div data-chart="citrus"></div></div></div>
+  <div class="bodyp" id="bodyP"></div>
+ </div>
+</section>
+
+<section class="slide" id="sLinkMap" data-title="Sơ đồ: câu và liên kết" data-steps="7">
+ <div class="hdr"><h2>Sơ đồ đoạn thân bài: chức năng câu và liên kết</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="lmap">
+  <div class="lrow gen">
+   <div class="ln2 hide c1"><b>Câu 1 · Chủ đề</b><span>Nói rõ cách chia: gom theo tiêu chí gì</span></div>
+   <div class="lk2 hide"><i>dẫn vào</i></div>
+   <div class="ln2 hide c2"><b>Câu 2 · Cặp số 1</b><span>So sánh trong cặp: cao nhất, theo sau, có số liệu</span></div>
+   <div class="lk2 hide"><i>từ nối</i></div>
+   <div class="ln2 hide c3"><b>Câu 3 · Cặp số 2</b><span>So sánh trong cặp, đối chiếu với cặp 1</span></div>
+   <div class="lk2 hide"><i>từ nối</i></div>
+   <div class="ln2 hide c4"><b>Câu 4 · Cặp số 3</b><span>Nếu có: tiếp tục so sánh / so sánh chéo</span></div>
+  </div>
+  <div class="lwords hide">
+   <div class="g"><b>Giống xu hướng</b><span>Similarly, … · A similar pattern was seen in … · … followed a similar pattern, although …</span></div>
+   <div class="r"><b>Trái ngược</b><span>By contrast, … · In stark contrast, … · …, whereas …</span></div>
+   <div class="b"><b>Chuyển sang mục khác</b><span>Turning to … · As for … · Meanwhile, …</span></div>
+  </div>
+  <div class="lrow ex hide"><span class="lab">Body 1 · gom theo độ lớn</span>
+   <div class="ln2 c1"><b>Câu 1 · Chủ đề</b><span>Oranges and lemons were the two categories exported in the largest quantities.</span></div><div class="lk2"><i>→</i></div>
+   <div class="ln2 c2"><b>Câu 2 · Cam</b><span>South Africa led … followed by Egypt and the US.</span></div><div class="lk2 on"><i>followed a similar pattern, although …</i></div>
+   <div class="ln2 c3"><b>Câu 3 · Chanh</b><span>Turkey ranked first … slightly ahead of Mexico.</span></div>
+  </div>
+  <div class="lrow ex hide"><span class="lab">Body 2 · gom theo sự chênh lệch</span>
+   <div class="ln2 c1"><b>Câu 1 · Chủ đề</b><span>The remaining two categories differed sharply in the gaps between exporters.</span></div><div class="lk2"><i>→</i></div>
+   <div class="ln2 c2"><b>Câu 2 · Bưởi</b><span>Fairly even: the US = South Africa, Turkey not far behind.</span></div><div class="lk2 on r"><i>In stark contrast, …</i></div>
+   <div class="ln2 c3"><b>Câu 3 · Loại khác</b><span>Mexico dominated: 45 times Israel and the US combined.</span></div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" id="sFull" data-title="Viết cả bài: biểu đồ game" data-steps="1">
+ <div class="hdr"><h2>Viết cả bài: biểu đồ game điện tử</h2><div class="tools"><div class="minitimers"><div class="timer sm2" data-sec="1200" data-label="Viết"></div></div><button class="b pri" data-act="step">Bài mẫu 7.0 ▸</button></div></div>
+ <div class="two even">
+  <div class="zw" id="zFull"><div class="zi"><div data-chart="game"></div></div></div>
+  <div class="essay locked" id="essay">
+   <p><span class="pl">Introduction</span><span class="zs" data-z="">The pie charts illustrate the characteristics of electronic game players in South Korea in 2003, covering their age, gender and preferred game types.</span></p>
+   <p><span class="pl">Overview</span><span class="zs" data-z="age:Under 18,18–36|gen:Male">Overall, players were predominantly young, and males made up the vast majority.</span> <span class="zs" data-z="typ:Action,Role-playing,Education">Action games were by far the most popular genre, whereas role-playing and educational games attracted the smallest shares.</span></p>
+   <p><span class="pl">Body 1</span><span class="zs" data-z="age:Under 18,18–36">Players under 18 and those aged 18 to 36 were almost equal in number, at 39% and 38% respectively, together accounting for over three-quarters of the total.</span> <span class="zs" data-z="age:Above 36">Players above 36 made up the remaining 23%.</span> <span class="zs" data-z="gen:Male,Female">In terms of gender, males constituted 72% of players, roughly two and a half times the proportion of females, who accounted for 28%.</span></p>
+   <p><span class="pl">Body 2</span><span class="zs" data-z="typ:Action,Sports">Action games were the favourite genre, with 43% of players, which exceeded sports games (20%) by 23 percentage points.</span> <span class="zs" data-z="typ:Racing,Role-playing,Education,Others">Racing games attracted 17%, while role-playing and educational games each captured 7% and other genres 6%.</span> <span class="zs" data-z="typ:Role-playing,Education,Others,Sports">Taken together, these three smaller categories matched the share of sports games alone.</span></p>
+  </div>
+ </div>
+</section>
+

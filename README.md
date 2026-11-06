@@ -27,4 +27,7 @@ Cần: Python 3, ffmpeg, poppler-utils (`pdftotext`, `pdfimages`), và để phi
 
 - `interactive-lesson-deck/examples/map-labelling/`: giáo án Map Labelling 90 phút (band 3.0).
   Ảnh trang sách và audio không nằm trong repo; đặt chúng vào `media/` khi build.
+- `interactive-lesson-deck/examples/word-stress-clips/`: phát âm Buổi 5, trọng âm từ qua clip phim
+  (Kung Fu Panda, Modern Family). Video không nằm trong repo: đặt `kfp.mp4`, `mf1.mp4`, `mf2.mp4`
+  đã cắt vào `media/`, hoặc bấm "Chọn file video" trên slide để nạp clip gốc; slide chỉ phát đúng các đoạn đã chọn.
 - `ielts-listening-review/examples/cam19_test3.py`: Cambridge 19, Listening Test 3.

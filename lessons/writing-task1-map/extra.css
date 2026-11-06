@@ -435,3 +435,29 @@ body.hide7 .wcard.shown .wmodel7{display:none}
 .wessay{min-height:3cqi}
 .wcard:has(.wmodel7.has) .wmodel,.wcard:has(.wmodel7.has) .wmodel7{font-size:1.45cqi;padding:.5cqi .9cqi}
 .wmodel7{font-size:1.6cqi}
+
+/* ===== v4: single / compound sentences, practice ===== */
+.hs.iv{background:var(--ct-s);box-shadow:inset 0 -.22em 0 var(--ct)}
+.t15.basic td.fm{width:38%}.t15.basic td.eg{width:auto;font-size:1.9cqi}
+.advtabs{display:flex;gap:.7cqi;flex-wrap:wrap}
+.advtabs button{font:800 1.5cqi var(--f-body);border:0;border-radius:99px;padding:.6cqi 1.4cqi;cursor:pointer;opacity:.5;transition:all .2s}
+.advtabs button.on{opacity:1;transform:scale(1.05)}
+.adv2{display:grid;grid-template-columns:1fr 30%;gap:1.6cqi;flex:1;min-height:0}
+.adv2 .twomap.v{display:flex;flex-direction:column;min-height:0}.adv2 .twomap.v figure{flex:1;min-height:0}
+.adv2 svg.plan{height:100%;width:auto;max-width:100%;margin:0 auto}
+.advlist{display:flex;flex-direction:column;gap:1.2cqi;justify-content:center}
+.advrow{display:grid;grid-template-columns:1fr auto;gap:.7cqi 1.2cqi;align-items:center;background:var(--paper);border-radius:14px;padding:1.3cqi 1.6cqi;cursor:pointer;animation:popIn .5s both;transition:box-shadow .3s}
+.advrow.cur{box-shadow:0 0 0 .3cqi #F2B84B}
+.advrow .fm{grid-column:1/-1;font:600 1.6cqi var(--f-mono)}
+.advrow .bs{font-size:1.75cqi}
+.advrow .av{grid-column:1/-1;display:none;font-family:var(--f-head);font-size:2cqi;background:#fff;border:2px solid var(--ink);border-radius:10px;padding:.7cqi 1.1cqi}
+.advrow.on .av{display:block;animation:popIn .5s both}.advrow.on [data-up2]{visibility:hidden}
+.advrow .tg6,.advrow .tg7{font-family:var(--f-body);vertical-align:middle;margin-right:.4cqi}
+.jpat{font:600 1.35cqi var(--f-mono);background:#fff;border-radius:8px;padding:.5cqi .8cqi}
+#joinB .jr span{font-size:1.6cqi}#joinB .jcol{gap:1cqi}
+.jh i b{color:var(--red)}
+.act{grid-template-columns:3cqi 1fr auto auto 1.15fr}
+body.hide7 .act{grid-template-columns:3cqi 1fr auto}
+.ahint{font-size:1.1cqi;font-weight:800;border-radius:99px;padding:.2cqi .8cqi;white-space:nowrap}
+.ahint.u1{background:var(--blue-soft);color:var(--blue)}.ahint.u2{background:var(--orange-soft);color:var(--orange)}
+.acts{gap:.6cqi}.act{padding:.6cqi 1.1cqi}.act .a6,.act .a7{font-size:1.4cqi}

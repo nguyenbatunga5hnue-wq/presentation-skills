@@ -1,4 +1,6 @@
-/* ===== comic drawing kit: characters, backgrounds, props (SVG strings, viewBox 400x290) ===== */
+/* Comic kit, part 1: cast, poses, faces, props, backgrounds (SVG strings, viewBox 400x290).
+   Every character is built from animatable groups: .chr.m-<mood>.p-<pose> > .ent > .bob > (.arm.al, .arm.ar, .head > .eyes, .mouth).
+   Lessons may add cast members: CAST.name={skin,hair,style,shirt,pants,glasses?,coat?,s?}. */
 const CAST={
  minh:{skin:'#F5C9A0',hair:'#1E1B22',style:'spiky',shirt:'#3E6FD8',pants:'#2B3550',glasses:true},
  lan:{skin:'#F8D2B0',hair:'#2A1D1A',style:'long',shirt:'#E9705A',pants:'#5B4A7A',clip:'#F2B84B'},

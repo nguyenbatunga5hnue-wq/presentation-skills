@@ -4,7 +4,7 @@
     python3 pack_offline.py OUT_DIR/index.html PACKED.html
 
 Inlines, as data URIs: every local file referenced by src="…" or data-audio="…"
-(images, mp3), and the Google Fonts (latin, latin-ext, vietnamese subsets). Adds the
+(images, mp3, scripts), and every Google Fonts stylesheet (latin, latin-ext, vietnamese subsets). Adds the
 <!doctype>/<head> skeleton the artifact host normally supplies. Needs network access to
 fonts.googleapis.com once, while packing.
 """
@@ -24,10 +24,10 @@ def inline(m):
 src = re.sub(r'\b(src|data-audio)="([^"]+)"', inline, src)
 
 UA = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36'}
-m = re.search(r'<link rel="stylesheet" href="(https://fonts.googleapis.com/css2\?[^"]+)">', src)
-if m:
+cache = {}
+for m in list(re.finditer(r'<link rel="stylesheet" href="(https://fonts.googleapis.com/css2\?[^"]+)">', src)):
     css = urllib.request.urlopen(urllib.request.Request(m.group(1).replace('&amp;', '&'), headers=UA)).read().decode()
-    keep, cache = [], {}
+    keep = []
     for subset, block in re.findall(r'/\* ([a-z-]+) \*/\s*(@font-face \{.*?\})', css, flags=re.S):
         if subset not in ('latin', 'latin-ext', 'vietnamese'):
             continue
@@ -36,7 +36,7 @@ if m:
             cache[url] = 'data:font/woff2;base64,' + base64.b64encode(urllib.request.urlopen(urllib.request.Request(url, headers=UA)).read()).decode()
         keep.append(block.replace(url, cache[url]))
     src = src.replace(m.group(0), '<style>\n' + '\n'.join(keep) + '\n</style>')
-    src = src.replace('<link rel="preconnect" href="https://fonts.googleapis.com">', '')
+src = src.replace('<link rel="preconnect" href="https://fonts.googleapis.com">', '')
 
 title = re.search(r'<title>.*?</title>', src).group(0)
 src = src.replace(title, '', 1)

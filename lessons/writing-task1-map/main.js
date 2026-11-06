@@ -5,7 +5,7 @@ const NS='http://www.w3.org/2000/svg';
 const E=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
 const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;');
 /* <rc>…</rc> etc. → coloured spans; <cj> = simple connector (and / but / so) */
-const ST={rc:'Mệnh đề quan hệ',vi:'Cụm V-ing',cp:'Câu ghép',ct:'Tương phản',cl:'Nhấn mạnh / đảo'};
+const ST={nz:'Khái quát xu hướng',rc:'Mệnh đề quan hệ',vi:'Cụm V-ing',cp:'Câu ghép',ct:'Tương phản',cl:'Nhấn mạnh / đảo'};
 const mk=s=>s.replace(/<(rc|vi|cp|ct|cl|cj|nz)>/g,'<span class="hs $1">').replace(/<\/(rc|vi|cp|ct|cl|cj|nz)>/g,'</span>');
 const hide7=()=>document.body.classList.contains('hide7');
 
@@ -86,7 +86,8 @@ NELSON:{maps:['NELSON0','NELSON1'],cap:['2000','Present day'],
   [['rest','bar'],'Restaurants · Bars','Thêm nhà hàng, quán bar cạnh cảng','MỚI','g','were added nearby']],
  ov:{big:[[['road'],'Main Road → pedestrian-only zone'],[['stn','rail'],'Train station được dời vào trung tâm']],
   opts:['Nhà ở tăng → đông dân hơn','Nhà máy thay đất nông nghiệp → công nghiệp hoá','Trung tâm hiện đại, dễ tiếp cận hơn'],pick:2,
-  note:'Ghi chú cho Overview: <b>pedestrian zone</b> + <b>train station</b> → <b>more modern and accessible</b>'},
+  note:'Ghi chú cho Overview: <b>pedestrian zone</b> + <b>train station</b> → <b>more modern and accessible</b>',
+  gen:{minus:['road'],mtxt:'Xe cộ ↓',plus:['stn','bike','hall','cov','trees','rest','bar','road'],ptxt:'Đi bộ, giao thông công cộng, giải trí ↑',note:'Khái quát (Band 7): thành phố chuyển <b>từ ưu tiên xe cộ sang ưu tiên người đi bộ, giao thông công cộng và giải trí</b>'}},
  split:{q:'Map có Entrance không?',a:'Không, chỉ có la bàn → <b>Cách 2 · theo la bàn</b>, đi từ Tây sang Đông',qbox:[700,0,300,190],
   b1:[['stn','hall','mkt','rail'],'Body 1 · Tây và Bắc','Train station · Hall of residence · Market'],b2:[['cov','trees','road','bike','port','rest','bar'],'Body 2 · Đông và Nam','Covered market · Trees · Main Road · Bike rental · Port']},
  outline:[[1,['stn','rail'],'Train station: rìa thành phố → trung tâm, cạnh University','which had stood …'],[1,['hall'],'Hall of residence mới ở tây bắc','while …'],[1,['mkt'],'Market (tây nam) → shop','which had occupied …'],
@@ -94,7 +95,8 @@ NELSON:{maps:['NELSON0','NELSON1'],cap:['2000','Present day'],
  write:[['Introduction',[],'Paraphrase đề: <i>show</i> → <i>illustrate</i>; <i>the changes that have taken place</i> → <i>how … changed</i>',['illustrate','how … changed','Nelson City','between 2000 and the present day'],'The maps illustrate how … changed between … and ….',
    'The maps illustrate how Nelson City changed between 2000 and the present day.'],
   ['Overview · câu 1',['road','stn','rail'],'Hai thay đổi lớn nhất: đường chính và ga tàu',['Overall','underwent some significant changes','the most important of which were','conversion of the main road','relocation of the train station'],'Overall, … underwent some significant changes, the most important of which were … and ….',
-   'Overall, the city underwent some significant changes, <rc>the most important of which were</rc> the conversion of the main road into a pedestrian-only zone and the relocation of the train station.'],
+   'Overall, the city underwent some significant changes, the most important of which were the conversion of the main road into a pedestrian-only zone and the relocation of the train station.',
+   'Overall, Nelson City <nz>was transformed from a traffic-dominated town into a more pedestrian-friendly and accessible centre</nz>, <vi>with public transport and leisure facilities expanding considerably</vi>.'],
   ['Overview · câu 2',[],'Ý nghĩa: trung tâm hiện đại, dễ tiếp cận hơn',['These changes','have transformed','a more modern and accessible place','residents and visitors'],'These changes have transformed … into ….',
    'These changes have transformed the centre into a more modern and accessible place for residents and visitors.'],
   ['Body 1 · câu 1',['stn','rail'],'Ga cũ ở rìa phía tây bị bỏ; ga mới ở trung tâm, cạnh University',['On the western side','train station','on the edge of the city','removed','replaced by','next to the university'],'On the western side, the …, which had stood …, was removed and replaced by …',
@@ -120,7 +122,8 @@ CC:{maps:['CC0','CC1'],cap:['10 years ago','Now'],
   [['cof','wc','off'],'Coffee bar · Toilets','→ một văn phòng','THAY THẾ','o','were replaced by']],
  ov:{big:[[['garden'],'Garden → indoor sports facilities'],[['off1','off2','off3','off4','sto2','cafe'],'Khu café mở rộng']],
   opts:['Nhà ở tăng → đông dân hơn','Hoạt động trong nhà và giao lưu','Nhà máy → công nghiệp hoá'],pick:1,
-  note:'Ghi chú cho Overview: <b>indoor sports</b> + <b>bigger café</b> → <b>indoor recreation and social activities</b>'},
+  note:'Ghi chú cho Overview: <b>indoor sports</b> + <b>bigger café</b> → <b>indoor recreation and social activities</b>',
+  gen:{minus:['garden','off1','off2','off3','off4','sto2'],mtxt:'Văn phòng, vườn ↓',plus:['garden','cafe','wcn'],ptxt:'Giải trí, giao lưu ↑',note:'Khái quát (Band 7): trung tâm chuyển <b>từ văn phòng và không gian ngoài trời sang giải trí trong nhà và giao lưu</b>'}},
  split:{q:'Map có Entrance không?',a:'Có → <b>Cách 1 · theo lối vào</b>, đứng ở Entrance, đi từ trái sang phải',qbox:[200,440,300,180],
   b1:[['garden','car','hall','rec'],'Body 1 · phía Tây','Garden · Car park · Hall · Reception'],b2:[['sto','wcn','kit','cafe','off1','off2','off3','off4','sto2','cof','wc','off'],'Body 2 · Bắc, Đông, Đông Nam','Storage · Kitchen · Offices → Café · Coffee bar']},
  outline:[[1,['garden'],'Garden → indoor sports facilities','which had provided …'],[1,['car'],'Car park giữ nguyên','while … was retained'],[1,['hall','rec'],'Hall (100 chỗ), lối vào, lễ tân giữ nguyên','which seats …'],
@@ -128,7 +131,8 @@ CC:{maps:['CC0','CC1'],cap:['10 years ago','Now'],
  write:[['Introduction',[],'Paraphrase đề: <i>show</i> → <i>illustrate</i>; <i>ten years ago and now</i> → <i>between ten years ago and the present day</i>',['illustrate','how … changed','the community centre','between ten years ago and the present day'],'The maps illustrate how … changed between … and ….',
    'The maps illustrate how the community centre changed between ten years ago and the present day.'],
   ['Overview · câu 1',['garden','off1','off2','off3','off4','sto2','cafe'],'Hai thay đổi lớn nhất: vườn và khu café',['Overall','underwent some significant changes','the most important of which were','replacement of the garden','expansion of the cafe area'],'Overall, … underwent some significant changes, the most important of which were … and ….',
-   'Overall, the centre underwent some significant changes, <rc>the most important of which were</rc> the replacement of the garden with indoor sports facilities and the expansion of the cafe area.'],
+   'Overall, the centre underwent some significant changes, the most important of which were the replacement of the garden with indoor sports facilities and the expansion of the cafe area.',
+   'Overall, the centre <nz>shifted from office and outdoor space towards indoor leisure and socialising</nz>, <vi>with administrative areas shrinking as recreational facilities expanded</vi>.'],
   ['Overview · câu 2',[],'Ý nghĩa: chuyển sang hoạt động trong nhà và giao lưu',['These changes','have shifted … towards','indoor recreation','social activities'],'These changes have shifted … towards ….',
    'These changes have shifted the centre towards indoor recreation and social activities.'],
   ['Body 1 · câu 1',['garden','car'],'Vườn → khu thể thao trong nhà; bãi đỗ xe giữ nguyên',['On the western side','garden','provided outdoor green space','replaced by','indoor sports facilities','while','retained'],'On the western side, the …, which had …, was replaced by …, while …',
@@ -153,14 +157,14 @@ $$('.slide.prac').forEach(s=>{const d=T[s.dataset.test],k=s.dataset.kind,ki=KIND
   if(k==='read'){body=`<div class="task2">${d.task.replace(/\[\[(\w)\|([^\]]*)\]\]/g,'<span class="kw" data-k="$1">$2</span>')}</div>${mapsHTML(d)}<div class="rcards">${d.read.map(r=>`<div class="rc2"><b>${r[1]}</b><span>${r[2]}</span></div>`).join('')}</div>`}
   if(k==='analyze'){body=`${mapsHTML(d)}<div class="anbot"><div class="ancard"><span class="anhint">Bấm → để phóng to từng khu và gọi tên thay đổi.</span></div><div class="antrail"></div></div>`}
   if(k==='overview'){body=`${mapsHTML(d)}<div class="ovq"><div class="q1"><b>❓</b> Thay đổi nào <u>lớn nhất</u>?</div><div class="bigs">${d.ov.big.map((b,i)=>`<span class="bigc">${i+1}. ${b[1]}</span>`).join('')}</div>
-   <div class="q2"><b>❓</b> Những thay đổi này <u>có ý nghĩa gì</u>?</div><div class="ovopts">${d.ov.opts.map((o,i)=>`<span class="opt3${i===d.ov.pick?' ok':''}">${o}</span>`).join('')}</div><div class="ovnote">${d.ov.note}</div></div>`}
+   <div class="q2"><b>❓</b> Những thay đổi này <u>có ý nghĩa gì</u>?</div><div class="ovopts">${d.ov.opts.map((o,i)=>`<span class="opt3${i===d.ov.pick?' ok':''}">${o}</span>`).join('')}</div><div class="ovnote">${d.ov.note}</div><div class="ovnote gen b7">${d.ov.gen.note}</div></div>`}
   if(k==='split'){body=`${mapsHTML(d)}<div class="dtree"><div class="dq"><b>❓</b> ${d.split.q}</div><div class="da">${d.split.a}</div><div class="db b1"><b>${d.split.b1[1]}</b><span>${d.split.b1[2]}</span></div><div class="db b2"><b>${d.split.b2[1]}</b><span>${d.split.b2[2]}</span></div></div>`}
   if(k==='outline'){body=`<div class="out3">${mapsHTML(d,true)}<div class="outl2"><div class="obody"><h3>Body 1</h3>${d.outline.filter(o=>o[0]===1).map(o=>`<div class="ob"><span>${o[2]}</span><i class="b7">${o[3]}</i></div>`).join('')}</div><div class="obody"><h3>Body 2</h3>${d.outline.filter(o=>o[0]===2).map(o=>`<div class="ob"><span>${o[2]}</span><i class="b7">${o[3]}</i></div>`).join('')}</div></div></div>`}
   if(k==='write'){body=`<div class="wr2">${mapsHTML(d,true)}<div class="wrr"><div class="wdots">${d.write.map((w,i)=>`<span>${w[0]}</span>`).join('')}</div>
-   <div class="wcard"><div class="wpart"></div><div class="wvn"></div><div class="wkeys"></div><div class="wframe b7"></div><div class="wpen">✎ Học sinh viết câu vào vở…</div><div class="wmodel"></div></div>
+   <div class="wcard"><div class="wpart"></div><div class="wvn"></div><div class="wkeys"></div><div class="wframe b7"></div><div class="wpen">✎ Học sinh viết câu vào vở…</div><div class="wmodel"></div><div class="wmodel7 b7"></div></div>
    <div class="wessay"></div></div></div>`}
   s.innerHTML=hdr(title,k==='write'?'<div class="timer sm2" data-sec="180" data-label="Viết câu"></div>':'')+road+body;
-  s.dataset.steps={read:d.read.length,analyze:d.changes.length+1,overview:5,split:5,outline:d.outline.length+1,write:d.write.length*2}[k];
+  s.dataset.steps={read:d.read.length,analyze:d.changes.length+1,overview:6,split:5,outline:d.outline.length+1,write:d.write.length*2}[k];
   $$('svg.plan',s).forEach((v,i)=>drawPlan(v,P[d.maps[i]],{fs:k==='outline'||k==='write'?36:32}));
   s._svgs=$$('svg.plan',s);});
 
@@ -172,8 +176,9 @@ function pracStep(s,n){const d=T[s.dataset.test],k=s.dataset.kind,sv=s._svgs;cle
     if(c){hl(sv[0],c[0],c[4]);camTo(sv,c[0],90);$('.ancard',s).innerHTML=`<span class="anno">${n}/${d.changes.length}</span><div class="anname">${c[1]}</div><div class="anwhat">${c[2]}</div><div class="antype"><span class="pgtag ${c[4]}">${c[3]}</span><b>${c[5]}</b></div>`;SFX.whoosh()}
     else{camTo(sv,null);$('.ancard',s).innerHTML=n?`<div class="anname">Tổng cộng ${d.changes.length} thay đổi</div><div class="anwhat">Đã gọi tên đủ. Không bỏ sót khu nào khi viết thân bài.</div>`:'<span class="anhint">Bấm → để phóng to từng khu và gọi tên thay đổi.</span>';if(n)SFX.chime()}
     $('.antrail',s).innerHTML=d.changes.slice(0,Math.min(n,d.changes.length)).map(x=>`<span class="pgtag ${x[4]}">${x[1]}</span>`).join('')}
-  if(k==='overview'){$('.q1',s).classList.toggle('in',n>=1);$$('.bigc',s).forEach((b,i)=>b.classList.toggle('in',n>=i+2));$('.q2',s).classList.toggle('in',n>=4);$('.ovopts',s).classList.toggle('in',n>=4);$('.ovopts',s).classList.toggle('pk',n>=5);$('.ovnote',s).classList.toggle('in',n>=5);
-    const b=d.ov.big;if(n===2||n===3){sv.forEach(v=>hl(v,b[n-2][0],'o'));camTo(sv,b[n-2][0],90)}else{if(n>=4)sv.forEach(v=>{hl(v,b[0][0],'o');hl(v,b[1][0],'o')});camTo(sv,null)}
+  if(k==='overview'){$('.q1',s).classList.toggle('in',n>=1);$$('.bigc',s).forEach((b,i)=>b.classList.toggle('in',n>=i+2));$('.q2',s).classList.toggle('in',n>=4);$('.ovopts',s).classList.toggle('in',n>=4);$('.ovopts',s).classList.toggle('pk',n>=5);$('.ovnote',s).classList.toggle('in',n>=5);$('.ovnote.gen',s).classList.toggle('in',n>=6);
+    const b=d.ov.big;if(n===6){const g=d.ov.gen;camTo(sv,null);hl(sv[0],g.minus,'r');tagOn(sv[0],g.minus,g.mtxt,'r');hl(sv[1],g.plus,'g');tagOn(sv[1],g.plus,g.ptxt,'g');SFX.chime();return}
+    if(n===2||n===3){sv.forEach(v=>hl(v,b[n-2][0],'o'));camTo(sv,b[n-2][0],90)}else{if(n>=4)sv.forEach(v=>{hl(v,b[0][0],'o');hl(v,b[1][0],'o')});camTo(sv,null)}
     if(n)n>=5?SFX.chime():SFX.pop(n+1)}
   if(k==='split'){const p=d.split;$('.dq',s).classList.toggle('in',n>=1);$('.da',s).classList.toggle('in',n>=2);$('.db.b1',s).classList.toggle('in',n>=3);$('.db.b2',s).classList.toggle('in',n>=4);
     if(n===1){camTo(sv,p.qbox);sv.forEach(v=>E('rect',{x:p.qbox[0]+10,y:p.qbox[1]+10,width:p.qbox[2]-20,height:p.qbox[3]-20,rx:16,class:'hlbox o'},ovOf(v)))}
@@ -189,9 +194,9 @@ function pracStep(s,n){const d=T[s.dataset.test],k=s.dataset.kind,sv=s._svgs;cle
     $$('.wdots span',s).forEach((x,j)=>{x.classList.toggle('done',j<i||(j===i&&shown));x.classList.toggle('cur',j===i&&n>0)});
     const c=$('.wcard',s);c.classList.toggle('in',n>0);c.classList.toggle('shown',shown);
     if(w){$('.wpart',s).textContent=w[0];$('.wvn',s).innerHTML=w[2];$('.wkeys',s).innerHTML=w[3].map((x,j)=>`<span style="animation-delay:${j*.08}s">${x}</span>`).join('');
-      $('.wframe',s).innerHTML='<b>Khung câu</b> '+esc(w[4]);$('.wmodel',s).innerHTML=mk(w[5]);
+      $('.wframe',s).innerHTML='<b>Khung câu</b> '+esc(w[4]);$('.wmodel',s).innerHTML=(w[6]?'<span class="tg6">Band 6 · công thức</span> ':'')+mk(w[5]);const m7=$('.wmodel7',s);m7.innerHTML=w[6]?'<span class="tg7">Band 7 · khái quát</span> '+mk(w[6]):'';m7.classList.toggle('has',!!w[6]);
       if(w[1].length){sv.forEach(v=>hl(v,w[1],'o'));camTo(sv,w[1],90)}else camTo(sv,null);
-      if(shown){const m=$('.wmodel',s);m.animate([{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0 0 0)'}],{duration:1400,easing:'ease-out'});SFX.chime()}else SFX.pop(3)}
+      if(shown){const m=$('.wmodel',s);if(w[6])$('.wmodel7',s).animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:600,delay:1300,fill:'both'});m.animate([{clipPath:'inset(0 100% 0 0)'},{clipPath:'inset(0 0 0 0)'}],{duration:1400,easing:'ease-out'});SFX.chime()}else SFX.pop(3)}
     else camTo(sv,null);
     const done=d.write.slice(0,shown?i+1:Math.max(0,i));let html='',last='';
     done.forEach(x=>{const part=x[0].split(' ·')[0];html+=(part!==last&&last?'</p><p>':'')+mk(x[5])+' ';last=part});
@@ -367,11 +372,20 @@ STEP.sOver2=(s,n)=>{$$('.mcard',s).forEach((c,i)=>{c.classList.toggle('in',i<n);
 function rows(el,data){el.innerHTML=data.map((p,i)=>`<div class="pair"><div class="p6">${mk(p[0])}</div><button class="up b7" data-up aria-label="Nâng band">▸</button><div class="p7 b7"><p>${mk(p[1])}</p><span class="strtag">${p[2]}</span></div></div>`).join('')}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-up]');if(b){const r=b.closest('.pair');r.classList.toggle('on');r.classList.contains('on')?SFX.chime():SFX.tick();return}
   const a=e.target.closest('[data-act="pair-all"]');if(!a)return;const rs=$$('.pair',a.closest('.slide')),on=!rs.every(r=>r.classList.contains('on'));rs.forEach((r,i)=>setTimeout(()=>{r.classList.toggle('on',on);if(on)SFX.pop(2+i)},i*260))});
-rows($('#ovPairs'),[
- ['Overall, there were many changes in the campus.','Overall, the campus <cl>underwent some significant changes</cl>, <rc>the most important of which were</rc> the clearance of trees and the expansion of the classrooms.','many changes → underwent significant changes · nêu 2 thay đổi lớn bằng “of which”'],
- ['Overall, the library was removed, a car park was built <cj>and</cj> the trees were cleared.','Overall, the most striking developments were <nz>the loss of green space</nz> and <nz>the growth of teaching facilities</nz>.','Liệt kê chi tiết → gom thành xu hướng bằng danh từ'],
- ['The campus is better now, <cj>so</cj> students are happy.','These changes have modernised the campus, <vi>providing students with better facilities</vi>.','so → V-ing chỉ kết quả · better → modernised'],
- ['The campus changed a lot, <cj>but</cj> the offices stayed the same.','<ct>While the offices remained unchanged</ct>, the rest of the campus was comprehensively redeveloped.','but → While · changed a lot → comprehensively redeveloped']]);
+/* overview: Band 6 formula vs Band 7 generalisation */
+const gA=$('#genA'),gB=$('#genB'),GS=[gA,gB];drawPlan(gA,P.CAMPUS0,{fs:34});drawPlan(gB,P.CAMPUS1,{fs:34});
+STEP.sOver3=(s,n)=>{clearOv(gA,gB);$('.gq',s).classList.toggle('in',n>=2);$('.g7',s).classList.toggle('in',n>=3);$('.gways',s).classList.toggle('in',n>=4);
+  $('.g6',s).classList.toggle('dimc',n>=3);
+  if(n===1){GS.forEach(v=>hl(v,['ne','it','ne2','cls'],'o'));camTo(GS,['ne','it','ne2','cls'],40)}
+  else if(n>=2){camTo(GS,null);hl(gA,['ne','garden'],'r');tagOn(gA,['ne','garden'],'Cây xanh, vườn ↓','r');hl(gB,['ne','it','garden','lib','cls'],'g');tagOn(gB,['ne','it','garden','lib','cls'],'Công trình, tiện ích ↑','g')}
+  else camTo(GS,null);
+  if(n)n===3?SFX.chime():SFX.pop(n+1)};
+
+/* two kinds of description */
+const twA=$('#twoA'),twB=$('#twoB');drawPlan(twA,P.CAMPUS1,{fs:34});drawPlan(twB,P.CAMPUS1,{fs:34});
+STEP.sTwo=(s,n)=>{$$('.tk',s).forEach((t,i)=>t.classList.toggle('in',n>i));$('.r1',s).classList.toggle('in',n>=3);$('.r2',s).classList.toggle('in',n>=4);$('.bt',s).classList.toggle('in',n>=3);
+  clearOv(twA,twB);if(n>=1){hl(twA,['cls'],'b');cam(twA,fit(union([twA],['cls']),60))}else cam(twA,null);
+  if(n>=2){hl(twB,['lib','ne','it'],'o');cam(twB,fit(union([twB],['lib','ne']),40))}else cam(twB,null);if(n)SFX.pop(n+1)};
 
 /* ---------- vocabulary ---------- */
 const VOC=[[['was built / constructed','được xây dựng'],['was added','được thêm vào'],['was developed into','được phát triển thành'],['was demolished','bị phá bỏ'],['was removed','bị dỡ bỏ'],['was cleared','bị chặt / dọn sạch'],['was replaced by','được thay bằng'],['gave way to','nhường chỗ cho'],['was converted into','được chuyển đổi thành'],['was extended','được mở rộng'],['was widened','được nới rộng'],['was reduced in size','bị thu nhỏ'],['was relocated to','được dời tới'],['was shifted from … to …','được chuyển từ … sang …'],['remained the same','giữ nguyên'],['was retained','được giữ lại'],['was renovated','được cải tạo'],['underwent redevelopment','được tái phát triển']],
@@ -382,41 +396,49 @@ voc(0);$$('[data-voc]').forEach(b=>b.onclick=()=>{voc(+b.dataset.voc);SFX.whoosh
 $('#vocGrid').addEventListener('click',e=>{const f=e.target.closest('.flip');if(!f)return;f.classList.toggle('on');SFX.tick()});
 
 /* ---------- 15 band-6 structures, 3 per page, each with its Band 7 upgrade ---------- */
-const S15=[['The construction of … marked a significant change in …','The construction of a basketball court marked a significant change in the southern area.','The construction of a basketball court, <rc>which replaced an unused lawn</rc>, marked a significant change in the southern area.','Mệnh đề quan hệ'],
- ['… was converted into …','The sports facility was converted into administrative offices.','<cp>While</cp> the sports facility was converted into administrative offices, the library remained unchanged.','Câu ghép while'],
- ['The … was relocated to …','The sports facility was relocated to the south-west of the university.','<vi>Having been located in the north</vi>, the sports facility was relocated to the south-west of the university.','Having + V3'],
- ['The most noticeable change in the map of … is …','The most noticeable change in the map of Hanoi University is the removal of the sports facility.','<cl>It was the removal of the sports facility that</cl> marked the most noticeable change at Hanoi University.','Câu nhấn mạnh'],
- ['The old … was demolished to make way for …','The old canteen was demolished to make way for new administrative offices.','The old canteen, <rc>which had stood next to the main gate</rc>, was demolished to make way for new administrative offices.','Mệnh đề quan hệ'],
- ['… underwent a substantial redevelopment.','The southern campus underwent a substantial redevelopment.','<cp>Not only did</cp> the southern campus undergo a substantial redevelopment, <cp>but</cp> its road network <cp>was also</cp> extended.','Not only … but also'],
- ['The area of … was expanded to include …','The area of the sports facility was expanded to include administrative spaces.','The sports facility was expanded to include administrative spaces, <vi>almost doubling in size</vi>.','V-ing kết quả'],
- ['There was an addition of … in …','There was an addition of a microwave in the kitchen area.','A microwave was added to the kitchen area, <vi>with a dining table being placed beside it</vi>.','with + V-ing'],
- ['The … was replaced by …','The sports facility was replaced by administrative offices.','<ct>In contrast to the library, which remained intact</ct>, the sports facility was replaced by administrative offices.','In contrast to …'],
- ['The layout of … was significantly altered.','The layout of the southern campus was significantly altered.','<ct>Although the northern campus remained largely unchanged</ct>, the layout of the southern campus was significantly altered.','Although …'],
- ['… was newly constructed / built.','A bathroom was newly constructed.','A bathroom was newly constructed, <vi>replacing the storage cupboard that had occupied the corner</vi>.','V-ing replacing'],
- ['… has been transformed from … into …','The building has been transformed from a library into a cafe.','The building, <rc>which once housed a library</rc>, has been transformed into a cafe.','Mệnh đề quan hệ'],
- ['… was developed into …','The house was developed into multi-storey apartments.','The house was developed into multi-storey apartments, <vi>suggesting a growing need for housing</vi>.','V-ing suggesting'],
- ['The … was renovated / overhauled.','The bathroom was renovated.','The bathroom was renovated, <cp>while</cp> the bedrooms remained unchanged.','Câu ghép while'],
- ['… was shifted from … to …','The round-shaped table was shifted from the top to the bottom.','The round-shaped table was shifted from the top to the bottom, <vi>freeing up space for a sofa</vi>.','V-ing kết quả']];
+const S15=[['The construction of … marked a significant change in …','The construction of a basketball court marked a significant change in the southern area.','<cl>It was</cl> the construction of a basketball court <cl>that</cl> marked a significant change in the southern area.','Câu nhấn mạnh It was … that'],
+ ['… was converted into …','The sports facility was converted into administrative offices.','<vi>Having served as a sports facility</vi>, the building was converted into administrative offices.','Cụm phân từ Having + V3'],
+ ['The … was relocated to …','The sports facility was relocated to the south-west of the university.','<cl>Relocated to the south-west of the university was</cl> the sports facility.','Đảo ngữ (V3 lên đầu)'],
+ ['The most noticeable change in the map of … is …','The most noticeable change in the map of Hanoi University is the removal of the sports facility.','<cl>What</cl> stands out most in the map of Hanoi University <cl>is</cl> the removal of the sports facility.','Câu nhấn mạnh What … is'],
+ ['The old … was demolished to make way for …','The old canteen was demolished to make way for new administrative offices.','The old canteen, <rc>which had stood by the main gate</rc>, was demolished to make way for new administrative offices.','Mệnh đề quan hệ'],
+ ['… underwent a substantial redevelopment.','The southern campus underwent a substantial redevelopment.','The southern campus underwent <cl>such</cl> a substantial redevelopment <cl>that it is now barely recognisable</cl>.','such … that'],
+ ['The area of … was expanded to include …','The area of the sports facility was expanded to include administrative spaces.','The area of the sports facility was expanded to include administrative spaces, <vi>almost doubling in size</vi>.','Cụm V-ing chỉ kết quả'],
+ ['There was an addition of … in …','There was an addition of a microwave in the kitchen area.','<cl>Added to the kitchen area was</cl> a microwave.','Đảo ngữ (V3 lên đầu)'],
+ ['The … was replaced by …','The sports facility was replaced by administrative offices.','The sports facility was replaced by administrative offices, <rc>which now occupy the whole site</rc>.','Mệnh đề quan hệ'],
+ ['The layout of … was significantly altered.','The layout of the southern campus was significantly altered.','<cl>Only in the southern campus was</cl> the layout significantly altered.','Đảo ngữ Only in …'],
+ ['… was newly constructed / built.','A bathroom was newly constructed.','A bathroom was newly constructed, <vi>occupying the former storage corner</vi>.','Cụm V-ing'],
+ ['… has been transformed from … into …','The building has been transformed from a library into a cafe.','<cl>What used to be</cl> a library <cl>has been</cl> transformed into a cafe.','Câu nhấn mạnh What used to be'],
+ ['… was developed into …','The house was developed into multi-storey apartments.','<cl>Gone is the house; in its place stand</cl> multi-storey apartments.','Đảo ngữ Gone is …'],
+ ['The … was renovated / overhauled.','The bathroom was renovated.','The bathroom was <cl>so</cl> thoroughly renovated <cl>that it now looks completely new</cl>.','so … that'],
+ ['… was shifted from … to …','The round-shaped table was shifted from the top to the bottom.','The round-shaped table was shifted from the top to the bottom, <vi>freeing up space near the door</vi>.','Cụm V-ing chỉ kết quả']];
 STEP.s15=(s,n)=>{const pg=S15.slice(n*3,n*3+3);$('#pg15').textContent=`${n*3+1}–${n*3+3} / 15`;
-  $('#t15').innerHTML=pg.map((x,i)=>`<tr style="animation-delay:${i*.12}s"><td class="n">${n*3+i+1}</td><td class="fm">${esc(x[0])}</td><td class="eg">${x[1]}</td><td class="up7 b7"><button class="b sm" data-t15>▸ Nâng Band 7</button><div class="u7"><p>${mk(x[2])}</p><span class="strtag">${x[3]}</span></div></td></tr>`).join('');if(n)SFX.whoosh()};
+  $('#t15').innerHTML=pg.map((x,i)=>`<tr style="animation-delay:${i*.12}s"><td class="n">${n*3+i+1}</td><td class="fm">${esc(x[0])}</td><td class="eg">${x[1]}</td><td class="up7 b7"><button class="b sm" data-t15>▸ Band 7</button><div class="u7"><p>${mk(x[2])}</p><span class="strtag">${x[3]}</span></div></td></tr>`).join('');if(n)SFX.whoosh()};
 document.addEventListener('click',e=>{const b=e.target.closest('[data-t15]');if(b){const td=b.closest('td');td.classList.toggle('on');td.classList.contains('on')?SFX.chime():SFX.tick();return}
   if(e.target.closest('[data-act="t15-all"]')){const all=$$('#t15 td.up7'),on=!all.every(t=>t.classList.contains('on'));all.forEach((t,i)=>setTimeout(()=>{t.classList.toggle('on',on);if(on)SFX.pop(3+i)},i*250))}});
 
 /* ---------- band 6 vs band 7 pairs ---------- */
-rows($('#pairs'),[['The library was removed, <cj>and</cj> a car park was built.','The library, <rc>which had stood by the entrance</rc>, was removed, <vi>making way for a car park</vi>.','and → mệnh đề quan hệ + V-ing'],
- ['The trees were cleared, <cj>and</cj> a library was built there.','The trees were cleared, <vi>with a library being built in their place</vi>.','and → with + V-ing'],
- ['The farmland became housing, <cj>and</cj> the factory was demolished.','The farmland was converted into housing, <cp>while the factory to the south was demolished</cp>.','and → while'],
- ['The garden was replaced, <cj>but</cj> the offices stayed the same.','<ct>Although the garden was replaced by sports facilities</ct>, the offices remained unchanged.','but → Although'],
- ['Many places changed, <cj>but</cj> the north changed the most.','<cl>It was the northern section that</cl> underwent the most dramatic change.','but … the most → It was … that']]);
+rows($('#pairs'),[['The library was removed, <cj>and</cj> a car park was built.','The library was removed, <vi>making way for</vi> a car park.','and → making way for'],
+ ['The trees were cleared, <cj>and</cj> a library was built there.','The trees were cleared, <vi>with</vi> a library <vi>being built</vi> there.','and → with + V-ing'],
+ ['The garden was replaced, <cj>but</cj> the offices stayed the same.','<ct>While</ct> the garden was replaced, the offices stayed the same.','but → While'],
+ ['The canteen was demolished, <cj>and</cj> the old shop was demolished too.','The canteen was demolished, <rc>as was</rc> the old shop.','and … too → as was'],
+ ['The trees were cleared, <cj>so</cj> the campus became less green.','The trees were cleared, <vi>leaving</vi> the campus less green.','so → V-ing kết quả'],
+ ['The farmland became housing, <cj>and</cj> the factory became a park.','<cp>Not only</cp> did the farmland become housing, <cp>but</cp> the factory <cp>also</cp> became a park.','and → Not only … but also']]);
+
+/* and / but / so → ? */
+const JOIN=[['and','thêm một thay đổi',[['making way for / to make room for','The library was removed, <vi>making way for</vi> a car park.'],['with + N + V-ing','The trees were cleared, <vi>with</vi> a library <vi>being built</vi>.'],['as was / as were','The canteen was demolished, <rc>as was</rc> the shop.'],['Not only … but also','<cp>Not only</cp> was the forest cleared, <cp>but</cp> the river was <cp>also</cp> developed.']]],
+ ['but','tương phản: đổi / không đổi',[['While / Whereas','<ct>While</ct> the garden was replaced, the offices stayed the same.'],['Although','<ct>Although</ct> the port remained unchanged, bars were added.'],['In contrast to …, which …','<ct>In contrast to</ct> the offices, <rc>which</rc> stayed the same, the canteen was converted.']]],
+ ['so','kết quả',[['…, V-ing (leaving / resulting in)','The trees were cleared, <vi>resulting in</vi> a loss of green space.'],['…, which …','The road was widened, <rc>which</rc> improved traffic flow.']]]];
+$('#join3').innerHTML=JOIN.map(j=>`<div class="jcol"><div class="jh"><span class="hs cj">${j[0]}</span><i>${j[1]}</i></div>${j[2].map(x=>`<div class="jr"><b class="b7">${x[0]}</b><span class="b7">${mk(x[1])}</span></div>`).join('')}</div>`).join('');
+STEP.sJoin=(s,n)=>{$$('.jcol',s).forEach((c,i)=>{c.classList.toggle('in',i<n);c.classList.toggle('cur',i===n-1)});if(n)SFX.pop(n+1)};
 
 /* ---------- each change on the map (zoom) ---------- */
 const omA=$('#omA'),omB=$('#omB'),OM2=[omA,omB];drawPlan(omA,P.CAMPUS0,{fs:32});drawPlan(omB,P.CAMPUS1,{fs:32});
-const OM=[['Library → Car park',['lib'],'The library was demolished, <cj>and</cj> a car park was built.','The library, <rc>which had stood next to the entrance</rc>, was demolished, <vi>making way for a car park</vi>.','and → mệnh đề quan hệ + V-ing'],
- ['Cây → Library, IT centre',['ne','it','ne2'],'The trees were cut down, <cj>and</cj> a library and an IT centre were built.','Most of the trees in the north-east were cleared, <vi>with a new library and an IT centre being built in their place</vi>.','and → with + V-ing'],
- ['Library dời đi',['lib','ne'],'The library was near the entrance, <cj>but</cj> now it is in the north-east.','<vi>Having stood by the entrance in 2000</vi>, the library was relocated to the north-eastern corner.','but now → Having + V3'],
- ['Classrooms mở rộng',['cls'],'The classrooms were extended, <cj>so</cj> they are bigger now.','The classrooms in the north-west were extended southwards, <vi>almost doubling in size</vi>.','so → V-ing kết quả'],
- ['Garden → Sports',['garden'],'The garden was removed, <cj>and</cj> sports facilities were built.','<cl>Gone is the garden that had once occupied the north of the campus; in its place stand</cl> new sports facilities.','and → câu đảo Gone is …'],
- ['Canteen · Offices',['canteen','offices'],'The canteen was converted into administrative offices, <cj>but</cj> the offices stayed the same.','<ct>In contrast to the offices in the south-west, which remained unchanged</ct>, the canteen was converted into administrative offices.','but → In contrast to …']];
+const OM=[['Library → Car park',['lib'],'The library near the entrance was demolished to make way for a car park.','The library, <rc>which had stood next to the entrance</rc>, was demolished to make way for a car park.','Mệnh đề quan hệ'],
+ ['Cây bị chặt',['ne','it','ne2'],'The trees in the north-east were cleared.','<cl>So extensively were</cl> the trees in the north-east cleared <cl>that only a narrow strip remains</cl>.','Đảo ngữ So … that'],
+ ['Library dời đi',['lib','ne'],'The library was relocated to the north-east.','<vi>Having stood by the entrance in 2000</vi>, the library was relocated to the north-east.','Cụm phân từ Having + V3'],
+ ['Classrooms mở rộng',['cls'],'The classrooms were extended.','The classrooms were extended southwards, <vi>almost doubling in size</vi>.','Cụm V-ing chỉ kết quả'],
+ ['Garden → Sports',['garden'],'The garden was replaced by sports facilities.','<cl>Gone is the garden; in its place stand</cl> sports facilities.','Đảo ngữ Gone is …'],
+ ['Canteen → Admin',['canteen'],'The canteen was converted into administrative offices.','<cl>What used to be</cl> the canteen <cl>has been</cl> converted into administrative offices.','Câu nhấn mạnh What used to be']];
 $('#omBtns').innerHTML=OM.map((o,i)=>`<button data-om="${i}">${o[0]}</button>`).join('');
 $('#omBtns').addEventListener('click',e=>{const b=e.target.closest('[data-om]');if(!b)return;const o=OM[+b.dataset.om];$$('#omBtns button').forEach(x=>x.classList.toggle('on',x===b));
   clearOv(omA,omB);hl(omA,o[1],'o');hl(omB,o[1],'o');camTo(OM2,o[1],90);
@@ -425,43 +447,40 @@ $('#omBtns').addEventListener('click',e=>{const b=e.target.closest('[data-om]');
   SFX.whoosh();setTimeout(()=>{if(!hide7())SFX.ding()},500)});
 
 /* ---------- band 7 groups ---------- */
-const B7=[['rc','Mệnh đề quan hệ',[['[X], which had previously been [Y], was [change] by [year].','The northern field, <rc>which had previously been used for agriculture</rc>, was converted into a housing estate by the present day.'],
-   ['[location], whose [feature], was [change] to accommodate [Y].','The main road, <rc>whose narrow width had limited traffic flow</rc>, was widened to accommodate more vehicles.'],
-   ['[X] was [change], as were [Y].','The warehouse on the eastern side was replaced by housing, <rc>as were the two smaller buildings nearby</rc>.']]],
- ['vi','Cụm V-ing',[['Having been [change], [X] was [further development] by [year].','<vi>Having been largely undeveloped in 1985</vi>, the western area was transformed into a dense residential zone.'],
-   ['Situated [location], [X] was [change], with [Y] being [change].','<vi>Situated to the south of the town centre</vi>, the industrial zone was significantly expanded, <vi>with two new factory units being added</vi>.'],
-   ['[X] was [change], replacing the [feature] that had occupied the site.','A multi-storey car park was built, <vi>replacing the open wasteland that had previously stood to the east</vi>.']]],
- ['cp','Câu ghép',[['Not only was [X] [change 1], but [Y] was also [change 2], resulting in [effect].','<cp>Not only was</cp> the forest to the west cleared, <cp>but</cp> the riverbank <cp>was also</cp> developed, <vi>resulting in the near-total loss of green space</vi>.'],
-   ['[X] was [change 1]; [Y], by contrast, [change 2].','The northern section was heavily developed; the southern area, <cp>by contrast</cp>, saw minimal change.'],
-   ['While [X] was [change 1], [Y] underwent [change 2], suggesting [pattern].','<cp>While</cp> the eastern farmland was converted into housing, the town centre underwent commercial expansion, <vi>suggesting a planned pattern of urban growth</vi>.']]],
- ['ct','Tương phản',[['Although [X] remained unchanged, the surrounding area [change].','<ct>Although the church in the town square remained unchanged</ct>, the surrounding area was comprehensively redeveloped.'],
-   ['Despite [noun phrase], [X] was [change], indicating [interpretation].','<ct>Despite its central location</ct>, the original market building was demolished, <vi>indicating a shift in economic priorities</vi>.'],
-   ['In contrast to [X], which [remained], [Y] was [changed].','<ct>In contrast to the southern streets, which remained intact</ct>, the northern farmland was entirely replaced by a commercial estate.']]],
- ['cl','Câu đảo / nhấn mạnh',[['It was [X] that underwent the most dramatic change.','<cl>It was the northern section of the town that</cl> underwent the most dramatic change.'],
-   ['Only by [time] was [X] [change].','<cl>Only by the present day was</cl> the full extent of the redevelopment apparent.'],
-   ['Gone were [X]; in their place stood [Y].','<cl>Gone were</cl> the open fields that had once defined the landscape; <cl>in their place stood</cl> a sprawling industrial estate.']]]];
+const B7=[['rc','Mệnh đề quan hệ',[['[X], which had stood …, was [change].','The library, <rc>which had stood by the entrance</rc>, was demolished.','đơn'],
+   ['[location], whose [feature], was [change].','The main road, <rc>whose narrow width had limited traffic</rc>, was widened.','đơn'],
+   ['[X] was [change], as were [Y].','The warehouse was replaced by housing, <rc>as were the two smaller buildings nearby</rc>.','kết hợp']]],
+ ['vi','Cụm phân từ',[['Having been [state], [X] was [change].','<vi>Having been largely undeveloped in 1985</vi>, the western area was transformed into housing.','đơn'],
+   ['Situated [location], [X] was [change].','<vi>Situated to the south of the centre</vi>, the industrial zone was expanded.','đơn'],
+   ['[X] was [change], with [Y] being [change].','The zone was expanded, <vi>with two factory units being added</vi>.','kết hợp']]],
+ ['cl','Câu nhấn mạnh',[['It was [X] that [change].','<cl>It was the northern section that</cl> underwent the most dramatic change.','đơn'],
+   ['What used to be [X] has been [change].','<cl>What used to be</cl> a library <cl>has been</cl> turned into a cafe.','đơn']]],
+ ['ct','Đảo ngữ',[['Gone is / are [X]; in its place stands [Y].','<cl>Gone are</cl> the open fields; <cl>in their place stands</cl> an industrial estate.','đơn'],
+   ['Only in / by [place / time] was [X] [change].','<cl>Only by the present day was</cl> the redevelopment complete.','đơn'],
+   ['So [adv] was [X] [V3] that …','<cl>So extensively was</cl> the forest <cl>cleared that</cl> little green space remains.','đơn'],
+   ['Not only was [X] [change], but [Y] was also [change].','<cp>Not only was</cp> the forest cleared, <cp>but</cp> the riverbank was <cp>also</cp> developed.','kết hợp']]]];
 $('#b7Tabs').innerHTML=B7.map((g,i)=>`<button data-b7="${i}" class="hs ${g[0]}">${i+1} · ${g[1]}</button>`).join('');
 function b7(i){$$('#b7Tabs button').forEach((b,j)=>b.classList.toggle('on',j===i));
-  $('#b7List').innerHTML=B7[i][2].map((x,j)=>`<div class="b7row" style="animation-delay:${j*.15}s"><div class="fm">${esc(x[0])}</div><button class="b sm" data-eg>Ví dụ</button><div class="eg">${mk(x[1])}</div></div>`).join('');SFX.whoosh()}
+  $('#b7List').innerHTML=B7[i][2].map((x,j)=>`<div class="b7row" style="animation-delay:${j*.15}s"><div class="fm">${esc(x[0])} <span class="use ${x[2]==='đơn'?'u1':'u2'}">mô tả ${x[2]}</span></div><button class="b sm" data-eg>Ví dụ</button><div class="eg">${mk(x[1])}</div></div>`).join('');SFX.whoosh()}
 $('#b7Tabs').addEventListener('click',e=>{const b=e.target.closest('[data-b7]');if(b)b7(+b.dataset.b7)});
 $('#b7List').addEventListener('click',e=>{const b=e.target.closest('[data-eg]');if(!b)return;b.parentNode.classList.toggle('on');SFX.ding()});
 b7(0);
 
 /* ---------- applying: one paragraph ---------- */
-const AP6=[['The library by the entrance was demolished, <cj>and</cj> a car park was built there.','Thay thế → mệnh đề quan hệ + V-ing'],['The trees in the north-east were cleared, <cj>and</cj> a new library and an IT centre were built.','Kéo theo nhau → with + V-ing'],['The offices did not change.','Không đổi → giữ một câu đơn'],['The north-east changed the most.','Lớn nhất → It was … that']];
+const AP6=[['The library by the entrance was demolished, <cj>and</cj> a car park was built there.','and → making way for'],['The trees in the north-east were cleared, <cj>and</cj> a new library and an IT centre were built.','and → with + V-ing'],['The offices did not change.','giữ nguyên câu đơn'],['The north-east changed the most.','→ It was … that']];
 $('#ap6').innerHTML=AP6.map(x=>`<span class="ap6line"><span class="s6">${mk(x[0])}</span> <span class="sug">${x[1]}</span></span>`).join('');
-$('#ap7').innerHTML=mk('<cl>It was the north-eastern corner that</cl> underwent the most dramatic change: most of the trees there were cleared, <vi>with a new library and an IT centre being built in their place</vi>. Near the entrance, the old library, <rc>which had stood beside the main path</rc>, was demolished to make way for a car park. <span class="simple">The offices in the south-west remained unchanged.</span>')+'<span class="count"><span class="hs cl">Nhấn mạnh ×1</span><span class="hs vi">V-ing ×1</span><span class="hs rc">Mệnh đề quan hệ ×1</span><span class="simple">Câu đơn ×1</span></span>';
+$('#ap7').innerHTML=mk('The library by the entrance was demolished, <vi>making way for</vi> a car park. The trees in the north-east were cleared, <vi>with</vi> a new library and an IT centre <vi>being built</vi>. <span class="simple">The offices did not change.</span> <cl>It was the north-east that</cl> changed the most.')+'<span class="count"><span class="hs vi">V-ing ×2</span><span class="hs cl">Nhấn mạnh ×1</span><span class="simple">Câu đơn giữ nguyên</span></span>';
 STEP.sApply=(s,n)=>{$$('#apSteps li').forEach((li,i)=>{li.classList.toggle('done',i<n-1);li.classList.toggle('cur',i===n-1)});
-  s.classList.toggle('u',n>=1);s.classList.toggle('sg',n>=2);$('.a7',s).classList.toggle('in',n>=3);s.classList.toggle('chk',n>=4);
+  s.classList.toggle('u',n>=1);$$('.hs.cj',s).forEach(c=>c.classList.toggle('flag',n>=1));s.classList.toggle('sg',n>=2);$('.a7',s).classList.toggle('in',n>=3);s.classList.toggle('chk',n>=4);
   if(n)n===3?SFX.chime():n===4?SFX.ding():SFX.pop(n+1)};
 
 /* ---------- activity ---------- */
-const ACT=[['The northern field was used for agriculture, <cj>but</cj> it was converted into a housing estate.','The northern field, <rc>which had previously been used for agriculture</rc>, was converted into a housing estate.'],
- ['A multi-storey car park was built, <cj>and</cj> it replaced the open wasteland to the east.','A multi-storey car park was built, <vi>replacing the open wasteland that had previously stood to the east</vi>.'],
- ['The forest to the west was cleared, <cj>and</cj> the riverbank was developed.','<cp>Not only was</cp> the forest to the west cleared, <cp>but</cp> the riverbank <cp>was also</cp> developed.'],
- ['The church remained unchanged, <cj>but</cj> the area around it was redeveloped.','<ct>Although the church remained unchanged</ct>, the surrounding area was comprehensively redeveloped.'],
- ['The market building was in the centre, <cj>but</cj> it was demolished.','<ct>Despite its central location</ct>, the original market building was demolished.'],
- ['The open fields disappeared, <cj>so</cj> an industrial estate was built there.','<cl>Gone were</cl> the open fields; <cl>in their place stood</cl> a sprawling industrial estate.']];
+const ACT=[['The northern field was used for agriculture, <cj>but</cj> it was converted into a housing estate.','The northern field, <rc>which</rc> was used for agriculture, was converted into a housing estate.'],
+ ['A car park was built, <cj>and</cj> it replaced the wasteland to the east.','A car park was built, <vi>replacing</vi> the wasteland to the east.'],
+ ['The forest was cleared, <cj>and</cj> the riverbank was developed.','<cp>Not only</cp> was the forest cleared, <cp>but</cp> the riverbank was <cp>also</cp> developed.'],
+ ['The church remained unchanged, <cj>but</cj> the area around it was redeveloped.','<ct>Although</ct> the church remained unchanged, the area around it was redeveloped.'],
+ ['The school was demolished, <cj>and</cj> the hospital was demolished too.','The school was demolished, <rc>as was</rc> the hospital.'],
+ ['The fields disappeared, <cj>so</cj> an industrial estate was built.','The fields disappeared <vi>to make room for</vi> an industrial estate.']];
 $('#acts').innerHTML=ACT.map((a,i)=>`<div class="act"><b class="n">${i+1}</b><div class="a6">${mk(a[0])}</div><button class="b sm b7" data-ans>Đáp án</button><div class="a7 b7">${mk(a[1])}</div></div>`).join('');
 $('#acts').addEventListener('click',e=>{const b=e.target.closest('[data-ans]');if(!b)return;const r=b.closest('.act');r.classList.toggle('on');b.classList.toggle('on');if(r.classList.contains('on'))SFX.chime()});
 
@@ -470,13 +489,13 @@ const ESS={NELSON:{b6:['On the western side, the train station was removed, <cj>
   'On the eastern side, a new covered market was built. The trees beside the university were cleared, <cj>so</cj> a large shopping centre was built there. The road along the southern edge was converted into a pedestrian-only zone, <cj>and</cj> a bike rental scheme was added in the city centre. The port remained unchanged, <cj>but</cj> restaurants and a bar and club area were added nearby.']},
  CC:{b6:['On the western side, the garden was replaced by indoor sports facilities, <cj>but</cj> the car park remained the same. The hall seats 100 people, <cj>and</cj> it remained unchanged. The entrance and reception area stayed in the same position.',
   'In the north, the storage room was reduced in size, <cj>and</cj> toilets were added beside it. The four offices and the storage room were removed, <cj>and</cj> a large cafe area was built. The kitchen remained in place. In the south-east, the coffee bar and toilets were replaced by an office.']}};
-Object.keys(ESS).forEach(k=>{const w=T[k].write.map(x=>x[5]);ESS[k].intro=w[0];ESS[k].ov=w[1]+' '+w[2];ESS[k].b7=[w[3]+' '+w[4],w.slice(5).join(' ')]});
+Object.keys(ESS).forEach(k=>{const W=T[k].write,w=W.map(x=>x[5]);ESS[k].intro=w[0];ESS[k].ov6=w[1]+' '+w[2];ESS[k].ov7=W[1][6]+' '+w[2];ESS[k].b7=[w[3]+' '+w[4],w.slice(5).join(' ')]});
 const words=h=>h.replace(/<[^>]+>/g,'').split(/\s+/).filter(Boolean).length;
-function essayVer(s,v){const d=ESS[s.dataset.essay];const body=v===7?d.b7:d.b6;const all=[d.intro,d.ov,...body];
+function essayVer(s,v){const d=ESS[s.dataset.essay];const body=v===7?d.b7:d.b6;const all=[d.intro,v===7?d.ov7:d.ov6,...body];
   $('.model',s).innerHTML=all.map((p,i)=>`<p class="${i>1?'body':''}">${mk(p)}</p>`).join('')+`<span class="wc">${all.reduce((a,p)=>a+words(p),0)} từ</span>`;
   $$('[data-ev]',s).forEach(b=>b.classList.toggle('on',+b.dataset.ev===v));s.dataset.v=v;
-  $$('.model .body',s).forEach((p,i)=>p.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:400,delay:i*150,fill:'both'}))}
-$$('.essayslide').forEach(s=>{essayVer(s,7);$('.legend7',s).innerHTML=Object.entries(ST).map(([k,v])=>`<span class="hs ${k}">${v}</span>`).join('')+'<span class="hs cj">and / but / so (Band 6)</span><p class="sub">Bấm “Thân bài Band 6” để so sánh cùng nội dung nối bằng and / but / so.</p>';
+  $$('.model p:not(:first-child)',s).forEach((p,i)=>p.animate([{opacity:0,transform:'translateY(10px)'},{opacity:1,transform:'none'}],{duration:400,delay:i*150,fill:'both'}))}
+$$('.essayslide').forEach(s=>{essayVer(s,7);$('.legend7',s).innerHTML=Object.entries(ST).map(([k,v])=>`<span class="hs ${k}">${v}</span>`).join('')+'<span class="hs cj">and / but / so (Band 6)</span><p class="sub">Bấm “Bài Band 6”: Overview theo công thức, thân bài nối bằng and / but / so.</p>';
   s.addEventListener('click',e=>{const b=e.target.closest('[data-ev]');if(b){essayVer(s,+b.dataset.ev);SFX.whoosh();return}
     if(e.target.closest('[data-act="hl"]')){s.classList.toggle('hlon');e.target.closest('button').classList.toggle('on');SFX.ding()}})});
 

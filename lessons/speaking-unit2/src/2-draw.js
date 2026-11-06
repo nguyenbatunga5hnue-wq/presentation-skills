@@ -51,22 +51,24 @@ function face(c,x,y,mood,look){const ex=look||0,ink='#16213A';let e='',m='',x2='
   default:e=`<circle cx="${L}" cy="${ey}" r="2.8" fill="${ink}"/><circle cx="${Rr}" cy="${ey}" r="2.8" fill="${ink}"/>`;m=`<path d="M${x-6+ex} ${my-1}q6 5 12 0" stroke="${ink}" stroke-width="2.6" fill="none" stroke-linecap="round"/>`}
   const blush=['happy','grin','excited','love'].includes(mood)?`<ellipse cx="${x-17}" cy="${y-112}" rx="5" ry="3" fill="#F29A9A" opacity=".6"/><ellipse cx="${x+17}" cy="${y-112}" rx="5" ry="3" fill="#F29A9A" opacity=".6"/>`:'';
   const gl=c.glasses?`<g fill="none" stroke="${ink}" stroke-width="2"><circle cx="${L}" cy="${ey}" r="7.5"/><circle cx="${Rr}" cy="${ey}" r="7.5"/><path d="M${L+7.5} ${ey}h${Rr-L-15}"/></g>`:'';
-  return blush+e+gl+m+x2}
-function char(o){const c=Object.assign({},CAST[o.c]||{}),x=o.x,y=o.y||270,s=(o.s||1)*(c.s||1),pose=ARMS[o.pose||'idle'],ink='#16213A';
+  return{blush,e,gl,m,x2}}
+function char(o){const c=Object.assign({},CAST[o.c]||{}),x=o.x,y=o.y||270,s=(o.s||1)*(c.s||1),pn=o.pose||'idle',pose=ARMS[pn],ink='#16213A',mood=o.mood||'neutral';
   const arm=([ex,ey,hx,hy],side)=>`<path d="M${x+side*20} ${y-86}Q${x+ex} ${y+ey} ${x+hx} ${y+hy}" stroke="${c.coat?'#E9EDF3':c.shirt}" stroke-width="10" fill="none" stroke-linecap="round"/><circle cx="${x+hx}" cy="${y+hy}" r="5.5" fill="${c.skin}"/>`;
-  let g=`<ellipse cx="${x}" cy="${y+2}" rx="26" ry="5" fill="#000" opacity=".12"/>`;
-  g+=`<rect x="${x-14}" y="${y-36}" width="11" height="36" rx="5" fill="${c.pants}"/><rect x="${x+3}" y="${y-36}" width="11" height="36" rx="5" fill="${c.pants}"/>`;
-  g+=`<ellipse cx="${x-9}" cy="${y-1}" rx="9" ry="4.5" fill="${ink}"/><ellipse cx="${x+9}" cy="${y-1}" rx="9" ry="4.5" fill="${ink}"/>`;
-  g+=`<path d="M${x-21} ${y-92}Q${x} ${y-98} ${x+21} ${y-92}L${x+19} ${y-30}Q${x} ${y-26} ${x-19} ${y-30}Z" fill="${c.shirt}" stroke="${c.coat?'#C9D1DC':'none'}" stroke-width="1.5"/>`;
-  if(c.coat)g+=`<path d="M${x} ${y-94}V${y-30}" stroke="#C9D1DC" stroke-width="1.5"/><rect x="${x+6}" y="${y-80}" width="9" height="6" rx="1" fill="#3E6FD8"/>`;
-  g+=hairBack(c,x,y);
-  g+=`<rect x="${x-6}" y="${y-100}" width="12" height="10" fill="${c.skin}"/><circle cx="${x-27}" cy="${y-118}" r="5" fill="${c.skin}"/><circle cx="${x+27}" cy="${y-118}" r="5" fill="${c.skin}"/><circle cx="${x}" cy="${y-120}" r="27" fill="${c.skin}"/>`;
-  g+=face(c,x,y,o.mood||'neutral',o.look);g+=hairFront(c,x,y);
-  g+=arm(pose[0],-1)+arm(pose[1],1);
-  if(o.hold)g+=prop(o.hold,x+(o.pose==='phone'?14:0),y+(o.pose==='phone'?-98:-66),.8);
+  const O=(px,py)=>`style="transform-origin:${px}px ${py}px"`;
+  const sh=`<ellipse cx="${x}" cy="${y+2}" rx="26" ry="5" fill="#000" opacity=".12"/>`;
+  let body=`<rect x="${x-14}" y="${y-36}" width="11" height="36" rx="5" fill="${c.pants}"/><rect x="${x+3}" y="${y-36}" width="11" height="36" rx="5" fill="${c.pants}"/>`;
+  body+=`<ellipse cx="${x-9}" cy="${y-1}" rx="9" ry="4.5" fill="${ink}"/><ellipse cx="${x+9}" cy="${y-1}" rx="9" ry="4.5" fill="${ink}"/>`;
+  body+=`<path d="M${x-21} ${y-92}Q${x} ${y-98} ${x+21} ${y-92}L${x+19} ${y-30}Q${x} ${y-26} ${x-19} ${y-30}Z" fill="${c.shirt}" stroke="${c.coat?'#C9D1DC':'none'}" stroke-width="1.5"/>`;
+  if(c.coat)body+=`<path d="M${x} ${y-94}V${y-30}" stroke="#C9D1DC" stroke-width="1.5"/><rect x="${x+6}" y="${y-80}" width="9" height="6" rx="1" fill="#3E6FD8"/>`;
+  const F=face(c,x,y,mood,o.look);
+  const head=hairBack(c,x,y)+`<rect x="${x-6}" y="${y-100}" width="12" height="10" fill="${c.skin}"/><circle cx="${x-27}" cy="${y-118}" r="5" fill="${c.skin}"/><circle cx="${x+27}" cy="${y-118}" r="5" fill="${c.skin}"/><circle cx="${x}" cy="${y-120}" r="27" fill="${c.skin}"/>`
+    +F.blush+`<g class="eyes" ${O(x,y-122)}>${F.e}</g>`+F.gl+`<g class="mouth" ${O(x,y-104)}>${F.m}</g>`+F.x2+hairFront(c,x,y);
+  const arms=`<g class="arm al" ${O(x-20,y-86)}>${arm(pose[0],-1)}</g><g class="arm ar" ${O(x+20,y-86)}>${arm(pose[1],1)}</g>`;
+  const hold=o.hold?prop(o.hold,x+(pn==='phone'?14:0),y+(pn==='phone'?-98:-66),.8):'';
   const tr=`translate(${x} ${y}) scale(${(o.flip?-1:1)*s} ${s}) translate(${-x} ${-y})`;
-  const fxs=o.fx?`<g transform="translate(${x} ${y}) scale(${s}) translate(${-x} ${-y})">${o.fx.split(' ').map(k=>fx(k,x,y,o.flip?-1:1)).join('')}</g>`:'';
-  return`<g transform="${tr}">${g}</g>`+fxs}
+  const dl=((x*7+(o.c||'').length*13)%23)/10;
+  const fxs=o.fx?`<g transform="translate(${x} ${y}) scale(${s}) translate(${-x} ${-y})">${o.fx.split(' ').map(k=>`<g class="fx fx-${k==='?'?'q':k==='!'?'ex':k}" ${O(x,y-150)}>${fx(k,x,y,o.flip?-1:1)}</g>`).join('')}</g>`:'';
+  return`<g transform="${tr}" class="chr m-${mood} p-${pn}${o.talk?' talk':''}"><g class="ent${o.enter?' en-'+o.enter:''}" style="--dl:-${dl}s">${sh}<g class="bob" ${O(x,y)}>${body}${arms}<g class="head" ${O(x,y-100)}>${head}</g>${hold}</g></g></g>`+fxs}
 function fx(k,x,y,d){const X=a=>x+d*a,ink='Comic Neue,Arial';switch(k){
  case'?':return`<text x="${X(30)}" y="${y-150}" font-size="30" font-weight="800" fill="#3E6FD8" font-family="${ink}" text-anchor="middle">?</text><text x="${X(46)}" y="${y-166}" font-size="20" font-weight="800" fill="#3E6FD8" font-family="${ink}" text-anchor="middle">?</text>`;
  case'!':return`<text x="${X(32)}" y="${y-150}" font-size="34" font-weight="800" fill="#E9705A" font-family="${ink}" text-anchor="middle">!</text>`;
@@ -83,10 +85,10 @@ function prop(k,x,y,s=1){const t=`translate(${x} ${y}) scale(${s})`;const P={
  book:`<g transform="${t}"><path d="M-22 -10L0 -6L22 -10V12L0 16L-22 12Z" fill="#fff" stroke="#16213A" stroke-width="2"/><path d="M0 -6V16" stroke="#16213A" stroke-width="2"/><path d="M-17 -3h12M-17 2h12M5 -3h12M5 2h12" stroke="#9AA4B4" stroke-width="1.5"/></g>`,
  physics:`<g transform="${t}"><rect x="-20" y="-24" width="40" height="48" rx="3" fill="#B42318"/><text x="0" y="-4" text-anchor="middle" font-size="9" font-weight="800" fill="#fff" font-family="Arial">PHYSICS</text><path d="M-10 6a10 4 0 1 0 20 0a10 4 0 1 0 -20 0" stroke="#fff" fill="none" stroke-width="1.5"/><circle cx="0" cy="6" r="2" fill="#fff"/></g>`,
  cake:`<g transform="${t}"><rect x="-34" y="-10" width="68" height="34" rx="6" fill="#F7C6D4"/><rect x="-34" y="-12" width="68" height="10" rx="5" fill="#fff"/><rect x="-24" y="-40" width="48" height="30" rx="5" fill="#F29AB4"/><rect x="-24" y="-42" width="48" height="8" rx="4" fill="#fff"/><rect x="-2" y="-58" width="4" height="16" fill="#3E6FD8"/><path d="M0 -66q4 4 0 8q-4 -4 0 -8" fill="#F2B84B"/></g>`,
- balloon:`<g transform="${t}"><path d="M0 22q-4 20 4 40" stroke="#4A5670" fill="none"/><ellipse cx="0" cy="0" rx="16" ry="20" fill="#E9705A"/><path d="M-3 20h6l-3 4z" fill="#E9705A"/></g>`,
+ balloon:`<g transform="${t}"><g class="float"><path d="M0 22q-4 20 4 40" stroke="#4A5670" fill="none"/><ellipse cx="0" cy="0" rx="16" ry="20" fill="#E9705A"/><path d="M-3 20h6l-3 4z" fill="#E9705A"/></g></g>`,
  envelope:`<g transform="${t}"><rect x="-12" y="-17" width="24" height="34" rx="2" fill="#D7261E"/><circle cx="0" cy="-2" r="6" fill="#F2C94C"/></g>`,
- lantern:`<g transform="${t}"><path d="M0 -40v12" stroke="#7A5A20" stroke-width="2"/><ellipse cx="0" cy="-10" rx="16" ry="20" fill="#E23B2E"/><rect x="-7" y="-32" width="14" height="4" fill="#F2B84B"/><rect x="-7" y="8" width="14" height="4" fill="#F2B84B"/><path d="M-3 12v12M3 12v12" stroke="#F2B84B" stroke-width="2"/></g>`,
- star_lantern:`<g transform="${t}"><path d="M0 -60v18" stroke="#7A5A20" stroke-width="2"/><path d="M0 -42l7 14 15 2 -11 10 3 15 -14 -7 -14 7 3 -15 -11 -10 15 -2z" fill="#F2B84B" stroke="#E9705A" stroke-width="2"/></g>`,
+ lantern:`<g transform="${t}"><g class="sway" style="transform-origin:0px -40px"><path d="M0 -40v12" stroke="#7A5A20" stroke-width="2"/><ellipse cx="0" cy="-10" rx="16" ry="20" fill="#E23B2E"/><rect x="-7" y="-32" width="14" height="4" fill="#F2B84B"/><rect x="-7" y="8" width="14" height="4" fill="#F2B84B"/><path d="M-3 12v12M3 12v12" stroke="#F2B84B" stroke-width="2"/></g></g>`,
+ star_lantern:`<g transform="${t}"><g class="sway" style="transform-origin:0px -60px"><path d="M0 -60v18" stroke="#7A5A20" stroke-width="2"/><path d="M0 -42l7 14 15 2 -11 10 3 15 -14 -7 -14 7 3 -15 -11 -10 15 -2z" fill="#F2B84B" stroke="#E9705A" stroke-width="2"/></g></g>`,
  banhchung:`<g transform="${t}"><rect x="-22" y="-22" width="44" height="44" rx="3" fill="#3E8E4A"/><path d="M-22 -8h44M-22 8h44M-8 -22v44M8 -22v44" stroke="#C9E7B8" stroke-width="2.5"/></g>`,
  diploma:`<g transform="${t}"><rect x="-20" y="-7" width="40" height="14" rx="7" fill="#FFF7E0" stroke="#C99A1A" stroke-width="2"/><rect x="-3" y="-8" width="6" height="16" fill="#B42318"/></g>`,
  tissue:`<g transform="${t}"><rect x="-14" y="-6" width="28" height="18" rx="3" fill="#BFE0FF"/><path d="M-6 -6q6 -14 12 0" fill="#fff" stroke="#9AA4B4"/></g>`,
@@ -100,7 +102,7 @@ function prop(k,x,y,s=1){const t=`translate(${x} ${y}) scale(${s})`;const P={
 };return P[k]||''}
 
 /* ---------- backgrounds ---------- */
-function starsSvg(n,seed,h=180){let s='',r=seed;const R=()=>(r=(r*9301+49297)%233280)/233280;for(let i=0;i<n;i++)s+=`<circle cx="${R()*400}" cy="${R()*h}" r="${R()*1.4+.4}" fill="#fff" opacity="${.5+R()*.5}"/>`;return s}
+function starsSvg(n,seed,h=180){let s='',r=seed;const R=()=>(r=(r*9301+49297)%233280)/233280;for(let i=0;i<n;i++)s+=`<circle class="tw" style="animation-delay:-${(R()*3).toFixed(2)}s" cx="${R()*400}" cy="${R()*h}" r="${R()*1.4+.4}" fill="#fff" opacity="${.5+R()*.5}"/>`;return s}
 function bg(k){const W=400,H=290;switch(k){
  case'room':return`<rect width="400" height="290" fill="#FCEBDD"/><rect y="230" width="400" height="60" fill="#E0B98E"/><rect x="260" y="40" width="100" height="90" rx="6" fill="#BFE0FF" stroke="#fff" stroke-width="6"/><path d="M310 40v90M260 85h100" stroke="#fff" stroke-width="5"/><rect x="40" y="70" width="70" height="8" fill="#B07B4F"/><rect x="48" y="50" width="10" height="20" fill="#3E6FD8"/><rect x="60" y="54" width="10" height="16" fill="#E9705A"/><rect x="72" y="48" width="10" height="22" fill="#3C9A6B"/>`;
  case'tv':return`<rect width="400" height="290" fill="#2A2F45"/><rect y="236" width="400" height="54" fill="#3A3150"/><rect x="200" y="30" width="180" height="110" rx="6" fill="#0B1020" stroke="#16213A" stroke-width="6"/>${starsSvg(30,5).replace(/cx="(\d+\.?\d*)"/g,(m,a)=>`cx="${206+a*.42}"`).replace(/cy="(\d+\.?\d*)"/g,(m,a)=>`cy="${36+a*.55}"`)}<circle cx="290" cy="85" r="22" fill="#0B1020" stroke="#F2B84B" stroke-width="5"/><ellipse cx="290" cy="85" rx="44" ry="9" fill="none" stroke="#E9925A" stroke-width="3" opacity=".8"/><rect x="20" y="180" width="200" height="60" rx="16" fill="#5B3EA6"/><rect x="10" y="168" width="34" height="72" rx="12" fill="#4A2F8E"/>`;
@@ -121,7 +123,7 @@ function bg(k){const W=400,H=290;switch(k){
  case'table':return bg('kitchen')+`<g>${prop('banhchung',90,182,.8)}${[160,210,260,310].map((x,i)=>`<ellipse cx="${x}" cy="186" rx="20" ry="7" fill="#fff" stroke="#C9D1DC"/><circle cx="${x}" cy="181" r="7" fill="${['#E9705A','#3C9A6B','#F2B84B','#D86A9A'][i]}"/>`).join('')}</g>`;
  case'park':return`<rect width="400" height="290" fill="#D7F0FF"/><circle cx="350" cy="50" r="24" fill="#FFD95A"/><path d="M0 220Q200 190 400 220V290H0Z" fill="#7CC37A"/><rect x="40" y="130" width="10" height="90" fill="#8A5A3C"/><circle cx="45" cy="120" r="34" fill="#4CAF50"/><rect x="330" y="140" width="10" height="80" fill="#8A5A3C"/><circle cx="335" cy="130" r="30" fill="#5DBB63"/>`;
  case'beach':return`<rect width="400" height="290" fill="#BFE8FF"/><circle cx="330" cy="60" r="26" fill="#FFD95A"/><rect y="170" width="400" height="50" fill="#3E9BD8"/><path d="M0 172q20 -6 40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0t40 0" stroke="#fff" stroke-width="3" fill="none"/><rect y="220" width="400" height="70" fill="#F4D9A0"/>`;
- case'rain':return`<rect width="400" height="290" fill="#8C97AE"/><rect y="236" width="400" height="54" fill="#5B6680"/>${Array.from({length:40},(_,i)=>`<path d="M${(i*53)%400} ${(i*37)%220}l-6 16" stroke="#DCE6F5" stroke-width="2"/>`).join('')}`;
+ case'rain':return`<rect width="400" height="290" fill="#8C97AE"/><rect y="236" width="400" height="54" fill="#5B6680"/><g class="rainfx">${Array.from({length:60},(_,i)=>`<path d="M${(i*53)%420} ${(i*37)%260-30}l-6 16" stroke="#DCE6F5" stroke-width="2"/>`).join('')}</g>`;
  case'stage':return`<rect width="400" height="290" fill="#3A2F5E"/><path d="M0 0h70q-10 140 0 240H0Z" fill="#B42318"/><path d="M400 0h-70q10 140 0 240h70Z" fill="#B42318"/><rect y="0" width="400" height="22" fill="#8E1C14"/><rect y="236" width="400" height="54" fill="#8A5A3C"/><ellipse cx="200" cy="240" rx="120" ry="14" fill="#FFF3C9" opacity=".35"/><rect x="110" y="40" width="180" height="26" rx="4" fill="#16213A"/><text x="200" y="59" text-anchor="middle" font-family="Bangers,Impact" font-size="17" fill="#F2B84B">GRADUATION 2026</text>`;
  case'audience':return`<rect width="400" height="290" fill="#4A3F6E"/><rect y="200" width="400" height="90" fill="#2E2850"/>${Array.from({length:9},(_,i)=>`<circle cx="${20+i*46}" cy="232" r="16" fill="#1E1A38"/>`).join('')}`;
  case'campus':return`<rect width="400" height="290" fill="#D7F0FF"/><rect x="40" y="70" width="320" height="140" fill="#F1E2C4"/><path d="M30 70L200 20L370 70Z" fill="#B42318"/>${[70,130,190,250,310].map(x=>`<rect x="${x}" y="100" width="22" height="110" fill="#fff"/>`).join('')}<rect y="210" width="400" height="80" fill="#7CC37A"/>`;
@@ -131,5 +133,5 @@ function bg(k){const W=400,H=290;switch(k){
  case'crowd':return bg('temple')+Array.from({length:14},(_,i)=>`<circle cx="${10+i*30}" cy="${250+(i%2)*10}" r="15" fill="${['#2B3550','#4A3A30','#1E1B22'][i%3]}"/><rect x="${-4+i*30}" y="${262+(i%2)*10}" width="28" height="40" rx="10" fill="${['#E9705A','#3E6FD8','#3C9A6B','#F2B84B'][i%4]}"/>`).join('');
  case'moonpark':return bg('night')+`<circle cx="320" cy="70" r="30" fill="#FFF3C9"/>`+[60,140,220].map((x,i)=>prop('star_lantern',x,110+(i%2)*14,.8)).join('');
  case'white':return`<rect width="400" height="290" fill="#fff"/>`;
- case'flash':return`<rect width="400" height="290" fill="#FFF3C9"/>${Array.from({length:18},(_,i)=>{const a=i/18*Math.PI*2;return`<path d="M200 150L${200+Math.cos(a)*300} ${150+Math.sin(a)*300}L${200+Math.cos(a+.17)*300} ${150+Math.sin(a+.17)*300}Z" fill="#F2B84B" opacity=".45"/>`}).join('')}`;
+ case'flash':return`<rect width="400" height="290" fill="#FFF3C9"/><g class="rays" style="transform-origin:200px 150px">${Array.from({length:18},(_,i)=>{const a=i/18*Math.PI*2;return`<path d="M200 150L${200+Math.cos(a)*300} ${150+Math.sin(a)*300}L${200+Math.cos(a+.17)*300} ${150+Math.sin(a+.17)*300}Z" fill="#F2B84B" opacity=".45"/>`}).join('')}</g>`;
  }return`<rect width="400" height="290" fill="#F4F6F8"/>`}

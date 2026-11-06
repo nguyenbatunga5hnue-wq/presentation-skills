@@ -17,31 +17,76 @@
  <div class="sp3d">
   <div class="sp-labels"></div>
   <div class="sp-ov">
-   <svg viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid slice" aria-label="Đài thiên văn trên đồi vào ban đêm">
+   <svg viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid slice" aria-label="Cảnh trên Trái Đất trước chuyến bay">
     <defs><linearGradient id="ovsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#050a1f"/><stop offset=".7" stop-color="#1b2a5a"/><stop offset="1" stop-color="#3a3f7a"/></linearGradient>
-     <radialGradient id="ovglow"><stop offset="0" stop-color="#fff6c8" stop-opacity=".9"/><stop offset="1" stop-color="#fff6c8" stop-opacity="0"/></radialGradient></defs>
-    <rect width="1280" height="720" fill="url(#ovsky)"/>
-    <g class="ovstars"></g>
-    <path class="ovmw" d="M-40 420 Q 400 120 1320 60" stroke="#c9d6ff" stroke-width="120" opacity=".08" fill="none"/>
-    <circle cx="1080" cy="130" r="46" fill="#fff3c9"/><circle cx="1100" cy="116" r="42" fill="#0b1433"/>
-    <path d="M0 600 Q 300 470 640 560 T 1280 540 V720 H0Z" fill="#141d3d"/>
-    <path d="M0 650 Q 380 580 760 640 T 1280 620 V720 H0Z" fill="#0d1430"/>
-    <g class="obs">
-     <rect x="720" y="440" width="240" height="150" fill="#d9dfe7"/><rect x="805" y="510" width="60" height="80" fill="#8a5a3c"/>
-     <rect x="740" y="470" width="30" height="24" rx="3" fill="#f2b84b"/><rect x="910" y="470" width="30" height="24" rx="3" fill="#f2b84b"/>
-     <g class="tele"><rect x="828" y="330" width="120" height="30" rx="8" fill="#3e6fd8"/><rect x="938" y="324" width="22" height="42" rx="4" fill="#16213a"/></g>
-     <path d="M712 442 A128 128 0 0 1 968 442Z" fill="#eef2f7"/>
-     <rect class="shut" x="826" y="316" width="28" height="126" fill="#16213a"/>
-     <path class="beam" d="M940 345 L1180 60 L1240 110 Z" fill="url(#ovglow)" opacity="0"/>
+     <linearGradient id="dawn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d2b5e"/><stop offset=".55" stop-color="#7a5a9a"/><stop offset="1" stop-color="#f3a26b"/></linearGradient>
+     <radialGradient id="ovglow"><stop offset="0" stop-color="#fff6c8" stop-opacity=".9"/><stop offset="1" stop-color="#fff6c8" stop-opacity="0"/></radialGradient>
+     <radialGradient id="fire" cx=".5" cy=".2" r=".8"><stop offset="0" stop-color="#fff7c2"/><stop offset=".4" stop-color="#ffb43a"/><stop offset="1" stop-color="#ff5a1f" stop-opacity="0"/></radialGradient>
+     <linearGradient id="visor" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffe08a"/><stop offset="1" stop-color="#c77a1a"/></linearGradient></defs>
+    <!-- scene 1: Earth at night -->
+    <g class="scE">
+     <rect width="1280" height="720" fill="url(#ovsky)"/>
+     <g class="ovstars"></g>
+     <path d="M-40 420 Q 400 120 1320 60" stroke="#c9d6ff" stroke-width="120" opacity=".08" fill="none"/>
+     <circle cx="1080" cy="130" r="46" fill="#fff3c9"/><circle cx="1100" cy="116" r="42" fill="#0b1433"/>
+     <path d="M0 600 Q 300 470 640 560 T 1280 540 V720 H0Z" fill="#141d3d"/>
+     <path d="M0 650 Q 380 580 760 640 T 1280 620 V720 H0Z" fill="#0d1430"/>
+     <g class="obs hot" data-go="2" role="button" aria-label="Đài thiên văn">
+      <ellipse class="pring" cx="840" cy="470" rx="190" ry="170"/>
+      <rect x="720" y="440" width="240" height="150" fill="#d9dfe7"/><rect x="805" y="510" width="60" height="80" fill="#8a5a3c"/>
+      <rect x="740" y="470" width="30" height="24" rx="3" fill="#f2b84b"/><rect x="910" y="470" width="30" height="24" rx="3" fill="#f2b84b"/>
+      <g class="tele"><rect x="828" y="330" width="120" height="30" rx="8" fill="#3e6fd8"/><rect x="938" y="324" width="22" height="42" rx="4" fill="#16213a"/></g>
+      <path d="M712 442 A128 128 0 0 1 968 442Z" fill="#eef2f7"/>
+      <rect class="shut" x="826" y="316" width="28" height="126" fill="#16213a"/>
+      <path class="beam" d="M940 345 L1180 60 L1240 110 Z" fill="url(#ovglow)" opacity="0"/>
+     </g>
+     <g class="kid hot" data-go="3" role="button" aria-label="Bạn nhỏ ngắm sao">
+      <ellipse class="pring" cx="320" cy="510" rx="120" ry="110"/>
+      <path d="M330 545 L350 480 L370 545" stroke="#9aa4b4" stroke-width="5" fill="none"/>
+      <rect x="300" y="452" width="110" height="24" rx="7" fill="#e9705a" transform="rotate(-32 350 470)"/>
+      <circle cx="270" cy="470" r="26" fill="#f5c9a0"/><path d="M244 466 a26 26 0 0 1 52 0 q-18 -10 -52 0z" fill="#1e1b22"/>
+      <path d="M252 498 q18 -8 36 0 l4 60 h-44z" fill="#3e6fd8"/><path d="M286 506 l34 -24" stroke="#3e6fd8" stroke-width="10" stroke-linecap="round"/>
+      <rect x="254" y="556" width="12" height="40" rx="5" fill="#2b3550"/><rect x="272" y="556" width="12" height="40" rx="5" fill="#2b3550"/>
+     </g>
+     <g class="sstar"><line x1="0" y1="0" x2="-180" y2="-60" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".8"/><circle r="6" fill="#fff"/></g>
     </g>
-    <g class="kid">
-     <path d="M330 545 L350 480 L370 545" stroke="#9aa4b4" stroke-width="5" fill="none"/>
-     <rect x="300" y="452" width="110" height="24" rx="7" fill="#e9705a" transform="rotate(-32 350 470)"/>
-     <circle cx="270" cy="470" r="26" fill="#f5c9a0"/><path d="M244 466 a26 26 0 0 1 52 0 q-18 -10 -52 0z" fill="#1e1b22"/>
-     <path d="M252 498 q18 -8 36 0 l4 60 h-44z" fill="#3e6fd8"/><path d="M286 506 l34 -24" stroke="#3e6fd8" stroke-width="10" stroke-linecap="round"/>
-     <rect x="254" y="556" width="12" height="40" rx="5" fill="#2b3550"/><rect x="272" y="556" width="12" height="40" rx="5" fill="#2b3550"/>
+    <!-- scene 2: launch pad at dawn -->
+    <g class="scP">
+     <rect width="1280" height="720" fill="url(#dawn)"/>
+     <circle cx="1040" cy="575" r="80" fill="#ffd27a" opacity=".9"/>
+     <path d="M0 560 Q 320 520 640 560 T 1280 545 V720 H0Z" fill="#3b3f55"/>
+     <rect x="400" y="545" width="300" height="22" fill="#6b7188"/>
+     <g class="tower"><rect x="650" y="170" width="44" height="375" fill="none" stroke="#c94f3d" stroke-width="6"/>
+      <path d="M650 170 L694 220 M694 170 L650 220 M650 220 L694 270 M694 220 L650 270 M650 270 L694 320 M694 270 L650 320 M650 320 L694 370 M694 320 L650 370 M650 370 L694 420 M694 370 L650 420 M650 420 L694 470 M694 420 L650 470 M650 470 L694 545 M694 470 L650 545" stroke="#c94f3d" stroke-width="3"/>
+      <rect class="arm" x="590" y="300" width="62" height="10" fill="#c94f3d"/></g>
+     <g class="rk hot" data-go="6" role="button" aria-label="Tàu vũ trụ">
+      <ellipse class="pring" cx="550" cy="360" rx="120" ry="230"/>
+      <g class="smoke"><circle cx="500" cy="560" r="40"/><circle cx="560" cy="570" r="55"/><circle cx="610" cy="560" r="38"/><circle cx="450" cy="572" r="30"/><circle cx="660" cy="575" r="32"/></g>
+      <g class="rkbody">
+       <path class="flame" d="M520 520 Q550 640 580 520 Z" fill="url(#fire)"/>
+       <path d="M505 470 L470 540 L510 520 Z" fill="#d8432f"/><path d="M595 470 L630 540 L590 520 Z" fill="#d8432f"/>
+       <rect x="505" y="200" width="90" height="320" rx="44" fill="#f2f4f8" stroke="#c9d1dc" stroke-width="3"/>
+       <path d="M505 245 Q550 110 595 245 Z" fill="#d8432f"/>
+       <circle cx="550" cy="300" r="22" fill="#7fc8ff" stroke="#16213a" stroke-width="5"/>
+       <rect x="505" y="400" width="90" height="14" fill="#3e6fd8"/><rect x="505" y="420" width="90" height="6" fill="#d8432f"/>
+      </g>
+     </g>
+     <g class="astro hot" data-go="5" role="button" aria-label="Phi hành gia">
+      <ellipse class="pring" cx="300" cy="470" rx="110" ry="130"/>
+      <g class="astw">
+       <rect x="270" y="380" width="22" height="40" rx="8" fill="#c9d1dc"/>
+       <rect x="278" y="475" width="20" height="70" rx="9" fill="#e9edf3" class="lg1"/><rect x="304" y="475" width="20" height="70" rx="9" fill="#e9edf3" class="lg2"/>
+       <rect x="276" y="536" width="26" height="14" rx="6" fill="#4a5670"/><rect x="302" y="536" width="26" height="14" rx="6" fill="#4a5670"/>
+       <rect x="270" y="400" width="62" height="90" rx="20" fill="#f4f6f8" stroke="#c9d1dc" stroke-width="3"/>
+       <rect x="284" y="420" width="22" height="16" rx="3" fill="#3e6fd8"/><rect x="310" y="420" width="10" height="16" rx="2" fill="#d8432f"/>
+       <path d="M276 412 Q250 440 258 470" stroke="#e9edf3" stroke-width="16" fill="none" stroke-linecap="round"/>
+       <path class="warm" d="M326 412 Q356 392 366 360" stroke="#e9edf3" stroke-width="16" fill="none" stroke-linecap="round"/>
+       <circle class="warmh" cx="366" cy="356" r="10" fill="#f4f6f8" stroke="#c9d1dc" stroke-width="2"/>
+       <circle cx="301" cy="370" r="40" fill="#f4f6f8" stroke="#c9d1dc" stroke-width="3"/>
+       <ellipse cx="305" cy="372" rx="28" ry="22" fill="url(#visor)"/><ellipse cx="296" cy="364" rx="8" ry="5" fill="#fff" opacity=".7"/>
+      </g>
+     </g>
     </g>
-    <g class="sstar"><line x1="0" y1="0" x2="-180" y2="-60" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".8"/><circle r="6" fill="#fff"/></g>
    </svg>
   </div>
   <div class="sp-top"><h2>Hành trình vũ trụ</h2>
@@ -51,26 +96,13 @@
  </div>
 </section>
 
-<section class="slide comic" id="cS1" data-comic="S1" data-title="Comic · How Minh got into space"></section>
-<section class="slide comic" id="cS2" data-comic="S2" data-title="Comic · Movie night"></section>
-<section class="slide comic" id="cS3" data-comic="S3" data-title="Comic · A school trip"></section>
-<section class="slide comic" id="cS4" data-comic="S4" data-title="Comic · Life on Mars?"></section>
-<section class="slide comic" id="cS5" data-comic="S5" data-title="Comic · Exam week"></section>
-<section class="slide comic" id="cS6" data-comic="S6" data-title="Comic · Stargazing apps"></section>
+<section class="slide comic" id="cStudy" data-story="study" data-title="Truyện · Minh and the stars"></section>
 
 <section class="slide dark" data-title="Relationships" style="justify-content:center"><h1>Relationships</h1></section>
-<section class="slide comic" id="cR1" data-comic="R1" data-title="Comic · The first day"></section>
-<section class="slide comic" id="cR2" data-comic="R2" data-title="Comic · Two personalities"></section>
-<section class="slide comic" id="cR3" data-comic="R3" data-title="Comic · The friend group"></section>
-<section class="slide comic" id="cR4" data-comic="R4" data-title="Comic · After graduation"></section>
-<section class="slide comic" id="cR5" data-comic="R5" data-title="Comic · A bad day"></section>
+<section class="slide comic" id="cRel" data-story="rel" data-title="Truyện · Lan, Nam and friends"></section>
 
 <section class="slide dark" data-title="Special events" style="justify-content:center"><h1>Special events</h1></section>
-<section class="slide comic" id="cE1" data-comic="E1" data-title="Comic · Tết is coming"></section>
-<section class="slide comic" id="cE2" data-comic="E2" data-title="Comic · Family time"></section>
-<section class="slide comic" id="cE3" data-comic="E3" data-title="Comic · The surprise party"></section>
-<section class="slide comic" id="cE4" data-comic="E4" data-title="Comic · Graduation day"></section>
-<section class="slide comic" id="cE5" data-comic="E5" data-title="Comic · Two kinds of festivals"></section>
+<section class="slide comic" id="cEv" data-story="ev" data-title="Truyện · A year to remember"></section>
 
 <section class="slide dark" data-title="Discourse markers" style="justify-content:center"><h1>Discourse markers</h1></section>
 

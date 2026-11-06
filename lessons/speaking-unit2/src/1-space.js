@@ -8,17 +8,22 @@ const T=THREE,V=(x=0,y=0,z=0)=>new T.Vector3(x,y,z),UP=V(0,1,0);
 /* ---------- stops (one build step each) ---------- */
 const STOPS=[
  {k:'intro',lab:'Bắt đầu'},
- {k:'obs',lab:'Observatory',w:'observatory',ipa:'/əbˈzɜːvətri/',pos:'n',vn:'đài thiên văn',ex:'We visited an [observatory] on a school trip.'},
- {k:'gaze',lab:'Stargazing',w:'stargazing',ipa:'/ˈstɑːɡeɪzɪŋ/',pos:'n',vn:'ngắm sao',ex:'I go [stargazing] whenever the sky is clear.'},
- {k:'earth',lab:'Earth',w:'Earth',ipa:'/ɜːθ/',pos:'n',vn:'Trái Đất',ex:'[Earth] is the only planet we know with life.',p:'Earth'},
- {k:'meteor',lab:'Meteor',w:'meteor',ipa:'/ˈmiːtiə(r)/',pos:'n',vn:'thiên thạch (bốc cháy khi lao vào khí quyển)',ex:'A [meteor] burns up when it enters the atmosphere.',
-   w2:'shooting star',vn2:'sao băng (cách nói tự nhiên hơn)',ex2:'I saw a [shooting star] last night.',p:'Earth'},
+ {k:'earthsc',lab:'Trái Đất',ov:'earth'},
+ {k:'obs',lab:'Observatory',ov:'obs',w:'observatory',ipa:'/əbˈzɜːvətri/',pos:'n',vn:'đài thiên văn',ex:'We visited an [observatory] on a school trip.'},
+ {k:'gaze',lab:'Stargazing',ov:'gaze',w:'stargazing',ipa:'/ˈstɑːɡeɪzɪŋ/',pos:'n',vn:'ngắm sao',ex:'I go [stargazing] whenever the sky is clear.'},
+ {k:'pad',lab:'Bệ phóng',ov:'pad'},
+ {k:'astro',lab:'Astronaut',ov:'astro',w:'astronaut',ipa:'/ˈæstrənɔːt/',pos:'n',vn:'phi hành gia',ex:'The [astronaut] waved goodbye before the launch.'},
+ {k:'ship',lab:'Spaceship',ov:'ship',w:'spaceship',ipa:'/ˈspeɪsʃɪp/',pos:'n',vn:'tàu vũ trụ',ex:'The [spaceship] is ready for take-off.',
+   w2:'launch',vn2:'phóng (tàu, tên lửa)',ex2:'They will [launch] the spaceship at sunrise.'},
+ {k:'earth',lab:'Earth',ov:'launch',w:'Earth',ipa:'/ɜːθ/',pos:'n',vn:'Trái Đất',ex:'[Earth] is the only planet we know with life.',p:'Earth'},
  {k:'venus',lab:'Venus',w:'Venus',ipa:'/ˈviːnəs/',pos:'n',vn:'sao Kim',ex:'[Venus] is the hottest planet in our solar system.',p:'Venus'},
  {k:'mars',lab:'Mars',w:'Mars',ipa:'/mɑːz/',pos:'n',vn:'sao Hoả',ex:'[Mars] is often called the red planet.',p:'Mars'},
- {k:'comet',lab:'Comet',w:'comet',ipa:'/ˈkɒmɪt/',pos:'n',vn:'sao chổi',ex:'A [comet] has a long, bright tail.'},
  {k:'jupiter',lab:'Jupiter',w:'Jupiter',ipa:'/ˈdʒuːpɪtə(r)/',pos:'n',vn:'sao Mộc',ex:'[Jupiter] is the biggest planet in our solar system.',p:'Jupiter'},
- {k:'ufo',lab:'Extraterrestrial',w:'extraterrestrial',ipa:'/ˌekstrətəˈrestriəl/',pos:'n, adj',vn:'sinh vật ngoài Trái Đất; thuộc về ngoài Trái Đất',ex:"I'm not sure whether [extraterrestrial] life exists.",p:'Jupiter'},
  {k:'pluto',lab:'Pluto',w:'Pluto',ipa:'/ˈpluːtəʊ/',pos:'n',vn:'sao Diêm Vương',ex:'[Pluto] used to be a planet. Now it is a dwarf planet.',p:'Pluto'},
+ {k:'comet',lab:'Comet',w:'comet',ipa:'/ˈkɒmɪt/',pos:'n',vn:'sao chổi',ex:'A [comet] has a long, bright tail of ice and dust.'},
+ {k:'meteor',lab:'Meteor',w:'meteor',ipa:'/ˈmiːtiə(r)/',pos:'n',vn:'thiên thạch (bốc cháy khi lao vào khí quyển)',ex:'Comet dust burns up in the sky as a [meteor].',
+   w2:'shooting star',vn2:'sao băng (cách nói tự nhiên hơn)',ex2:'I saw a [shooting star] last night.',p:'Earth'},
+ {k:'ufo',lab:'Extraterrestrial',w:'extraterrestrial',ipa:'/ˌekstrətəˈrestriəl/',pos:'n, adj',vn:'sinh vật ngoài Trái Đất; thuộc về ngoài Trái Đất',ex:"I'm not sure whether [extraterrestrial] life exists.",p:'Earth'},
  {k:'solar',lab:'Solar system',w:'solar system',ipa:'/ˈsəʊlə ˌsɪstəm/',pos:'n',vn:'hệ Mặt Trời',ex:'There are eight planets in our [solar system].'},
  {k:'const',lab:'Constellation',w:'constellation',ipa:'/ˌkɒnstəˈleɪʃn/',pos:'n',vn:'chòm sao',ex:'The Little Bear [constellation] is still used by navigators at sea.'},
  {k:'milky',lab:'Milky Way',w:'the Milky Way',ipa:'/ðə ˌmɪlki ˈweɪ/',pos:'n',vn:'dải Ngân Hà',ex:'You can see [the Milky Way] clearly in the countryside.',
@@ -171,7 +176,7 @@ const here=document.createElement('span');here.className='plab3 here';here.textC
 const polaris=document.createElement('span');polaris.className='plab3 star';polaris.textContent='Polaris · North Star';labs.appendChild(polaris);
 const umiLab=document.createElement('span');umiLab.className='plab3 star';umiLab.textContent='Ursa Minor · Little Bear';labs.appendChild(umiLab);
 const card=$('.wcard',sec),route=$('.sp-route',sec),ov=$('.sp-ov',sec);
-route.innerHTML=STOPS.map((s,i)=>i?`<button data-stop="${i}"><b>${i}</b>${s.lab}</button>`:'').join('');
+route.innerHTML=STOPS.map((s,i)=>i?`<button data-stop="${i}" aria-label="Điểm dừng ${i}"><b>${i}</b><span>${s.lab}</span></button>`:'').join('');
 route.addEventListener('click',e=>{const b=e.target.closest('[data-stop]');if(b)setStep(sec,+b.dataset.stop)});
 let quiz=false,showLabels=false;
 const hl=t=>esc(t).replace(/\[(.+?)\]/g,'<mark>$1</mark>');
@@ -202,15 +207,15 @@ function near(n,side=1){const p=PL[n],rad=p.pos.clone().setY(0).normalize(),perp
   const sp=p.pos.clone().addScaledVector(perp,(p.r*1.7+1)*side).addScaledVector(UP,p.r*.35).addScaledVector(rad,-p.r*.6);
   const mid=p.pos.clone().lerp(sp,.42),k=p.r*2.4+3.4;
   return{ship:sp,cam:mid.clone().addScaledVector(rad,-k).addScaledVector(perp,side*k*.6).addScaledVector(UP,k*.36),look:mid}}
-const cometSpot=(()=>{const a=4.0,rad=V(Math.cos(a),0,Math.sin(a)),perp=V(-rad.z,0,rad.x),sp=rad.clone().multiplyScalar(34).setY(1);
+const cometSpot=(()=>{const a=.25,rad=V(Math.cos(a),0,Math.sin(a)),perp=V(-rad.z,0,rad.x),sp=rad.clone().multiplyScalar(70).setY(2);
   return{ship:sp,rad,perp,cam:sp.clone().addScaledVector(perp,-6.5).addScaledVector(UP,1.6).addScaledVector(rad,-1.2),look:sp.clone().addScaledVector(perp,7).addScaledVector(rad,1)}})();
 function frame(k){const s=STOPS[k];
-  if(s.k==='intro'||s.k==='obs'||s.k==='gaze'){const e=near('Earth');return{ship:e.ship,orbit:true}}
+  if(s.k==='intro'||s.ov&&s.k!=='earth'){const e=near('Earth');return{ship:e.ship,orbit:true}}
   if(s.k==='earth'){const e=near('Earth');return e}
   if(s.k==='meteor'){const e=near('Earth'),P=PL.Earth.pos,rad=P.clone().normalize(),perp=V(-rad.z,0,rad.x);
     return{ship:e.ship,cam:P.clone().addScaledVector(rad,-7.5).addScaledVector(perp,5.5).addScaledVector(UP,2.4),look:P.clone().addScaledVector(perp,1.2)}}
   if(s.k==='comet')return cometSpot;
-  if(s.k==='ufo'){const j=near('Jupiter');return{ship:j.ship,cam:j.ship.clone().lerp(j.cam,.55),look:j.ship.clone().addScaledVector(UP,.8)}}
+  if(s.k==='ufo'){const j=near('Earth');return{ship:j.ship,cam:j.cam.clone().addScaledVector(UP,1.2),look:j.ship.clone().addScaledVector(UP,1.4)}}
   if(s.p)return near(s.p,s.k==='venus'?-1:1);
   if(s.k==='solar')return{ship:null,cam:V(10,175,105),look:V(0,0,8)};
   if(s.k==='const'){const e=PL.Earth.pos.clone().addScaledVector(UP,3);return{ship:null,cam:e,look:e.clone().addScaledVector(CDIR,100)}}
@@ -236,17 +241,20 @@ function wobble(dur=2.6){if(!SFX.on)return;const c=ac();if(!c)return;const t=c.c
 const SND=[];let later=(ms,f)=>{SND.push(setTimeout(f,ms))};const laterBase=later;function hush(){SND.forEach(clearTimeout);SND.length=0}
 
 /* ---------- step handler ---------- */
-STEP.sSpace=(s,n)=>{hush();const prevStop=stop;stop=n;t0=performance.now();yaw=0;pitch=0;zoom=1;const S=STOPS[n],f=frame(n);
-  $$('[data-stop]',route).forEach(b=>{b.classList.toggle('on',+b.dataset.stop===n);b.classList.toggle('done',+b.dataset.stop<n)});
+let ovT=0;
+STEP.sSpace=(s,n)=>{hush();clearTimeout(ovT);stop=n;t0=performance.now();yaw=0;pitch=0;zoom=1;const S=STOPS[n],f=frame(n);
+  $$('[data-stop]',route).forEach(b=>{const k=+b.dataset.stop;b.classList.toggle('on',k===n);b.classList.toggle('done',k<n);b.classList.toggle('fut',k>n)});
   card.classList.remove('in');cardShown=false;
-  ov.dataset.k=(S.k==='obs'||S.k==='gaze')?S.k:'';ov.classList.toggle('on',S.k==='obs'||S.k==='gaze');sec.classList.toggle('ovmode',S.k==='obs'||S.k==='gaze');
+  const ovOn=!!S.ov;ov.dataset.k=S.ov||'';ov.classList.toggle('on',ovOn);sec.classList.toggle('ovmode',ovOn);
+  if(S.ov==='launch')ovT=setTimeout(()=>{ov.classList.remove('on');sec.classList.remove('ovmode')},2300);
   sec.classList.toggle('intro',n===0);
   let dur=0;
-  if(f.ship){if(S.k==='earth'&&prevStop<3){const E=PL.Earth;ship.position.copy(E.pos).addScaledVector(E.pos.clone().normalize(),-E.r*1.02).addScaledVector(UP,.2);dur=flyTo(f.ship,2.6,true);rumble(3)}
-    else if(n<=2){ship.position.copy(f.ship);fly=null}
+  if(f.ship){if(S.k==='earth'){const E=PL.Earth;ship.position.copy(E.pos).addScaledVector(E.pos.clone().normalize(),-E.r*1.02).addScaledVector(UP,.2);fly=null;
+      SND.push(setTimeout(()=>{if(stop===n)flyTo(f.ship,2.6,true)},2100));dur=4.7;rumble(4.5)}
+    else if(S.ov||n===0){ship.position.copy(f.ship);fly=null}
     else{dur=flyTo(f.ship);if(dur)SFX.whoosh()}}
   evD=['meteor','comet','ufo'].includes(S.k)?(dur?dur+.4:0):0;
-  const delay={earth:2.4,meteor:1.7,comet:4.2,ufo:3.2,const:2.6,milky:2.6,cosmos:3,solar:1.6,obs:2.2,gaze:2.2}[S.k];
+  const delay={earth:4.9,meteor:1.7,comet:4.2,ufo:3.2,const:2.6,milky:2.6,cosmos:3,solar:1.6,obs:2.2,gaze:2.2,astro:2.6,ship:1.2}[S.k];
   cardAt=(delay!=null?Math.max(delay+evD,dur+.3):dur+.4)*1000;
   later=(ms,f)=>laterBase(ms+evD*1000,f);
   if(S.k==='meteor'){later(1000,()=>SFX.whoosh(false));later(1500,()=>SFX.thud())}
@@ -254,10 +262,15 @@ STEP.sSpace=(s,n)=>{hush();const prevStop=stop;stop=n;t0=performance.now();yaw=0
   if(S.k==='ufo'){later(400,()=>wobble(3.2))}
   if(S.k==='obs'){later(500,()=>SFX.zip());later(1400,()=>SFX.thud())}
   if(S.k==='gaze'){later(1200,()=>SFX.whoosh());}
+  if(S.k==='earthsc'||S.k==='pad')SFX.whoosh(false);
+  if(S.k==='astro'){[300,700,1100,1500,1900].forEach(t=>later(t,()=>SFX.tick()))}
+  if(S.k==='ship')later(200,()=>SFX.grow());
+  if(S.k==='earth'){[0,1,2].forEach(i=>later(i*600,()=>SFX.tick()));later(1900,()=>SFX.thud())}
   if(S.k==='const'){[0,1,2,3,4,5,6,7].forEach(i=>later(900+i*200,()=>SFX.pop(i+1)))}
   if(S.k==='milky'||S.k==='cosmos')SFX.whoosh(false);
   metState.length=0;if(S.k==='meteor')for(let i=0;i<MET;i++)metState.push(newMeteor(i));
 };
+ov.addEventListener('click',e=>{const h=e.target.closest('[data-go]');if(h){setStep(sec,+h.dataset.go)}});
 function newMeteor(i){const P=PL.Earth.pos,r=PL.Earth.r;const dir=V(r2()-.5,r2()*.6+.2,r2()-.5).normalize();
   const tgt=P.clone().addScaledVector(V(r2()-.5,r2()-.2,r2()-.5).normalize(),r*.95);
   if(i===0){const sp=ship.position;return{a:sp.clone().add(V(14,5,-10)),b:sp.clone().add(V(-16,-4,12)),s:.9,d:1.1,big:true}}

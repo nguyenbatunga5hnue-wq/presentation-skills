@@ -1,188 +1,214 @@
-/* ===== comic strips: data + renderer ===== */
+/* ===== comic stories: one continuous story per topic, 4 panels per page ===== */
 CAST.cousin={skin:'#EFC29C',hair:'#1E1B22',style:'curly',shirt:'#2B8A9E',pants:'#3A3F55'};
 CAST.grandpa={skin:'#E5B089',hair:'#C9CCD2',style:'short',shirt:'#6B7A50',pants:'#4A4038',glasses:true};
-const CLOUDS='<g fill="#9AA4B4" opacity=".95"><ellipse cx="120" cy="60" rx="80" ry="26"/><ellipse cx="170" cy="44" rx="50" ry="24"/><ellipse cx="300" cy="80" rx="90" ry="28"/><ellipse cx="250" cy="66" rx="50" ry="22"/></g>';
-const SOFA='<rect x="40" y="196" width="190" height="46" rx="14" fill="#5B3EA6"/><rect x="30" y="180" width="30" height="62" rx="12" fill="#4A2F8E"/><rect x="214" y="180" width="30" height="62" rx="12" fill="#4A2F8E"/>';
+const CLOUDS='<g fill="#9AA4B4" opacity=".95" class="drift"><ellipse cx="120" cy="60" rx="80" ry="26"/><ellipse cx="170" cy="44" rx="50" ry="24"/><ellipse cx="300" cy="80" rx="90" ry="28"/><ellipse cx="250" cy="66" rx="50" ry="22"/></g>';
+const SOFA='<rect x="20" y="196" width="230" height="46" rx="14" fill="#5B3EA6"/><rect x="10" y="180" width="30" height="62" rx="12" fill="#4A2F8E"/><rect x="234" y="180" width="30" height="62" rx="12" fill="#4A2F8E"/>';
 const DESK='<rect x="0" y="214" width="400" height="12" fill="#B07B4F"/>';
 const C=(c,x,o={})=>Object.assign({c,x},o);
+const B=(t,x,y,w,who,o={})=>Object.assign({t,x,y,w,who},o);
 
-const COMICS={
-/* ---------------- STUDY ---------------- */
-S1:{t:'How Minh got into space',
- words:[{w:'get into something',vn:'bắt đầu thích, tìm hiểu',u:'get into + N / V-ing'},
-        {w:"pique someone's curiosity",vn:'khơi gợi sự tò mò',u:'Sth piques my curiosity.'},
-        {w:'be fascinated by',vn:'bị cuốn hút bởi',u:'be fascinated by + N'}],
- q:'What piqued your curiosity recently? How did you get into your favourite hobby?',
- p:[{bg:'tv',extra:SOFA,cap:'Minh, ten years old.',ch:[C('minh',150,{s:.8,y:232,mood:'surprised',fx:'spark'})],b:[{t:'Whoa… a black hole?!',x:6,y:20,w:40,tl:70}]},
-    {bg:'tv',extra:SOFA,cap:'That documentary [[piqued his curiosity|1]].',ch:[C('minh',150,{s:.8,y:232,mood:'excited',pose:'up'})],b:[{t:'I want to know EVERYTHING about space!',x:2,y:14,w:40,tl:80}]},
-    {bg:'class',ch:[C('lan',110,{mood:'happy',look:2}),C('minh',290,{flip:1,mood:'happy',look:-2})],b:[{t:'How did you [[get into|0]] astronomy, Minh?',x:3,y:4,w:46,tl:30},{t:'I [[got into|0]] it after a documentary when I was ten.',x:50,y:16,w:47,tl:70}]},
-    {bg:'roof',ch:[C('lan',100,{mood:'sleep',fx:'zz'}),C('minh',230,{mood:'love',pose:'hold'})],pr:[{k:'telescope',x:320,y:200,s:1}],b:[{t:"I've always [[been fascinated by|2]] space.",x:44,y:4,w:42,tl:30},{t:"And I've always been fascinated by… sleep.",x:2,y:24,w:40,tl:40}]}]},
-S2:{t:'Movie night',
- words:[{w:'gripping',vn:'hấp dẫn, lôi cuốn',u:'a gripping film / story / documentary'},
-        {w:'light-years away',vn:'rất rất xa (hàng năm ánh sáng)',u:'Sth is light-years away.'},
-        {w:'wrap my head around',vn:'hiểu được điều phức tạp',u:"can't wrap my head around + N"},
-        {w:'out of this world',vn:'tuyệt vời, khó tin',u:'The view was out of this world.'}],
- q:'Have you ever watched a gripping documentary or film? What was it about?',
- p:[{bg:'tv',extra:SOFA,ch:[C('lan',90,{s:.85,y:236,mood:'excited',look:3}),C('minh',170,{s:.85,y:236,mood:'happy',look:3})],b:[{t:'This documentary is absolutely [[gripping|0]]!',x:2,y:4,w:48,tl:25}]},
-    {bg:'tv',extra:SOFA,cap:'NARRATOR: “These galaxies are [[light-years away|1]].”',ch:[C('lan',90,{s:.85,y:236,mood:'surprised',look:3}),C('minh',170,{s:.85,y:236,mood:'surprised',look:3})],b:[]},
-    {bg:'tv',extra:SOFA,ch:[C('lan',90,{s:.85,y:236,mood:'confused',pose:'think',fx:'?'}),C('minh',170,{s:.85,y:236,mood:'happy',look:-3})],b:[{t:"I still can't [[wrap my head around|2]] black holes.",x:44,y:16,w:46,tl:10}]},
-    {bg:'room',ch:[C('lan',120,{mood:'happy',look:3}),C('minh',280,{flip:1,mood:'grin',pose:'up',fx:'spark'})],b:[{t:'The special effects were [[out of this world|3]]!',x:46,y:4,w:50,tl:55},{t:'Totally!',x:6,y:22,w:22,tl:60}]}]},
-S3:{t:'A school trip',
- words:[{w:'cutting-edge',vn:'hiện đại, tiên tiến',u:'cutting-edge technology / telescopes'},
-        {w:'meticulous',vn:'tỉ mỉ, cẩn thận',u:'be meticulous about + N'},
-        {w:'empirical evidence',vn:'bằng chứng thực nghiệm',u:'need / find empirical evidence'},
-        {w:'in-depth',vn:'sâu sắc, chi tiết',u:'an in-depth understanding / knowledge of'}],
- q:'Do you know someone who is meticulous? Is the technology at your school cutting-edge?',
- p:[{bg:'observatory',cap:'School trip to the observatory.',ch:[C('guide',100,{pose:'point',mood:'happy'}),C('minh',200,{mood:'excited',fx:'spark',look:3})],b:[{t:'This is our [[cutting-edge|0]] telescope.',x:2,y:18,w:42,tl:30}]},
-    {bg:'lab',extra:DESK,ch:[C('guide',200,{pose:'hold',hold:'notes',mood:'neutral'})],b:[{t:'Our astronomers are [[meticulous|1]]. They check every number three times!',x:4,y:4,w:58,tl:70}]},
-    {bg:'lab',extra:DESK,ch:[C('tom',110,{mood:'excited',pose:'up'}),C('guide',290,{flip:1,pose:'think',mood:'neutral'})],b:[{t:'So aliens are real?!',x:2,y:6,w:32,tl:40},{t:'Maybe! But we need [[empirical evidence|2]] first.',x:52,y:8,w:46,tl:65}]},
-    {bg:'lab',extra:DESK,ch:[C('minh',110,{pose:'hold',hold:'notes',mood:'happy'}),C('guide',290,{flip:1,mood:'happy'})],b:[{t:'Can I ask more questions? I want an [[in-depth|3]] understanding.',x:2,y:4,w:52,tl:25},{t:'Of course!',x:62,y:26,w:24,tl:60}]}]},
-S4:{t:'Life on Mars?',
- words:[{w:'far-fetched',vn:'xa vời, khó tin',u:'That sounds far-fetched.'},
-        {w:'jump on the bandwagon',vn:'chạy theo trào lưu',u:'jump on the bandwagon (of + N)'},
-        {w:'mundane',vn:'tầm thường, nhàm chán',u:'find sth mundane'},
-        {w:'downplay the role of',vn:'hạ thấp vai trò của',u:"Don't downplay the role of + N."}],
- q:'What trend have you jumped on the bandwagon of? What idea sounds far-fetched to you?',
- p:[{bg:'cafe',ch:[C('tom',110,{pose:'phone',hold:'phone',mood:'excited'}),C('lan',290,{flip:1,mood:'bored'})],b:[{t:"A billionaire says we'll live on Mars by 2035!",x:2,y:4,w:48,tl:30},{t:'That sounds [[far-fetched|0]].',x:58,y:24,w:36,tl:60}]},
-    {bg:'billboard',cap:'Soon, every brand [[jumped on the bandwagon|1]].',ch:[C('tom',80,{mood:'excited',look:3}),C('lan',150,{mood:'surprised',look:3})],b:[{t:'Mars burgers?!',x:2,y:30,w:28,tl:70}]},
-    {bg:'cafe',ch:[C('lan',110,{mood:'bored',pose:'shrug'}),C('minh',290,{flip:1,mood:'surprised',fx:'!'})],b:[{t:'Honestly, I find space news a bit [[mundane|2]].',x:2,y:4,w:46,tl:30}]},
-    {bg:'cafe',ch:[C('lan',110,{mood:'surprised'}),C('minh',290,{flip:1,pose:'point',mood:'angry'})],b:[{t:"Don't [[downplay the role of|3]] space science! Your phone's GPS needs satellites!",x:40,y:2,w:58,tl:70},{t:'Oh… really?',x:4,y:24,w:26,tl:50}]}]},
-S5:{t:'Exam week',
- words:[{w:'a closed book',vn:'điều mình không hiểu, không rành',u:'Sth is a closed book to me.'},
-        {w:'forte',vn:'sở trường',u:'Sth is (not) my forte.'},
-        {w:'come in handy',vn:'hữu ích, có lúc dùng đến',u:'Sth comes in handy (for + N).'},
-        {w:'a walk in the park',vn:'rất dễ, dễ như ăn kẹo',u:'Sth was a walk in the park.'}],
- q:'Which subject is your forte? Which subject is a closed book to you?',
- p:[{bg:'class',ch:[C('lan',200,{pose:'hold',hold:'physics',mood:'confused',fx:'swirl'})],b:[{t:'Physics is [[a closed book|0]] to me.',x:4,y:6,w:40,tl:80}]},
-    {bg:'class',ch:[C('lan',110,{mood:'sad'}),C('minh',290,{flip:1,pose:'wave',mood:'happy'})],b:[{t:"Don't worry. Science is my [[forte|1]]. I'll help you!",x:46,y:4,w:50,tl:65}]},
-    {bg:'board',ch:[C('minh',100,{pose:'point',mood:'happy',look:3}),C('lan',290,{flip:1,pose:'hold',hold:'notes',mood:'happy',fx:'bulb'})],b:[{t:'Your notes really [[come in handy|2]]!',x:50,y:14,w:40,tl:60}]},
-    {bg:'class',ch:[C('lan',120,{pose:'up',mood:'grin',fx:'spark'}),C('teacher',290,{flip:1,mood:'happy'})],b:[{t:'The test was [[a walk in the park|3]]!',x:2,y:4,w:42,tl:35},{t:'Well done, Lan!',x:62,y:22,w:30,tl:50}]}]},
-S6:{t:'Stargazing apps',
- words:[{w:'be all the rage',vn:'đang rất thịnh hành',u:'Sth is all the rage (now).'},
-        {w:'weather patterns',vn:'quy luật thời tiết',u:'track / study weather patterns'},
-        {w:'stargazing',vn:'ngắm sao',u:'go stargazing'}],
- q:'Which apps are all the rage among your friends? Have you ever gone stargazing?',
- p:[{bg:'cafe',ch:[C('lan',110,{pose:'phone',hold:'phone',mood:'excited'}),C('minh',290,{flip:1,mood:'happy'})],b:[{t:'Stargazing apps are [[all the rage|0]] right now!',x:2,y:4,w:46,tl:30},{t:'I know! I use one every night.',x:56,y:24,w:40,tl:60}]},
-    {bg:'roof',ch:[C('minh',200,{pose:'phone',hold:'phone',mood:'happy'})],b:[{t:'Mine also tracks [[weather patterns|1]].',x:4,y:8,w:42,tl:85}]},
-    {bg:'roof',extra:CLOUDS,ch:[C('minh',200,{mood:'sad'})],pr:[{k:'telescope',x:310,y:200}],b:[{t:'Clouds tonight… no [[stargazing|2]] for me.',x:2,y:30,w:42,tl:85}]},
-    {bg:'roof',ch:[C('lan',100,{mood:'excited',pose:'point'}),C('minh',220,{mood:'grin',pose:'up'})],pr:[{k:'telescope',x:320,y:200}],b:[{t:'Look! The clouds are gone!',x:2,y:6,w:34,tl:40},{t:'Perfect night for [[stargazing|2]]!',x:52,y:4,w:40,tl:30}]}]},
-/* ---------------- RELATIONSHIPS ---------------- */
-R1:{t:'The first day',
- words:[{w:'reserved',vn:'kín đáo, ít nói',u:'He is quite reserved (at first).'},
-        {w:'come across as',vn:'tạo ấn tượng là',u:'come across as + adj / N'},
-        {w:'strike up (a conversation)',vn:'bắt chuyện, bắt đầu (tình bạn)',u:'strike up a conversation / friendship with sb'},
-        {w:'hit it off',vn:'hợp nhau ngay từ đầu',u:'hit it off (straight away)'}],
- q:'Is it easy for you to strike up a conversation with a stranger?',
- p:[{bg:'class',cap:'First day at university. Nam is quite [[reserved|0]].',ch:[C('nam',250,{mood:'nervous'})],b:[{t:"Hmm… I don't know anyone here.",x:50,y:22,w:40,tl:30,think:1}]},
-    {bg:'class',ch:[C('lan',90,{pose:'think',mood:'neutral',look:3}),C('nam',310,{s:.8,y:262,mood:'nervous'})],b:[{t:'He [[comes across as|1]] shy…',x:20,y:10,w:34,tl:25,think:1}]},
-    {bg:'class',cap:'Lan [[strikes up a conversation|2]].',ch:[C('lan',110,{pose:'wave',mood:'happy'}),C('nam',290,{flip:1,mood:'surprised'})],b:[{t:'Hi! Is this seat free?',x:2,y:22,w:34,tl:40},{t:'Oh! Sure.',x:68,y:28,w:22,tl:30}]},
-    {bg:'cafe',cap:'They [[hit it off|3]] straight away.',ch:[C('lan',120,{mood:'grin',hold:'mug',pose:'hold'}),C('nam',280,{flip:1,mood:'grin',fx:'spark'})],b:[{t:"Ha ha! You're so funny!",x:58,y:22,w:34,tl:40}]}]},
-R2:{t:'Two personalities',
- words:[{w:'social butterfly',vn:'người hoà đồng, thích giao du',u:'She is a real social butterfly.'},
-        {w:'ambivert',vn:'người cân bằng giữa hướng nội và hướng ngoại',u:"I'd say I'm an ambivert."},
-        {w:'have a lot in common',vn:'có nhiều điểm chung',u:'have a lot / nothing in common (with sb)'},
-        {w:'be on the same wavelength',vn:'hiểu ý nhau',u:'We are on the same wavelength.'}],
- q:'Are you a social butterfly, an introvert or an ambivert? Why?',
- p:[{bg:'party',cap:'Lan is a real [[social butterfly|0]].',ch:[C('tom',60,{mood:'happy',s:.85,y:262}),C('lan',170,{pose:'wave',mood:'grin'}),C('minh',290,{flip:1,mood:'happy',s:.85,y:262}),C('cousin',360,{flip:1,mood:'happy',s:.85,y:262})],b:[{t:'Hi everyone!!',x:22,y:18,w:26,tl:60,shout:1}]},
-    {bg:'party',cap:'Nam is an [[ambivert|1]].',ch:[C('nam',200,{pose:'hold',hold:'mug',mood:'neutral'})],b:[{t:'I like parties… for about an hour.',x:52,y:20,w:40,tl:15}]},
-    {bg:'cafe',cap:'They [[have a lot in common|2]].',ch:[C('lan',110,{mood:'excited',pose:'point'}),C('nam',290,{flip:1,mood:'excited',pose:'up'})],b:[{t:'You love sci-fi films?',x:2,y:22,w:34,tl:40},{t:'Me too!',x:70,y:22,w:20,tl:30}]},
-    {bg:'cafe',cap:"They're always [[on the same wavelength|3]].",ch:[C('lan',110,{mood:'grin',pose:'point'}),C('nam',290,{flip:1,mood:'grin',pose:'point'})],b:[{t:'PIZZA!',x:8,y:24,w:22,tl:60,shout:1},{t:'PIZZA!',x:70,y:24,w:22,tl:40,shout:1}]}]},
-R3:{t:'The friend group',
- words:[{w:'tight-knit',vn:'gắn bó chặt chẽ',u:'a tight-knit group / family / community'},
-        {w:'see eye to eye (with)',vn:'đồng quan điểm',u:"don't always see eye to eye (with sb)"},
-        {w:'get along (with)',vn:'hoà hợp với',u:'get along well with sb'},
-        {w:'companionship',vn:'tình bạn, sự đồng hành',u:'need / enjoy companionship'}],
- q:'Do you and your best friend always see eye to eye?',
- p:[{bg:'park',cap:'A [[tight-knit|0]] group of friends.',ch:[C('tom',70,{mood:'grin'}),C('lan',160,{mood:'happy',pose:'up'}),C('nam',245,{mood:'happy'}),C('minh',330,{mood:'grin',pose:'wave'})],b:[]},
-    {bg:'cafe',cap:"They don't always [[see eye to eye|1]]…",ch:[C('tom',110,{pose:'point',mood:'angry'}),C('lan',290,{flip:1,pose:'hips',mood:'angry'})],b:[{t:'Horror films are the best!',x:2,y:22,w:36,tl:40},{t:'No way! Rom-coms!',x:62,y:22,w:34,tl:40}]},
-    {bg:'cafe',cap:'…but they [[get along|2]] really well.',ch:[C('tom',160,{pose:'hug',mood:'happy'}),C('lan',240,{flip:1,pose:'hug',mood:'happy'})],b:[{t:'OK, a rom-com this time!',x:2,y:22,w:36,tl:70}]},
-    {bg:'park',ch:[C('grandma',140,{mood:'happy'}),C('grandpa',250,{flip:1,mood:'happy'})],b:[{t:'At our age, [[companionship|3]] is what matters most.',x:4,y:4,w:56,tl:30}]}]},
-R4:{t:'After graduation',
- words:[{w:'keep in touch',vn:'giữ liên lạc',u:'keep in touch (with sb)'},
-        {w:'drift apart',vn:'dần xa cách',u:'Old friends can drift apart.'},
-        {w:'long-forgotten',vn:'bị lãng quên từ lâu',u:'a long-forgotten photo / friend / memory'},
-        {w:'lifelong friend',vn:'bạn suốt đời',u:'become lifelong friends'}],
- q:'Do you still keep in touch with your primary school friends?',
- p:[{bg:'campus',ch:[C('lan',140,{pose:'hug',mood:'grin'}),C('nam',250,{flip:1,pose:'hug',mood:'happy'})],b:[{t:"Promise we'll [[keep in touch|0]]!",x:2,y:6,w:38,tl:60},{t:'Promise!',x:72,y:10,w:20,tl:20}]},
-    {bg:'calendar',cap:'Busy jobs, new cities… they slowly [[drifted apart|1]].',ch:[C('lan',110,{s:.75,y:280,mood:'sad'}),C('nam',300,{s:.75,y:280,flip:1,mood:'sad'})],b:[]},
-    {bg:'room',ch:[C('lan',200,{pose:'hold',hold:'photo',mood:'surprised',fx:'!'})],b:[{t:'Wow… a [[long-forgotten|2]] photo of us!',x:4,y:6,w:40,tl:85}]},
-    {bg:'call',cap:'Some friends become [[lifelong friends|3]].',ch:[C('lan',105,{s:.8,y:250,mood:'grin',pose:'wave'}),C('nam',295,{s:.8,y:250,flip:1,mood:'grin',pose:'wave'})],b:[{t:"Lan! It's been ages!",x:54,y:20,w:34,tl:50}]}]},
-R5:{t:'A bad day',
- words:[{w:'a shoulder to cry on',vn:'người để tâm sự, dựa vào',u:'be a shoulder to cry on (for sb)'},
-        {w:'make the most of',vn:'tận dụng tối đa',u:'make the most of + time / weekend / chance'}],
- q:'Who is a shoulder to cry on for you? How do you make the most of your weekend?',
- p:[{bg:'rain',ch:[C('lan',200,{mood:'cry',pose:'cry'})],b:[{t:'I failed my driving test…',x:4,y:12,w:38,tl:85}]},
-    {bg:'rain',cap:'Nam is always [[a shoulder to cry on|0]].',ch:[C('lan',130,{mood:'cry',pose:'cry'}),C('nam',270,{flip:1,pose:'hold',hold:'tissue',mood:'sad'})],b:[{t:"Hey, it's OK. You'll pass next time.",x:52,y:22,w:42,tl:40}]},
-    {bg:'park',ch:[C('lan',110,{mood:'neutral'}),C('nam',290,{flip:1,pose:'point',mood:'grin'})],b:[{t:"It's the weekend! Let's [[make the most of|1]] it!",x:44,y:6,w:50,tl:65}]},
-    {bg:'beach',ch:[C('lan',130,{pose:'hold',hold:'icecream',mood:'grin'}),C('nam',260,{flip:1,pose:'hold',hold:'icecream',mood:'happy'})],b:[{t:'Best day ever!',x:4,y:14,w:30,tl:70}]}]},
-/* ---------------- SPECIAL EVENTS ---------------- */
-E1:{t:'Tết is coming',
- words:[{w:'festive mood',vn:'không khí lễ hội',u:'be in a festive mood'},
-        {w:'look forward to',vn:'mong chờ',u:'look forward to + N / V-ing'},
-        {w:'the highlight of the year',vn:'điều đáng mong nhất trong năm',u:'Sth is the highlight of my year.'},
-        {w:'eager',vn:'háo hức',u:'be eager to + V'}],
- q:'What do you look forward to every year? Why?',
- p:[{bg:'tetstreet',cap:'Late January. The whole city is in a [[festive mood|0]].',ch:[C('lan',90,{mood:'happy',look:3})],b:[]},
-    {bg:'room',ch:[C('lan',200,{pose:'up',mood:'excited'})],b:[{t:'I [[look forward to|1]] Tết every year!',x:4,y:8,w:40,tl:85}]},
-    {bg:'tet',ch:[C('mom',120,{mood:'happy'}),C('lan',260,{flip:1,mood:'grin',fx:'heart'})],b:[{t:"It's [[the highlight of my year|2]]!",x:42,y:12,w:52,tl:45}]},
-    {bg:'tet',ch:[C('lan',110,{mood:'happy'}),C('bin',260,{pose:'up',mood:'excited',fx:'spark'})],pr:[{k:'envelope',x:290,y:150,s:1.1}],b:[{t:"I'm [[eager|3]] to get lucky money!",x:44,y:24,w:40,tl:40}]}]},
-E2:{t:'Family time',
- words:[{w:'carry on a tradition',vn:'giữ gìn truyền thống',u:'carry on the tradition of + V-ing'},
-        {w:'get together',vn:'gặp nhau, tụ họp',u:'The family gets together (at Tết).'},
-        {w:'catch up (with)',vn:'gặp lại, hỏi han chuyện cũ',u:'catch up with sb'},
-        {w:'beloved',vn:'được yêu quý',u:'our beloved grandma / teacher'},
-        {w:'affection',vn:'tình cảm, sự yêu mến',u:'show affection (for sb)'}],
- q:'How does your family get together during Tết? What traditions do you carry on?',
- p:[{bg:'kitchen',ch:[C('grandma',120,{pose:'hold',hold:'banhchung',mood:'happy'}),C('lan',280,{flip:1,mood:'happy'})],b:[{t:'Every year, we [[carry on the tradition|0]] of making bánh chưng.',x:24,y:4,w:56,tl:15}]},
-    {bg:'table',cap:"On New Year's Eve, the whole family [[gets together|1]].",ch:[C('dad',60,{s:.8,y:250,mood:'grin'}),C('mom',150,{s:.8,y:250,mood:'happy'}),C('bin',225,{s:.8,y:250,mood:'excited'}),C('lan',300,{s:.8,y:250,mood:'happy'}),C('grandma',370,{s:.8,y:250,mood:'happy',flip:1})],b:[]},
-    {bg:'tet',ch:[C('lan',110,{pose:'wave',mood:'excited'}),C('cousin',290,{flip:1,mood:'grin'})],b:[{t:"Let's [[catch up|2]]! How's university?",x:2,y:6,w:40,tl:35},{t:'Busy, but fun!',x:66,y:24,w:28,tl:40}]},
-    {bg:'table',cap:'Our [[beloved|3]] grandma shows her [[affection|4]] with food.',ch:[C('grandma',130,{pose:'hold',mood:'love'}),C('lan',290,{flip:1,mood:'surprised'})],b:[{t:'Eat more!',x:6,y:32,w:22,tl:80}]}]},
-E3:{t:'The surprise party',
- words:[{w:'throw a party',vn:'tổ chức tiệc',u:'throw a party for sb'},
-        {w:'go all out',vn:'làm hết mình, chi mạnh tay',u:'go all out for + event'},
-        {w:'catch someone off guard',vn:'làm ai bất ngờ',u:'Sth caught me off guard.'},
-        {w:'freak out',vn:'hoảng hốt, phát cuồng',u:'freak out (when …)'},
-        {w:'the icing on the cake',vn:'điều làm mọi thứ tuyệt hơn',u:'… was the icing on the cake.'}],
- q:'Have you ever been caught off guard by a surprise? What happened?',
- p:[{bg:'cafe',ch:[C('lan',110,{mood:'excited',pose:'point'}),C('minh',230,{mood:'happy',look:-2}),C('tom',320,{flip:1,mood:'grin'})],b:[{t:"Let's [[throw a party|0]] for Nam's birthday!",x:2,y:4,w:46,tl:30}]},
-    {bg:'party',cap:'They [[went all out|1]]: balloons, music and a giant cake.',ch:[C('minh',90,{pose:'up',mood:'grin'}),C('tom',300,{flip:1,mood:'happy'})],pr:[{k:'balloon',x:60,y:110},{k:'balloon',x:130,y:96,s:.9},{k:'cake',x:200,y:236,s:1.2}],b:[]},
-    {bg:'flash',cap:'It [[caught him off guard|2]].',ch:[C('nam',200,{mood:'surprised',pose:'up',fx:'!'})],b:[{t:'SURPRISE!!!',x:4,y:22,w:28,tl:80,shout:1},{t:'I almost [[freaked out|3]]!',x:62,y:22,w:34,tl:20}]},
-    {bg:'party',ch:[C('nam',140,{mood:'love',pose:'hug'}),C('mom',240,{flip:1,mood:'happy',pose:'hug'})],b:[{t:'Mum came all the way from Đà Nẵng? That’s [[the icing on the cake|4]]!',x:2,y:4,w:58,tl:25}]}]},
-E4:{t:'Graduation day',
- words:[{w:'be on edge',vn:'hồi hộp, lo lắng',u:"I'm always on edge before + N"},
-        {w:'red-letter day',vn:'ngày đặc biệt đáng nhớ',u:'It was a red-letter day for me.'},
-        {w:'be moved by',vn:'xúc động trước',u:'be (deeply) moved by + N'},
-        {w:'commemorate',vn:'kỷ niệm (ngày, sự kiện)',u:'commemorate + event'}],
- q:'What was a red-letter day in your life?',
- p:[{bg:'stage',ch:[C('nam',200,{mood:'nervous'})],b:[{t:"I'm so [[on edge|0]]… what if I fall on stage?",x:4,y:22,w:40,tl:85}]},
-    {bg:'stage',cap:'It all went well. A [[red-letter day|1]] for Nam!',ch:[C('nam',200,{pose:'up',mood:'grin',fx:'spark'})],pr:[{k:'diploma',x:240,y:136,s:1}],b:[]},
-    {bg:'audience',ch:[C('mom',140,{mood:'cry',pose:'cry'}),C('dad',260,{flip:1,mood:'happy'})],b:[{t:'I was so [[moved by|2]] your speech, son.',x:40,y:4,w:44,tl:20}]},
-    {bg:'campus',ch:[C('lan',110,{mood:'happy'}),C('nam',300,{flip:1,mood:'happy'})],pr:[{k:'sapling',x:205,y:250,s:1.3}],b:[{t:'We planted a tree to [[commemorate|3]] our graduation.',x:2,y:4,w:56,tl:20}]}]},
-E5:{t:'Two kinds of festivals',
- words:[{w:'in full swing',vn:'đang diễn ra sôi động',u:'The festival was in full swing.'},
-        {w:'laid-back',vn:'thoải mái, không gò bó',u:'a laid-back party / festival / person'}],
- q:'Do you prefer big, busy festivals or laid-back ones? Why?',
- p:[{bg:'crowd',cap:"By 9 a.m., the Hùng Kings' Festival was [[in full swing|0]].",ch:[],pr:[{k:'drum',x:200,y:214,s:1.1}],b:[]},
-    {bg:'crowd',ch:[C('nam',200,{mood:'nervous',s:.9,y:252})],b:[{t:"It's so crowded… I can't move!",x:4,y:16,w:38,tl:85}]},
-    {bg:'moonpark',ch:[C('lan',120,{mood:'happy'}),C('nam',280,{flip:1,mood:'happy'})],b:[{t:'I prefer a [[laid-back|1]] festival like this.',x:44,y:28,w:44,tl:60}]},
-    {bg:'moonpark',ch:[C('lan',140,{pose:'hold',mood:'grin'}),C('nam',270,{flip:1,mood:'happy'})],b:[{t:'Me too. Lanterns, mooncakes and good friends!',x:2,y:28,w:42,tl:70}]}]}
+/* every word taught in the stories: key -> headword, meaning, pattern */
+const WORDS={
+ gripping:{w:'gripping',vn:'hấp dẫn, lôi cuốn',u:'a gripping film / story / documentary'},
+ pique:{w:"pique someone's curiosity",vn:'khơi gợi sự tò mò',u:'Sth piques my curiosity.'},
+ getinto:{w:'get into something',vn:'bắt đầu thích, tìm hiểu',u:'get into + N / V-ing'},
+ fascinated:{w:'be fascinated by',vn:'bị cuốn hút bởi',u:'be fascinated by + N'},
+ lightyears:{w:'light-years away',vn:'rất rất xa (hàng năm ánh sáng)',u:'Sth is light-years away.'},
+ wrap:{w:'wrap my head around',vn:'hiểu được điều phức tạp',u:"can't wrap my head around + N"},
+ cutting:{w:'cutting-edge',vn:'hiện đại, tiên tiến',u:'cutting-edge technology / telescopes'},
+ outofworld:{w:'out of this world',vn:'tuyệt vời, khó tin',u:'The view was out of this world.'},
+ meticulous:{w:'meticulous',vn:'tỉ mỉ, cẩn thận',u:'be meticulous about + N'},
+ empirical:{w:'empirical evidence',vn:'bằng chứng thực nghiệm',u:'need / find empirical evidence'},
+ indepth:{w:'in-depth',vn:'sâu sắc, chi tiết',u:'an in-depth understanding / knowledge of'},
+ farfetched:{w:'far-fetched',vn:'xa vời, khó tin',u:'That sounds far-fetched.'},
+ bandwagon:{w:'jump on the bandwagon',vn:'chạy theo trào lưu',u:'jump on the bandwagon (of + N)'},
+ mundane:{w:'mundane',vn:'tầm thường, nhàm chán',u:'find sth mundane'},
+ downplay:{w:'downplay the role of',vn:'hạ thấp vai trò của',u:"Don't downplay the role of + N."},
+ closedbook:{w:'a closed book',vn:'điều mình không hiểu, không rành',u:'Sth is a closed book to me.'},
+ forte:{w:'forte',vn:'sở trường',u:'Sth is (not) my forte.'},
+ handy:{w:'come in handy',vn:'hữu ích, có lúc dùng đến',u:'Sth comes in handy (for + N).'},
+ walkpark:{w:'a walk in the park',vn:'rất dễ, dễ như ăn kẹo',u:'Sth was a walk in the park.'},
+ rage:{w:'be all the rage',vn:'đang rất thịnh hành',u:'Sth is all the rage (now).'},
+ weather:{w:'weather patterns',vn:'quy luật thời tiết',u:'track / study weather patterns'},
+ stargazing:{w:'stargazing',vn:'ngắm sao',u:'go stargazing'},
+ reserved:{w:'reserved',vn:'kín đáo, ít nói',u:'He is quite reserved (at first).'},
+ comeacross:{w:'come across as',vn:'tạo ấn tượng là',u:'come across as + adj / N'},
+ strikeup:{w:'strike up (a conversation)',vn:'bắt chuyện, bắt đầu (tình bạn)',u:'strike up a conversation / friendship with sb'},
+ hititoff:{w:'hit it off',vn:'hợp nhau ngay từ đầu',u:'hit it off (straight away)'},
+ butterfly:{w:'social butterfly',vn:'người hoà đồng, thích giao du',u:'She is a real social butterfly.'},
+ ambivert:{w:'ambivert',vn:'người cân bằng giữa hướng nội và hướng ngoại',u:"I'd say I'm an ambivert."},
+ common:{w:'have a lot in common',vn:'có nhiều điểm chung',u:'have a lot / nothing in common (with sb)'},
+ wavelength:{w:'be on the same wavelength',vn:'hiểu ý nhau',u:'We are on the same wavelength.'},
+ tightknit:{w:'tight-knit',vn:'gắn bó chặt chẽ',u:'a tight-knit group / family / community'},
+ eyetoeye:{w:'see eye to eye (with)',vn:'đồng quan điểm',u:"don't always see eye to eye (with sb)"},
+ getalong:{w:'get along (with)',vn:'hoà hợp với',u:'get along well with sb'},
+ shoulder:{w:'a shoulder to cry on',vn:'người để tâm sự, dựa vào',u:'be a shoulder to cry on (for sb)'},
+ makemost:{w:'make the most of',vn:'tận dụng tối đa',u:'make the most of + time / weekend / chance'},
+ touch:{w:'keep in touch',vn:'giữ liên lạc',u:'keep in touch (with sb)'},
+ drift:{w:'drift apart',vn:'dần xa cách',u:'Old friends can drift apart.'},
+ longforgotten:{w:'long-forgotten',vn:'bị lãng quên từ lâu',u:'a long-forgotten photo / friend / memory'},
+ companionship:{w:'companionship',vn:'tình bạn, sự đồng hành',u:'need / enjoy companionship'},
+ lifelong:{w:'lifelong friend',vn:'bạn suốt đời',u:'become lifelong friends'},
+ festive:{w:'festive mood',vn:'không khí lễ hội',u:'be in a festive mood'},
+ lookforward:{w:'look forward to',vn:'mong chờ',u:'look forward to + N / V-ing'},
+ highlight:{w:'the highlight of the year',vn:'điều đáng mong nhất trong năm',u:'Sth is the highlight of my year.'},
+ eager:{w:'eager',vn:'háo hức',u:'be eager to + V'},
+ tradition:{w:'carry on a tradition',vn:'giữ gìn truyền thống',u:'carry on the tradition of + V-ing'},
+ gettogether:{w:'get together',vn:'gặp nhau, tụ họp',u:'The family gets together (at Tết).'},
+ catchup:{w:'catch up (with)',vn:'gặp lại, hỏi han chuyện cũ',u:'catch up with sb'},
+ beloved:{w:'beloved',vn:'được yêu quý',u:'our beloved grandma / teacher'},
+ affection:{w:'affection',vn:'tình cảm, sự yêu mến',u:'show affection (for sb)'},
+ throwparty:{w:'throw a party',vn:'tổ chức tiệc',u:'throw a party for sb'},
+ allout:{w:'go all out',vn:'làm hết mình, chi mạnh tay',u:'go all out for + event'},
+ offguard:{w:'catch someone off guard',vn:'làm ai bất ngờ',u:'Sth caught me off guard.'},
+ freakout:{w:'freak out',vn:'hoảng hốt, phát cuồng',u:'freak out (when …)'},
+ icing:{w:'the icing on the cake',vn:'điều làm mọi thứ tuyệt hơn',u:'… was the icing on the cake.'},
+ onedge:{w:'be on edge',vn:'hồi hộp, lo lắng',u:"I'm always on edge before + N"},
+ redletter:{w:'red-letter day',vn:'ngày đặc biệt đáng nhớ',u:'It was a red-letter day for me.'},
+ moved:{w:'be moved by',vn:'xúc động trước',u:'be (deeply) moved by + N'},
+ commemorate:{w:'commemorate',vn:'kỷ niệm (ngày, sự kiện)',u:'commemorate + event'},
+ fullswing:{w:'in full swing',vn:'đang diễn ra sôi động',u:'The festival was in full swing.'},
+ laidback:{w:'laid-back',vn:'thoải mái, không gò bó',u:'a laid-back party / festival / person'}
 };
 
-function kwHtml(t){return esc(t).replace(/\[\[(.+?)\|(\d+)\]\]/g,'<button class="kw" data-k="$2">$1</button>')}
-function panelSvg(p){return`<svg viewBox="0 0 400 290" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${bg(p.bg)}${p.extra||''}${(p.pr||[]).filter(x=>x.k!=='telescope'&&x.k!=='sapling'&&x.k!=='star_lantern').map(x=>prop(x.k,x.x,x.y,x.s||1)).join('')}${(p.ch||[]).map(char).join('')}${(p.pr||[]).filter(x=>x.k==='telescope'||x.k==='sapling'||x.k==='star_lantern').map(x=>prop(x.k,x.x,x.y,x.s||1)).join('')}</svg>`}
-function renderComic(sec){const D=COMICS[sec.dataset.comic];if(!D)return;
-  sec.innerHTML=`<div class="hdr"><h2>${esc(D.t)}</h2><div class="tools"><button class="b sm" data-act="cm-all">Hiện cả 4 khung</button><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
-   <div class="cwrap"><div class="cgrid">${D.p.map((p,i)=>`<div class="pan" data-i="${i}">${panelSvg(p)}<span class="pno">${i+1}</span>
-     ${p.cap?`<div class="cap">${kwHtml(p.cap)}</div>`:''}
-     ${(p.b||[]).map(b=>`<div class="bub${b.think?' think':''}${b.shout?' shout':''}" style="left:${b.x}%;top:${b.y}%;width:${b.w}%;--tl:${b.tl==null?50:b.tl}%">${kwHtml(b.t)}</div>`).join('')}</div>`).join('')}</div>
-   <aside class="cside"><div class="clbl">Từ trong truyện</div>${D.words.map((w,k)=>`<div class="wd" data-k="${k}" tabindex="0" role="button" aria-expanded="false"><div class="wh"><b>${esc(w.w)}</b><button class="spk" data-say="${esc(w.w.replace(/\(.*?\)/g,''))}" aria-label="Nghe phát âm">🔊</button></div><div class="wm"><span>${esc(w.vn)}</span><i>${esc(w.u)}</i></div></div>`).join('')}
-   <div class="yturn"><span>Your turn</span>${esc(D.q)}</div></aside></div>`;
-  sec.dataset.steps=6}
-$$('.slide[data-comic]').forEach(s=>{renderComic(s);const id=s.id;
-  STEP[id]=(s,n)=>{$$('.pan',s).forEach((p,i)=>p.classList.toggle('in',i<n));$$('.wd',s).forEach(w=>{w.classList.toggle('open',n>=5);w.setAttribute('aria-expanded',n>=5)});
-    $('.yturn',s).classList.toggle('in',n>=6);if(n>=1&&n<=4)SFX.pop(n);if(n===5)SFX.chime();if(n===6)SFX.ding()};
-  ENTER[id]=s=>STEP[id](s,stepOf(s))});
-document.addEventListener('click',e=>{const k=e.target.closest('.kw');if(k){const s=k.closest('.slide');const w=$(`.wd[data-k="${k.dataset.k}"]`,s);if(w){w.classList.add('open');w.setAttribute('aria-expanded',true);w.classList.remove('pulse');void w.offsetWidth;w.classList.add('pulse')}SFX.pop(4);return}
+const STORIES={
+/* ---------------- STUDY ---------------- */
+study:{t:'Minh and the stars',
+ q:['What piqued your curiosity recently?','Which subject is your forte, and which one is a closed book to you?','Does living on Mars sound far-fetched to you? Why?'],
+ pages:[
+ [{bg:'tv',extra:SOFA,cap:'Ten years ago…',ch:[C('mom',60,{s:.85,y:262,mood:'happy',look:3}),C('minh',140,{s:.72,y:255,mood:'surprised',fx:'spark',look:3}),C('dad',220,{s:.85,y:262,mood:'grin',look:3})],
+   b:[B('Whoa… a black hole?!',4,22,30,1),B('This documentary is [[gripping|gripping]]!',40,12,36,2)]},
+  {bg:'tv',extra:SOFA,cap:'That film [[piqued his curiosity|pique]].',ch:[C('mom',60,{s:.85,y:262,mood:'happy'}),C('minh',140,{s:.72,y:255,mood:'excited',pose:'up'}),C('dad',220,{s:.85,y:262,mood:'grin',look:-2})],
+   b:[B('I want to know EVERYTHING about space!',26,15,40,1),B('Bedtime first!',2,32,22,0)]},
+  {bg:'class',cap:'Ten years later, at university',ch:[C('tom',70,{s:.88,y:268,mood:'happy',look:3}),C('lan',170,{s:.88,y:268,mood:'happy',look:3,enter:'l'}),C('minh',310,{s:.9,flip:1,mood:'grin',look:-2})],
+   b:[B('How did you [[get into|getinto]] astronomy?',12,13,36,1),B("I [[got into|getinto]] it after a documentary. I've always [[been fascinated by|fascinated]] space!",52,12,46,2)]},
+  {bg:'tv',extra:SOFA,cap:'NARRATOR: “These galaxies are [[light-years away|lightyears]].”',ch:[C('lan',70,{s:.85,y:262,mood:'confused',pose:'think',fx:'?'}),C('minh',150,{s:.85,y:262,mood:'love',look:3}),C('tom',230,{s:.85,y:262,mood:'surprised',look:3})],
+   b:[B("I can't [[wrap my head around|wrap]] that!",2,24,34,0),B('Shh! This part is amazing!',56,26,32,2)]}],
+ [{bg:'observatory',cap:'A school trip to the observatory',ch:[C('guide',80,{pose:'point',mood:'happy',s:.92,y:268}),C('minh',180,{mood:'excited',fx:'spark',s:.9,y:268,enter:'l'}),C('lan',250,{mood:'happy',s:.85,y:268,look:-2})],
+   b:[B('This is our [[cutting-edge|cutting]] telescope.',2,14,36,0),B('The view must be [[out of this world|outofworld]]!',40,24,34,1)]},
+  {bg:'lab',extra:DESK,ch:[C('guide',100,{pose:'hold',hold:'notes',mood:'neutral'}),C('minh',220,{mood:'happy',look:-2,s:.92,y:268}),C('tom',320,{flip:1,mood:'surprised',s:.92,y:268})],
+   b:[B('Our astronomers are [[meticulous|meticulous]]. They check every number three times!',2,4,56,0),B('Three times?!',66,24,26,2)]},
+  {bg:'lab',extra:DESK,ch:[C('tom',90,{pose:'up',mood:'excited',s:.92,y:268}),C('guide',220,{pose:'think',mood:'neutral'}),C('lan',330,{flip:1,mood:'grin',s:.88,y:268})],
+   b:[B('So aliens are real?!',2,8,30,0),B('Maybe! But we need [[empirical evidence|empirical]] first.',36,6,46,1)]},
+  {bg:'lab',extra:DESK,ch:[C('minh',90,{pose:'hold',hold:'notes',mood:'happy',s:.92,y:268}),C('guide',210,{mood:'happy',s:.92,y:268}),C('lan',320,{flip:1,mood:'nervous',s:.88,y:268})],
+   b:[B('I want an [[in-depth|indepth]] understanding of black holes!',2,4,46,0),B('Then study physics!',40,27,28,1),B('Physics…?',72,22,24,2,{think:1})]}],
+ [{bg:'cafe',ch:[C('tom',80,{pose:'phone',hold:'phone',mood:'excited',s:.92,y:268}),C('lan',200,{mood:'bored',s:.9,y:268}),C('minh',320,{flip:1,mood:'neutral',s:.9,y:268})],
+   b:[B("A billionaire says we'll live on Mars by 2035!",2,4,44,0),B('That sounds [[far-fetched|farfetched]].',44,24,30,1)]},
+  {bg:'billboard',cap:'Soon, every brand [[jumped on the bandwagon|bandwagon]].',ch:[C('tom',60,{mood:'excited',s:.88,y:270,pose:'point'}),C('lan',130,{mood:'surprised',s:.85,y:270,look:3}),C('minh',200,{mood:'confused',s:.85,y:270,look:3,fx:'?'})],
+   b:[B('Mars burgers?!',2,22,24,0)]},
+  {bg:'cafe',ch:[C('lan',90,{mood:'bored',pose:'shrug',s:.92,y:268}),C('minh',220,{mood:'surprised',fx:'!',s:.92,y:268}),C('tom',330,{flip:1,mood:'happy',s:.9,y:268})],
+   b:[B('Honestly, I find space news a bit [[mundane|mundane]].',2,4,46,0),B('Uh-oh…',70,24,20,2)]},
+  {bg:'cafe',ch:[C('lan',90,{mood:'surprised',s:.92,y:268}),C('tom',200,{mood:'grin',s:.9,y:268}),C('minh',320,{flip:1,pose:'point',mood:'angry',s:.92,y:268})],
+   b:[B("Don't [[downplay the role of|downplay]] space science! Your phone's GPS needs satellites!",38,3,60,2),B('Oh… really?',2,26,24,0)]}],
+ [{bg:'class',ch:[C('lan',90,{pose:'hold',hold:'physics',mood:'confused',fx:'swirl',s:.92,y:268}),C('minh',220,{pose:'wave',mood:'happy',s:.92,y:268}),C('teacher',330,{flip:1,mood:'neutral',s:.88,y:268})],
+   b:[B('Physics is [[a closed book|closedbook]] to me.',2,4,34,0),B("Don't worry. Science is my [[forte|forte]]!",40,8,36,1)]},
+  {bg:'board',ch:[C('minh',80,{pose:'point',mood:'happy',look:3,s:.92,y:268}),C('lan',220,{pose:'hold',hold:'notes',mood:'happy',fx:'bulb',s:.92,y:268}),C('tom',330,{flip:1,mood:'sleep',fx:'zz',s:.9,y:268})],
+   b:[B('Your notes really [[come in handy|handy]]!',34,14,36,1)]},
+  {bg:'class',ch:[C('lan',100,{pose:'up',mood:'grin',fx:'spark',s:.92,y:268}),C('minh',220,{mood:'happy',s:.9,y:268}),C('teacher',330,{flip:1,mood:'happy',s:.88,y:268})],
+   b:[B('The test was [[a walk in the park|walkpark]]!',2,4,40,0),B('Well done, Lan!',64,22,30,2)]},
+  {bg:'roof',ch:[C('lan',70,{pose:'phone',hold:'phone',mood:'excited',s:.9,y:268}),C('tom',165,{mood:'happy',s:.88,y:268}),C('minh',255,{pose:'up',mood:'grin',s:.9,y:268})],pr:[{k:'telescope',x:350,y:200}],
+   b:[B('Stargazing apps are [[all the rage|rage]]! Mine even tracks [[weather patterns|weather]].',2,4,52,0),B('Clear sky: perfect for [[stargazing|stargazing]]!',52,26,40,2)]}]
+ ]},
+/* ---------------- RELATIONSHIPS ---------------- */
+rel:{t:'Lan, Nam and friends',
+ q:['Is it easy for you to strike up a conversation with a stranger?','Are you a social butterfly, an introvert or an ambivert?','Do you still keep in touch with your childhood friends?'],
+ pages:[
+ [{bg:'class',cap:'First day at university. Nam is quite [[reserved|reserved]].',ch:[C('lan',60,{s:.85,y:268,mood:'grin',look:2}),C('tom',140,{s:.85,y:268,mood:'happy',look:-2}),C('minh',220,{s:.85,y:268,mood:'happy',look:-2}),C('nam',340,{s:.85,y:268,flip:1,mood:'nervous'})],
+   b:[B("I don't know anyone here…",58,18,38,3,{think:1})]},
+  {bg:'class',ch:[C('lan',80,{pose:'think',mood:'neutral',look:3,s:.9,y:268}),C('tom',180,{mood:'neutral',look:3,s:.88,y:268}),C('nam',330,{s:.85,y:268,flip:1,mood:'nervous'})],
+   b:[B("Who's that?",30,14,22,1),B('He [[comes across as|comeacross]] shy…',2,26,32,0,{think:1})]},
+  {bg:'class',cap:'Lan [[strikes up a conversation|strikeup]].',ch:[C('tom',40,{s:.8,y:268,mood:'grin'}),C('lan',130,{pose:'wave',mood:'happy',s:.92,y:268,enter:'l'}),C('nam',300,{flip:1,mood:'surprised',s:.92,y:268})],
+   b:[B('Hi! Is this seat free?',14,18,30,1),B('Oh! Sure.',66,24,22,2)]},
+  {bg:'cafe',cap:'They [[hit it off|hititoff]] straight away.',ch:[C('lan',100,{pose:'hold',hold:'mug',mood:'grin',s:.92,y:268}),C('minh',200,{s:.82,y:268,mood:'happy'}),C('nam',300,{flip:1,mood:'grin',fx:'spark',s:.92,y:268})],
+   b:[B("Ha ha! You're so funny!",56,18,36,2)]}],
+ [{bg:'party',cap:'Lan is a real [[social butterfly|butterfly]].',ch:[C('tom',55,{mood:'happy',s:.85,y:266}),C('lan',150,{pose:'wave',mood:'grin',s:.92,y:268}),C('minh',250,{flip:1,mood:'happy',s:.85,y:266}),C('cousin',340,{flip:1,mood:'happy',s:.85,y:266})],
+   b:[B('Hi everyone!!',22,18,26,1,{shout:1})]},
+  {bg:'party',cap:'Nam is an [[ambivert|ambivert]]: quiet in big groups, chatty with friends.',ch:[C('nam',110,{pose:'hold',hold:'mug',mood:'happy',s:.92,y:268}),C('minh',270,{flip:1,mood:'excited',pose:'point',s:.92,y:268})],
+   b:[B('You love sci-fi too?',50,26,30,1),B('Yes! We [[have a lot in common|common]]!',2,28,38,0)]},
+  {bg:'cafe',cap:"Lan and Nam are always [[on the same wavelength|wavelength]].",ch:[C('lan',80,{pose:'point',mood:'grin',s:.9,y:268}),C('tom',200,{mood:'surprised',fx:'?',s:.88,y:268}),C('nam',320,{flip:1,pose:'point',mood:'grin',s:.9,y:268})],
+   b:[B('PIZZA!',2,22,20,0,{shout:1}),B('PIZZA!',76,22,20,2,{shout:1}),B('How do you DO that?',32,30,32,1)]},
+  {bg:'park',cap:'Soon, the four became a [[tight-knit|tightknit]] group.',ch:[C('tom',60,{mood:'grin',s:.88,y:268}),C('lan',150,{mood:'happy',pose:'up',s:.88,y:268}),C('nam',245,{mood:'happy',s:.88,y:268}),C('minh',335,{mood:'grin',pose:'wave',flip:1,s:.88,y:268})],
+   b:[B('Best friends!',26,24,24,1)]}],
+ [{bg:'cafe',cap:"They don't always [[see eye to eye|eyetoeye]]…",ch:[C('tom',80,{pose:'point',mood:'angry',s:.92,y:268}),C('nam',200,{s:.85,y:268,mood:'nervous'}),C('lan',320,{flip:1,pose:'hips',mood:'angry',s:.92,y:268})],
+   b:[B('Horror films are the best!',2,16,32,0),B('No way! Rom-coms!',66,16,32,2)]},
+  {bg:'cafe',cap:'…but they [[get along|getalong]] really well.',ch:[C('tom',140,{pose:'hug',mood:'happy',s:.92,y:268}),C('lan',230,{flip:1,pose:'hug',mood:'happy',s:.92,y:268}),C('nam',340,{flip:1,s:.85,y:268,mood:'grin'})],
+   b:[B('OK, a rom-com this time!',2,20,34,0)]},
+  {bg:'rain',cap:'Nam is always [[a shoulder to cry on|shoulder]].',ch:[C('lan',100,{mood:'cry',pose:'cry',s:.92,y:268}),C('nam',240,{flip:1,pose:'hold',hold:'tissue',mood:'sad',s:.92,y:268}),C('minh',340,{flip:1,s:.85,y:268,mood:'sad'})],
+   b:[B('I failed my driving test…',2,18,32,0),B("You'll pass next time.",46,22,30,1)]},
+  {bg:'beach',ch:[C('lan',70,{pose:'hold',hold:'icecream',mood:'grin',s:.88,y:268}),C('nam',170,{pose:'point',mood:'grin',s:.88,y:268}),C('minh',265,{pose:'hold',hold:'icecream',mood:'happy',s:.88,y:268}),C('tom',350,{flip:1,pose:'up',mood:'excited',s:.88,y:268})],
+   b:[B("It's the weekend. Let's [[make the most of|makemost]] it!",14,6,48,1)]}],
+ [{bg:'campus',ch:[C('lan',70,{pose:'hug',mood:'grin',s:.88,y:268}),C('nam',160,{pose:'hug',mood:'happy',s:.88,y:268}),C('minh',255,{pose:'wave',mood:'happy',s:.88,y:268}),C('tom',345,{flip:1,mood:'grin',s:.88,y:268})],
+   b:[B("Promise we'll [[keep in touch|touch]]!",2,6,36,0),B('Promise!',58,10,22,2)]},
+  {bg:'calendar',cap:'Busy jobs, new cities… they slowly [[drifted apart|drift]].',ch:[C('lan',110,{s:.75,y:280,mood:'sad'}),C('nam',300,{s:.75,y:280,flip:1,mood:'sad'})],b:[]},
+  {bg:'room',ch:[C('lan',120,{pose:'hold',hold:'photo',mood:'surprised',fx:'!',s:.92,y:268}),C('grandma',290,{flip:1,mood:'happy',s:.92,y:268})],
+   b:[B('A [[long-forgotten|longforgotten]] photo of us!',2,8,36,0),B('Old friends are precious. [[Companionship|companionship]] is what matters most.',42,6,54,1)]},
+  {bg:'call',cap:'Some friends become [[lifelong friends|lifelong]].',ch:[C('lan',105,{s:.8,y:250,mood:'grin',pose:'wave'}),C('nam',295,{s:.8,y:250,flip:1,mood:'grin',pose:'wave'})],
+   b:[B("Lan! It's been ages!",54,20,34,1)]}]
+ ]},
+/* ---------------- SPECIAL EVENTS ---------------- */
+ev:{t:'A year to remember',
+ q:['What do you look forward to every year?','How does your family get together during Tết?','What was a red-letter day in your life?'],
+ pages:[
+ [{bg:'tetstreet',cap:'January. The whole city is in a [[festive mood|festive]].',ch:[C('mom',70,{s:.88,y:268,mood:'happy'}),C('lan',160,{s:.88,y:268,mood:'excited',enter:'l'}),C('bin',240,{s:.95,y:268,mood:'excited',pose:'up'})],
+   b:[B('I [[look forward to|lookforward]] Tết every year!',22,18,36,1)]},
+  {bg:'tet',ch:[C('mom',80,{mood:'happy',s:.9,y:268}),C('lan',200,{mood:'grin',fx:'heart',s:.9,y:268}),C('bin',310,{flip:1,pose:'up',mood:'excited',fx:'spark'})],pr:[{k:'envelope',x:335,y:150,s:1.1}],
+   b:[B("It's [[the highlight of my year|highlight]]!",22,8,38,1),B("I'm [[eager|eager]] to get lucky money!",58,26,38,2)]},
+  {bg:'kitchen',ch:[C('grandma',100,{pose:'hold',hold:'banhchung',mood:'happy',s:.92,y:268}),C('lan',230,{mood:'happy',s:.9,y:268}),C('bin',320,{flip:1,mood:'excited'})],
+   b:[B('Every year, we [[carry on the tradition|tradition]] of making bánh chưng.',2,4,56,0)]},
+  {bg:'table',cap:"On New Year's Eve, the whole family [[gets together|gettogether]].",ch:[C('dad',60,{s:.8,y:250,mood:'grin'}),C('mom',150,{s:.8,y:250,mood:'happy'}),C('bin',225,{s:.8,y:250,mood:'excited'}),C('lan',300,{s:.8,y:250,mood:'happy'}),C('grandma',370,{s:.8,y:250,mood:'happy',flip:1})],b:[]}],
+ [{bg:'tet',ch:[C('lan',100,{pose:'wave',mood:'excited',s:.9,y:268}),C('cousin',220,{mood:'grin',s:.9,y:268,enter:'r'}),C('grandma',330,{flip:1,mood:'happy',s:.88,y:268})],
+   b:[B("Let's [[catch up|catchup]]! How's university?",2,6,38,0),B('Busy, but fun!',44,24,26,1)]},
+  {bg:'table',cap:'Our [[beloved|beloved]] grandma shows her [[affection|affection]] with food.',ch:[C('grandma',110,{pose:'hold',mood:'love',s:.92,y:268}),C('lan',250,{flip:1,mood:'surprised',s:.9,y:268}),C('cousin',340,{flip:1,mood:'grin',s:.88,y:268})],
+   b:[B('Eat more!',4,28,22,0)]},
+  {bg:'cafe',ch:[C('lan',80,{pose:'point',mood:'excited',s:.92,y:268}),C('minh',200,{mood:'happy',s:.9,y:268}),C('tom',320,{flip:1,mood:'grin',s:.9,y:268})],
+   b:[B("Let's [[throw a party|throwparty]] for Nam's birthday!",2,6,44,0),B('Great idea!',66,24,26,2)]},
+  {bg:'party',cap:'They [[went all out|allout]]: balloons, music and a giant cake.',ch:[C('minh',70,{pose:'up',mood:'grin',s:.88,y:268}),C('lan',140,{mood:'happy',s:.85,y:268}),C('tom',330,{flip:1,mood:'happy',s:.88,y:268})],pr:[{k:'balloon',x:40,y:110},{k:'balloon',x:110,y:96,s:.9},{k:'cake',x:235,y:236,s:1.2}],b:[]}],
+ [{bg:'flash',cap:'It [[caught him off guard|offguard]].',ch:[C('lan',70,{s:.85,y:268,pose:'up',mood:'grin'}),C('nam',200,{mood:'surprised',pose:'up',fx:'!',s:.92,y:268}),C('tom',330,{s:.85,y:268,flip:1,pose:'up',mood:'grin'})],
+   b:[B('SURPRISE!!!',2,16,28,0,{shout:1}),B('I almost [[freaked out|freakout]]!',58,18,34,1)]},
+  {bg:'party',ch:[C('nam',130,{pose:'hug',mood:'love',s:.92,y:268}),C('mom',220,{flip:1,pose:'hug',mood:'happy',s:.92,y:268,enter:'r'}),C('lan',330,{flip:1,s:.85,y:268,mood:'happy'})],
+   b:[B('Mum came all the way from Đà Nẵng? That’s [[the icing on the cake|icing]]!',2,4,58,0)]},
+  {bg:'stage',ch:[C('nam',200,{mood:'nervous',s:.92,y:268}),C('teacher',320,{flip:1,s:.85,y:268,mood:'happy'})],
+   b:[B("I'm so [[on edge|onedge]]… what if I fall on stage?",4,22,40,0),B('Nguyễn Văn Nam!',60,30,30,1)]},
+  {bg:'stage',cap:'It went perfectly. A [[red-letter day|redletter]] for Nam!',ch:[C('nam',200,{pose:'up',mood:'grin',fx:'spark',s:.92,y:268}),C('teacher',320,{flip:1,s:.85,y:268,mood:'happy'})],pr:[{k:'diploma',x:236,y:146,s:1}],b:[]}],
+ [{bg:'audience',ch:[C('mom',110,{mood:'cry',pose:'cry',s:.92,y:268}),C('dad',220,{mood:'happy',s:.92,y:268}),C('lan',320,{flip:1,mood:'happy',s:.88,y:268})],
+   b:[B('I was so [[moved by|moved]] your speech, son.',22,6,44,0)]},
+  {bg:'campus',ch:[C('lan',65,{mood:'happy',s:.85,y:268}),C('nam',145,{mood:'grin',s:.85,y:268}),C('minh',305,{flip:1,mood:'happy',s:.85,y:268}),C('tom',370,{flip:1,s:.8,y:268,mood:'grin'})],pr:[{k:'sapling',x:225,y:250,s:1.3}],
+   b:[B('We planted a tree to [[commemorate|commemorate]] our graduation.',2,4,56,0)]},
+  {bg:'crowd',cap:"Hùng Kings' Festival. By 9 a.m., it was [[in full swing|fullswing]].",ch:[C('nam',200,{mood:'nervous',s:.9,y:252})],
+   b:[B("So crowded… I can't move!",56,24,36,0)]},
+  {bg:'moonpark',ch:[C('lan',100,{mood:'happy',s:.9,y:268}),C('nam',210,{mood:'happy',s:.9,y:268}),C('minh',320,{flip:1,mood:'grin',s:.9,y:268})],
+   b:[B('I prefer a [[laid-back|laidback]] festival like this.',30,18,40,1),B('Me too!',2,32,18,0)]}]
+ ]}
+};
+
+/* ---------- renderer ---------- */
+function kwHtml(t){return esc(t).replace(/\[\[(.+?)\|(\w+)\]\]/g,'<span class="kw" role="button" tabindex="0" data-k="$2">$1</span>')}
+const keysOf=t=>[...String(t).matchAll(/\[\[.+?\|(\w+)\]\]/g)].map(m=>m[1]);
+function panelSvg(p){const talk=new Set((p.b||[]).map(b=>b.who).filter(w=>w!=null));const front=['telescope','sapling','star_lantern'];
+  return`<svg viewBox="0 0 400 290" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${bg(p.bg)}${p.extra||''}${(p.pr||[]).filter(x=>!front.includes(x.k)).map(x=>prop(x.k,x.x,x.y,x.s||1)).join('')}${(p.ch||[]).map((c,i)=>char(Object.assign({talk:talk.has(i)},c))).join('')}${(p.pr||[]).filter(x=>front.includes(x.k)).map(x=>prop(x.k,x.x,x.y,x.s||1)).join('')}</svg>`}
+function bubHtml(p,b,i){let tl=b.tl;if(tl==null&&b.who!=null&&p.ch[b.who]){const cx=p.ch[b.who].x/4;tl=Math.max(10,Math.min(90,(cx-b.x)/b.w*100))}if(tl==null)tl=50;
+  return`<div class="bub${b.think?' think':''}${b.shout?' shout':''}" style="left:${b.x}%;top:${b.y}%;width:${b.w}%;--tl:${tl}%;--bi:${i}">${kwHtml(b.t)}</div>`}
+function renderStory(sec){const D=STORIES[sec.dataset.story];if(!D)return;const P=D.pages,N=P.length*4;let gi=0;
+  const all=[...new Set(P.flat().flatMap(p=>[p.cap||'',...(p.b||[]).map(b=>b.t)]).flatMap(keysOf))];
+  sec.innerHTML=`<div class="hdr"><h2>${esc(D.t)}</h2><div class="tools"><span class="pgdots">${P.map((_,i)=>`<button data-pg="${i}" aria-label="Trang ${i+1}">${i+1}</button>`).join('')}</span><button class="b sm" data-act="cm-page">Hiện cả trang</button><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+   <div class="cwrap"><div class="cbook">${P.map((pg,pi)=>`<div class="cpage" data-p="${pi}"><div class="cgrid">${pg.map(p=>{gi++;return`<div class="pan" data-g="${gi}">${panelSvg(p)}<span class="pno">${gi}</span>
+     ${p.cap?`<div class="cap">${kwHtml(p.cap)}</div>`:''}${(p.b||[]).map((b,i)=>bubHtml(p,b,i)).join('')}</div>`}).join('')}</div></div>`).join('')}
+     <div class="ytov"><div class="ytbox"><span>Your turn</span><ol>${D.q.map(q=>`<li>${esc(q)}</li>`).join('')}</ol><div class="ytwords">${all.map(k=>`<i>${esc(WORDS[k].w)}</i>`).join('')}</div></div></div></div>
+   <aside class="cside"><div class="clbl">Từ mới · trang <b class="pgn">1</b></div><div class="wlist"></div></aside></div>`;
+  sec.dataset.steps=N+1;sec._pages=P;sec._page=-1}
+function paintWords(sec,pi){const P=sec._pages,keys=[...new Set(P[pi].flatMap(p=>[p.cap||'',...(p.b||[]).map(b=>b.t)]).flatMap(keysOf))];
+  $('.pgn',sec).textContent=pi+1;
+  $('.wlist',sec).innerHTML=keys.map(k=>{const w=WORDS[k];return`<div class="wd" data-k="${k}" tabindex="0" role="button" aria-expanded="false"><div class="wh"><b>${esc(w.w)}</b><button class="spk" data-say="${esc(w.w.replace(/\(.*?\)/g,''))}" aria-label="Nghe phát âm">🔊</button></div><div class="wm"><div><span>${esc(w.vn)}</span><i>${esc(w.u)}</i></div></div></div>`}).join('')}
+$$('.slide[data-story]').forEach(s=>{renderStory(s);const id=s.id,N=s._pages.length*4;
+  STEP[id]=(s,n)=>{const pi=Math.max(0,Math.min(s._pages.length-1,Math.floor((Math.max(1,Math.min(n,N))-1)/4)));
+    if(pi!==s._page){const prev=s._page;s._page=pi;$$('.cpage',s).forEach(c=>{const p=+c.dataset.p;c.classList.toggle('on',p===pi);c.classList.toggle('fwd',p===pi&&pi>prev)});paintWords(s,pi);if(prev>=0)SFX.whoosh(pi>prev)}
+    $$('.pgdots button',s).forEach(b=>{b.classList.toggle('on',+b.dataset.pg===pi);b.classList.toggle('done',+b.dataset.pg<pi)});
+    $$('.pan',s).forEach(p=>p.classList.toggle('in',+p.dataset.g<=n));
+    $('.ytov',s).classList.toggle('in',n>N);
+    if(n>N)SFX.chime();else if(n>=1)SFX.pop((n-1)%4+1)};
+  ENTER[id]=s=>{s._page=-1;STEP[id](s,stepOf(s))}});
+document.addEventListener('click',e=>{const k=e.target.closest('.kw');if(k){const s=k.closest('.slide');const w=$(`.wd[data-k="${k.dataset.k}"]`,s);if(w){w.classList.add('open');w.setAttribute('aria-expanded',true);w.classList.remove('pulse');void w.offsetWidth;w.classList.add('pulse');w.scrollIntoView({block:'nearest',behavior:'smooth'})}SFX.pop(4);return}
   const w=e.target.closest('.wd');if(w&&!e.target.closest('.spk')){w.classList.toggle('open');w.setAttribute('aria-expanded',w.classList.contains('open'));SFX.tick();return}
-  const a=e.target.closest('[data-act="cm-all"]');if(a){const s=a.closest('.slide');if(stepOf(s)<4)setStep(s,4)}});
-document.addEventListener('keydown',e=>{const w=e.target.closest&&e.target.closest('.wd');if(w&&(e.key==='Enter'||e.key===' ')){e.preventDefault();w.click()}});
+  const pg=e.target.closest('.pgdots [data-pg]');if(pg){const s=pg.closest('.slide');setStep(s,(+pg.dataset.pg+1)*4);return}
+  const a=e.target.closest('[data-act="cm-page"]');if(a){const s=a.closest('.slide');setStep(s,Math.min(s._pages.length*4,(s._page+1)*4))}});
+document.addEventListener('keydown',e=>{const w=e.target.closest&&e.target.closest('.wd,.kw');if(w&&(e.key==='Enter'||e.key===' ')){e.preventDefault();w.click()}});

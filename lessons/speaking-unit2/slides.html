@@ -1,0 +1,143 @@
+<meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap">
+<script src="three.min.js"></script>
+<main id="viewport"><div id="stage">
+
+<section class="slide dark title" data-title="Uncommon topics" style="justify-content:center"><h1>Uncommon topics</h1></section>
+
+<section class="slide" id="sScore" data-title="Bảng điểm nhóm">
+ <div class="hdr"><h2>Bảng điểm nhóm</h2>
+  <div class="tools"><button class="b pri" id="scBack" hidden>↩ Quay lại</button><button class="b sm" data-act="sc-add">+ Thêm nhóm</button><button class="b sm" data-act="sc-del">− Bớt nhóm</button><button class="b sm" data-act="sc-reset">Về 0</button></div></div>
+ <div class="board" id="board"></div>
+</section>
+
+<section class="slide dark" data-title="Study" style="justify-content:center"><h1>Study · Hành trình vũ trụ</h1></section>
+
+<section class="slide space" id="sSpace" data-title="Hành trình vũ trụ 3D">
+ <div class="sp3d">
+  <div class="sp-labels"></div>
+  <div class="sp-ov">
+   <svg viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid slice" aria-label="Đài thiên văn trên đồi vào ban đêm">
+    <defs><linearGradient id="ovsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#050a1f"/><stop offset=".7" stop-color="#1b2a5a"/><stop offset="1" stop-color="#3a3f7a"/></linearGradient>
+     <radialGradient id="ovglow"><stop offset="0" stop-color="#fff6c8" stop-opacity=".9"/><stop offset="1" stop-color="#fff6c8" stop-opacity="0"/></radialGradient></defs>
+    <rect width="1280" height="720" fill="url(#ovsky)"/>
+    <g class="ovstars"></g>
+    <path class="ovmw" d="M-40 420 Q 400 120 1320 60" stroke="#c9d6ff" stroke-width="120" opacity=".08" fill="none"/>
+    <circle cx="1080" cy="130" r="46" fill="#fff3c9"/><circle cx="1100" cy="116" r="42" fill="#0b1433"/>
+    <path d="M0 600 Q 300 470 640 560 T 1280 540 V720 H0Z" fill="#141d3d"/>
+    <path d="M0 650 Q 380 580 760 640 T 1280 620 V720 H0Z" fill="#0d1430"/>
+    <g class="obs">
+     <rect x="720" y="440" width="240" height="150" fill="#d9dfe7"/><rect x="805" y="510" width="60" height="80" fill="#8a5a3c"/>
+     <rect x="740" y="470" width="30" height="24" rx="3" fill="#f2b84b"/><rect x="910" y="470" width="30" height="24" rx="3" fill="#f2b84b"/>
+     <g class="tele"><rect x="828" y="330" width="120" height="30" rx="8" fill="#3e6fd8"/><rect x="938" y="324" width="22" height="42" rx="4" fill="#16213a"/></g>
+     <path d="M712 442 A128 128 0 0 1 968 442Z" fill="#eef2f7"/>
+     <rect class="shut" x="826" y="316" width="28" height="126" fill="#16213a"/>
+     <path class="beam" d="M940 345 L1180 60 L1240 110 Z" fill="url(#ovglow)" opacity="0"/>
+    </g>
+    <g class="kid">
+     <path d="M330 545 L350 480 L370 545" stroke="#9aa4b4" stroke-width="5" fill="none"/>
+     <rect x="300" y="452" width="110" height="24" rx="7" fill="#e9705a" transform="rotate(-32 350 470)"/>
+     <circle cx="270" cy="470" r="26" fill="#f5c9a0"/><path d="M244 466 a26 26 0 0 1 52 0 q-18 -10 -52 0z" fill="#1e1b22"/>
+     <path d="M252 498 q18 -8 36 0 l4 60 h-44z" fill="#3e6fd8"/><path d="M286 506 l34 -24" stroke="#3e6fd8" stroke-width="10" stroke-linecap="round"/>
+     <rect x="254" y="556" width="12" height="40" rx="5" fill="#2b3550"/><rect x="272" y="556" width="12" height="40" rx="5" fill="#2b3550"/>
+    </g>
+    <g class="sstar"><line x1="0" y1="0" x2="-180" y2="-60" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".8"/><circle r="6" fill="#fff"/></g>
+   </svg>
+  </div>
+  <div class="sp-top"><h2>Hành trình vũ trụ</h2>
+   <div class="tools"><button class="b sm" data-act="sp-quiz">Chế độ đố: tắt</button><button class="b sm" data-act="sp-labels">Tên hành tinh</button><button class="b sm" data-act="sp-view">Góc nhìn gốc</button><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+  <div class="wcard" aria-live="polite"></div>
+  <div class="sp-route"></div>
+ </div>
+</section>
+
+<section class="slide comic" id="cS1" data-comic="S1" data-title="Comic · How Minh got into space"></section>
+<section class="slide comic" id="cS2" data-comic="S2" data-title="Comic · Movie night"></section>
+<section class="slide comic" id="cS3" data-comic="S3" data-title="Comic · A school trip"></section>
+<section class="slide comic" id="cS4" data-comic="S4" data-title="Comic · Life on Mars?"></section>
+<section class="slide comic" id="cS5" data-comic="S5" data-title="Comic · Exam week"></section>
+<section class="slide comic" id="cS6" data-comic="S6" data-title="Comic · Stargazing apps"></section>
+
+<section class="slide dark" data-title="Relationships" style="justify-content:center"><h1>Relationships</h1></section>
+<section class="slide comic" id="cR1" data-comic="R1" data-title="Comic · The first day"></section>
+<section class="slide comic" id="cR2" data-comic="R2" data-title="Comic · Two personalities"></section>
+<section class="slide comic" id="cR3" data-comic="R3" data-title="Comic · The friend group"></section>
+<section class="slide comic" id="cR4" data-comic="R4" data-title="Comic · After graduation"></section>
+<section class="slide comic" id="cR5" data-comic="R5" data-title="Comic · A bad day"></section>
+
+<section class="slide dark" data-title="Special events" style="justify-content:center"><h1>Special events</h1></section>
+<section class="slide comic" id="cE1" data-comic="E1" data-title="Comic · Tết is coming"></section>
+<section class="slide comic" id="cE2" data-comic="E2" data-title="Comic · Family time"></section>
+<section class="slide comic" id="cE3" data-comic="E3" data-title="Comic · The surprise party"></section>
+<section class="slide comic" id="cE4" data-comic="E4" data-title="Comic · Graduation day"></section>
+<section class="slide comic" id="cE5" data-comic="E5" data-title="Comic · Two kinds of festivals"></section>
+
+<section class="slide dark" data-title="Discourse markers" style="justify-content:center"><h1>Discourse markers</h1></section>
+
+<section class="slide" id="sDM" data-title="4 nhóm discourse markers" data-steps="5">
+ <div class="hdr"><h2>Discourse markers</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="dmdef"><b>Discourse markers</b> are words or phrases that <u>connect</u>, <u>organise</u> and <u>manage</u> what we say. In the exam, they help <u>structure</u> your answers and make your points <u>clearer</u> and more <u>coherent</u>.</div>
+ <div class="dmgrid">
+  <div class="dmc c1"><h3>Causes &amp; effects</h3><div class="dmp"><i>Thanks to</i><i>As a result (of)</i><i>Consequently</i><i>This has the effect of</i></div>
+   <p><mark>Thanks to</mark> my geography teacher, I got into maps. <mark>As a result</mark>, I love travelling.</p></div>
+  <div class="dmc c2"><h3>Comparing &amp; contrasting</h3><div class="dmp"><i>Whereas</i><i>On the contrary</i><i>Instead of</i><i>Otherwise</i></div>
+   <p>My sister is a social butterfly, <mark>whereas</mark> I'm quite reserved.</p></div>
+  <div class="dmc c3"><h3>Similarities</h3><div class="dmp"><i>Likewise</i><i>In the same way</i><i>In a similar fashion</i><i>Just as</i></div>
+   <p><mark>Just as</mark> my grandparents did, we carry on the tradition of making bánh chưng.</p></div>
+  <div class="dmc c4"><h3>Referring to a previous argument</h3><div class="dmp"><i>Like I said</i><i>As I said earlier</i><i>As I mentioned before</i></div>
+   <p><mark>As I mentioned before</mark>, I've always been fascinated by space.</p></div>
+ </div>
+</section>
+
+<section class="slide" id="sSort" data-title="Xếp discourse markers">
+ <div class="hdr"><h2>Xếp vào đúng cột</h2>
+  <div class="tools"><button class="b sm" data-round="a1">Activity 1</button><button class="b sm" data-round="a3">Activity 3</button><button class="b" data-act="so-check">Kiểm tra</button><button class="b" data-act="so-ans">Đáp án</button><button class="b sm" data-act="so-reset">Làm lại</button><span class="sres"></span><div class="timer sm2" data-sec="180" data-label="Nhóm"></div></div></div>
+ <div class="spool" aria-label="Các cụm từ"></div>
+ <div class="scols"></div>
+</section>
+
+<section class="slide dark" data-title="Speaking" style="justify-content:center"><h1>Speaking practice</h1></section>
+
+<section class="slide" id="sCue" data-title="Nói theo từ gợi ý">
+ <div class="hdr"><h2>Nói theo từ gợi ý</h2>
+  <div class="tools"><button class="b sm" data-topic="study">Study</button><button class="b sm" data-topic="rel">Relationships</button><button class="b sm" data-topic="ev">Special events</button><button class="b sm" data-topic="a4">Activity 4</button></div></div>
+ <div class="cuegrid">
+  <div class="col" style="gap:1.6cqi">
+   <div class="cq"></div>
+   <div class="cchips"></div>
+  </div>
+  <div class="cside2">
+   <div class="timer" data-sec="45" data-label="Thời gian nói"></div>
+   <div class="clbl">Nhóm đang trả lời</div>
+   <div class="cgroups"></div>
+   <button class="b pri big" data-act="cu-pay">+0 điểm</button>
+   <div class="row" style="gap:.6cqi"><button class="b" data-act="cu-swap">↻ Đổi từ</button><button class="b" data-act="cu-next">Câu tiếp ▸</button></div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" id="sPair" data-title="Luyện theo cặp">
+ <div class="hdr"><h2>Luyện theo cặp</h2>
+  <div class="tools"><button class="b sm" data-ptopic="study">Study</button><button class="b sm" data-ptopic="rel">Relationships</button><button class="b sm" data-ptopic="ev">Special events</button></div></div>
+ <div class="pairgrid">
+  <div class="col" style="gap:1cqi;min-height:0">
+   <div class="ptask"></div>
+   <div class="row" style="align-items:center;gap:1cqi"><div class="timer sm2" data-sec="180" data-label="Một lượt"></div><button class="b pri" data-act="pa-swap">⇄ Đổi vai</button></div>
+  </div>
+  <div class="notes">
+   <div class="nhd"><b>Ghi chú của GV</b><div class="tools"><button class="b sm" data-act="pa-add">+ Thêm cặp</button><button class="b sm" data-act="pa-copy">Sao chép</button><button class="b sm" data-act="pa-hide">Ẩn ghi chú</button></div></div>
+   <div class="nlist"></div>
+  </div>
+ </div>
+</section>
+
+<section class="slide" id="sFeed" data-title="Nhận xét">
+ <div class="hdr"><h2>Nhận xét</h2><div class="tools"><button class="b sm" data-act="fd-names">Hiện tên cặp</button></div></div>
+ <div class="feedgrid">
+  <div class="fbox good"><h3>Good language 👍</h3><ul class="fgood"></ul></div>
+  <div class="fbox fix"><h3>Let's fix it ✍ <small>bấm để xem cách sửa</small></h3><ul class="ffix"></ul></div>
+  <div class="fbox tags"><h3>Cả lớp</h3><div class="ftags"></div></div>
+ </div>
+</section>
+
+<section class="slide dark" data-title="Bài về nhà" style="justify-content:center"><h1>Bài về nhà · LMS Student, Unit 2</h1></section>

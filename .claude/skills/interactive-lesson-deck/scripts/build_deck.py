@@ -7,6 +7,7 @@ LESSON_DIR holds (see examples/map-labelling):
   slides.html    every <section class="slide"> of the lesson; may contain {{EXERCISES}}
   main.js        the lesson controller (navigation, steps, interactions)
   maps.js        optional: window.MAPDATA for the town-map engine
+  pics.js        optional: illustration library (e.g. window.PICS of animated SVGs), loaded before main.js
   exercises.py   optional: html() returns the book-exercise slides that replace {{EXERCISES}}
   extra.css      optional: lesson-specific styles
   media/         optional: images and audio the slides reference (copied next to the page)
@@ -50,7 +51,8 @@ bar = '''
 '''
 runtime = rd(os.path.join(A, 'runtime-sfx-scoreboard.html'))
 scripts = []
-if os.path.exists(L('maps.js')): scripts.append(rd(L('maps.js')))
+for lib in ('maps.js', 'pics.js'):
+    if os.path.exists(L(lib)): scripts.append(rd(L(lib)))
 if 'TownMap' in rd(L('main.js')): scripts.append(rd(os.path.join(A, 'townmap-engine.js')))
 scripts.append(rd(L('main.js')))
 page = head + slides + bar + runtime + ''.join(f'<script>\n{s}\n</script>\n' for s in scripts)

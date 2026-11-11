@@ -1,6 +1,8 @@
 (function(){
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const slides=$$('.slide');let cur=0;
+$$('[data-pic]').forEach(x=>{x.innerHTML=(window.PICS||{})[x.dataset.pic]||''});
+$$('[data-icon]').forEach(x=>{x.innerHTML=(window.ICONS||{})[x.dataset.icon]||''});
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 
@@ -57,8 +59,8 @@ const PET=JSON.parse($('#petalData').textContent);
 STEP.sFlower=(s,n)=>{const fl=$('.flower',s);fl.classList.toggle('core-in',n>=1);
   $$('.petal',fl).forEach((p,i)=>{p.classList.toggle('in',n>=i+2);p.classList.toggle('cur',n===i+2)});
   $$('.frow',s).forEach((r,i)=>{r.classList.toggle('in',n>=i+2);r.classList.toggle('cur',n===i+2)});
-  $('.fnote',s).classList.toggle('in',n>=PET.length+2);fl.classList.toggle('full',n>=PET.length+2);
-  if(!n)return;if(n===1)SFX.thud();else if(n>=PET.length+2)SFX.chime();else SFX.pop((n%6)+1)};
+  fl.classList.toggle('full',n>=PET.length+1);
+  if(!n)return;if(n===1)SFX.thud();else if(n>=PET.length+1)SFX.chime();else SFX.pop((n%6)+1)};
 function demoPetal(s,k){const r=$(`.frow[data-p="${k}"]`,s),p=$(`.petal[data-p="${k}"]`,s);
   if(!p.classList.contains('in'))return;$$('.frow',s).forEach(x=>x.classList.toggle('cur',x===r));$$('.petal',s).forEach(x=>x.classList.toggle('cur',x===p));SFX.tick()}
 
@@ -68,12 +70,12 @@ function fInit(s,qi){s.dataset.qi=qi;s.dataset.used='';const qs=JSON.parse(s.dat
   $$('[data-fq]',s).forEach(b=>b.classList.toggle('on',+b.dataset.fq===qi));
   $('.flog',s).innerHTML='';fTask(s,null);$$('.timer',s).forEach(t=>t.reset())}
 function fTask(s,p){const used=s.dataset.used?s.dataset.used.split(','):[];const box=$('.task',s);
-  box.innerHTML=p?`<span class="tn">${used.length+1}</span><div><b>${p.ic} ${esc(p.lb)} <small>${esc(p.vi)}</small></b><p>${esc(p.st)}</p></div>`
-    :`<span class="tn">1</span><div><b>Trả lời thẳng</b><p>Yes / No + một ý ngắn</p></div>`;
+  box.innerHTML=p?`<span class="tn">${used.length+2}</span><div><b><i class="tic">${ICONS[p.k]}</i>${esc(p.lb)} <small>${esc(p.vi)}</small></b><p>${esc(p.st)}</p></div>`
+    :`<span class="tn">1</span><div><b>Direct answer</b><p>Yes, I… / No, I…</p></div>`;
   box.classList.remove('flash');void box.offsetWidth;box.classList.add('flash')}
 function fOpen(s,k){const used=s.dataset.used?s.dataset.used.split(','):[];if(used.includes(k))return;
   const p=PET.find(x=>x.k===k),log=$('.flog',s);
-  const prevTxt=$('.task b',s).textContent;log.insertAdjacentHTML('beforeend',`<span class="done">✓ ${esc(prevTxt)}</span>`);
+  const prevTxt=$('.task b',s).textContent.trim();log.insertAdjacentHTML('beforeend',`<span class="done">✓ ${esc(prevTxt)}</span>`);
   fTask(s,p);used.push(k);s.dataset.used=used.join(',');
   $$('.petal',s).forEach(x=>x.classList.toggle('cur',x.dataset.p===k));$(`.petal[data-p="${k}"]`,s).classList.add('in');
   $$('.timer',s).forEach(t=>t.reset());SFX.pop(used.length%6+1)}
@@ -81,11 +83,16 @@ $$('.fstep').forEach(s=>fInit(s,0));
 
 /* ---------- guess the word from a picture ---------- */
 function gShow(s,i){const D=JSON.parse($('.gdata',s).textContent);i=(i+D.length)%D.length;s.dataset.gi=i;const d=D[i];
-  $('.gimg',s).textContent=d.pic;$$('.tile',s).forEach(t=>t.classList.remove('off'));
+  $('.gimg',s).innerHTML=PICS[d.w]||'';$$('.tile',s).forEach(t=>t.classList.remove('off'));gBlur(s,5);s.classList.remove('lit');
   $('.gword',s).innerHTML=d.w.split(' ').map(w=>`<span class="wd">${[...w].map(c=>/[a-z]/i.test(c)?`<span class="lt" data-c="${esc(c)}"></span>`:`<span class="pc">${esc(c)}</span>`).join('')}</span>`).join('');
   $('.gvi',s).textContent=d.vi;$('.gvi',s).classList.remove('in');s.classList.remove('ans');
   $$('.gdot',s).forEach((b,k)=>b.classList.toggle('on',k===i))}
 $$('.gslide').forEach(s=>gShow(s,0));
+function gBlur(s,v){s.dataset.blur=v;$('.gimg',s).style.filter=s.classList.contains('g-blur')&&v>0?`blur(${v*5}px) grayscale(${v>2?1:.4})`:''}
+$$('.g-spot .gpic').forEach(g=>{g.addEventListener('pointermove',e=>{const r=g.getBoundingClientRect(),sp=$('.spot',g);g.classList.add('manual');
+  sp.style.setProperty('--sx',((e.clientX-r.left)/r.width*100)+'%');sp.style.setProperty('--sy',((e.clientY-r.top)/r.height*100)+'%')});
+  g.addEventListener('pointerleave',()=>g.classList.remove('manual'))});
+$$('.g-blur .gpic').forEach(g=>g.addEventListener('click',()=>{const s=g.closest('.slide');gBlur(s,Math.max(0,+s.dataset.blur-1));SFX.pop(6-+s.dataset.blur)}));
 const gWord=s=>JSON.parse($('.gdata',s).textContent)[+s.dataset.gi];
 
 /* ---------- memory cards ---------- */
@@ -121,7 +128,7 @@ function qSave(s){const who=s.dataset.who;
 /* ---------- teacher's notebook ---------- */
 const hm=t=>{const d=new Date(t);return d.getHours()+':'+String(d.getMinutes()).padStart(2,'0')};
 ENTER.sLog=()=>{LOG=loadLog();const tot={};LOG.forEach(r=>{tot[r.who]=tot[r.who]||{p:0,n:0};tot[r.who].p+=r.pts;tot[r.who].n++});
-  $('#logSum').innerHTML=Object.keys(tot).length?Object.entries(tot).map(([w,v])=>`<div class="ls"><b>${esc(w)}</b><span>${v.n} lượt · ${v.p} điểm</span></div>`).join(''):'<div class="ls empty">Chưa có lượt chấm nào. Chấm ở các slide luyện nói rồi bấm “Cộng điểm &amp; lưu”.</div>';
+  $('#logSum').innerHTML=Object.keys(tot).length?Object.entries(tot).map(([w,v])=>`<div class="ls"><b>${esc(w)}</b><span>${v.n} lượt · ${v.p} điểm</span></div>`).join(''):'<div class="ls empty">Chưa có lượt chấm.</div>';
   $('#logBody').innerHTML=LOG.slice().reverse().map(r=>`<tr><td>${hm(r.ts)}</td><td><b>${esc(r.who)}</b></td><td><small>${esc(r.topic)}</small><br>${esc(r.q)}</td>
     <td>${r.said.map(k=>`<span class="ok">✓ ${esc(k)}</span>`).join(' ')} ${r.miss.map(k=>`<span class="no">✗ ${esc(k)}</span>`).join(' ')}</td>
     <td class="pt">${r.pts}<small>cụm ${r.said.length} · mở rộng ${r.ext} · trôi chảy ${r.flu}</small></td><td>${esc(r.note)}</td></tr>`).join('')};
@@ -159,10 +166,11 @@ document.addEventListener('click',e=>{
     case 'step':next();break;
     case 'vc-all':{const all=$$('.vc',s),on=!all.every(f=>f.classList.contains('on'));all.forEach((f,i)=>setTimeout(()=>f.classList.toggle('on',on),i*45));SFX.whoosh();break}
     case 'gk-all':{const all=$$('.gk',s),on=!all.every(x=>x.classList.contains('show'));all.forEach((x,i)=>setTimeout(()=>x.classList.toggle('show',on),i*150));if(on)SFX.chime();break}
-    case 'g-open':$$('.tile',s).forEach((t,i)=>setTimeout(()=>t.classList.add('off'),i*40));SFX.whoosh();break;
+    case 'g-open':$$('.tile',s).forEach((t,i)=>setTimeout(()=>t.classList.add('off'),i*40));s.classList.add('lit');SFX.whoosh();break;
+    case 'g-clear':gBlur(s,Math.max(0,+s.dataset.blur-1));SFX.pop(6-+s.dataset.blur);break;
     case 'g-first':$$('.wd',s).forEach(w=>{const l=$('.lt',w);if(l){l.textContent=l.dataset.c;l.classList.add('in')}});SFX.pop(3);break;
     case 'g-vi':$('.gvi',s).classList.add('in');SFX.pop(2);break;
-    case 'g-ans':$$('.lt',s).forEach((l,i)=>setTimeout(()=>{l.textContent=l.dataset.c;l.classList.add('in')},i*45));$$('.tile',s).forEach(t=>t.classList.add('off'));
+    case 'g-ans':$$('.lt',s).forEach((l,i)=>setTimeout(()=>{l.textContent=l.dataset.c;l.classList.add('in')},i*45));$$('.tile',s).forEach(t=>t.classList.add('off'));gBlur(s,0);s.classList.add('lit');
       s.classList.add('ans');$('.gvi',s).classList.add('in');SFX.chime();say(gWord(s).w);break;
     case 'g-prev':gShow(s,+s.dataset.gi-1);SFX.whoosh(false);break;
     case 'g-next':gShow(s,+s.dataset.gi+1);SFX.whoosh();break;
@@ -178,8 +186,8 @@ document.addEventListener('click',e=>{
     case 'q-save':qSave(s);break;
     case 'log-copy':{const txt=LOG.map(r=>[hm(r.ts),r.who,r.topic,r.q,'✓ '+r.said.join(', '),'✗ '+r.miss.join(', '),r.pts,r.note].join('\t')).join('\n');
       (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>{b.textContent='✓ Đã sao chép';SFX.ding()}).catch(()=>{b.textContent='Không sao chép được'});
-      setTimeout(()=>b.textContent='📋 Sao chép',2000);break}
-    case 'log-clear':if(b.dataset.sure){LOG=[];saveLog(LOG);ENTER.sLog();delete b.dataset.sure;b.textContent='🗑 Xoá sổ';SFX.whoosh(false)}else{b.dataset.sure='1';b.textContent='Bấm lần nữa để xoá'}break;
+      setTimeout(()=>b.textContent='Sao chép',2000);break}
+    case 'log-clear':if(b.dataset.sure){LOG=[];saveLog(LOG);ENTER.sLog();delete b.dataset.sure;b.textContent='Xoá sổ';SFX.whoosh(false)}else{b.dataset.sure='1';b.textContent='Bấm lần nữa để xoá'}break;
     case 'pick':pick();break;
     case 'pick-hint':if(picked){pickCard.classList.toggle('hint');SFX.pop(2)}break;
     case 'pick-say':if(picked)say(picked.q);break}});

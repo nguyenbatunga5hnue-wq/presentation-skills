@@ -103,11 +103,11 @@ const TYPES=[
  {n:'Cause / Reason',v:'Nguyên nhân',c:'#B42318',sig:['Why…?','What makes…?'],q:'Why do many young people move to big cities?',ch:['Cause','Effect','Example'],note:'Khung C-E-E.'},
  {n:'Problem – Solution',v:'Giải pháp',c:'#9A6400',sig:['What can be done…?','How can the government…?'],q:'How can governments reduce traffic congestion?',ch:['Solution','Mechanism','Example'],note:'Giải pháp → vì sao hiệu quả → nơi đã áp dụng.'},
  {n:'Hypothetical',v:'Giả định',c:'#BE185D',sig:['What would happen if…?','Imagine…'],q:'What would happen if all shops closed on Sundays?',ch:['Accept','Consequence','Verdict'],note:'Giữ would xuyên suốt.'}];
-$('#tGrid').innerHTML=TYPES.map((t,i)=>`<button class="tcard" style="--c:${t.c}" data-t="${i}"><span class="tn">${i+1}</span><span><b>${t.n}</b><small>${t.v}</small></span></button>`).join('');
+$('#tGrid').innerHTML=TYPES.map((t,i)=>`<button class="tcard" style="--c:${t.c}" data-t="${i}"><span class="tn">${i+1}</span><span><b>${t.n}</b></span></button>`).join('');
 $('#tGrid').addEventListener('click',e=>{const b=e.target.closest('.tcard');if(!b)return;const i=+b.dataset.t,t=TYPES[i];
   $$('.tcard').forEach(x=>x.classList.toggle('on',x===b));const D=$('#tDetail');D.style.setProperty('--c',t.c);
-  D.innerHTML=`<h3>${i+1}. ${t.n} · ${t.v}</h3><div class="lbl2">Dấu hiệu</div><div class="sig">${t.sig.map((s,k)=>`<span style="animation-delay:${k*.12}s">${s}</span>`).join('')}</div>
-   <div class="tq">${t.q}</div><div class="lbl2">Khung trả lời</div>
+  D.innerHTML=`<h3>${i+1}. ${t.n}</h3><div class="sig">${t.sig.map((s,k)=>`<span style="animation-delay:${k*.12}s">${s}</span>`).join('')}</div>
+   <div class="qcard2 sm"><span class="qk">Q</span><span class="qx">${t.q}</span></div>
    <div class="chain">${t.ch.map((c,k)=>(k?`<span class="ar" style="animation-delay:${.5+k*.45-.15}s">→</span>`:'')+`<span class="lk" style="animation-delay:${.5+k*.45}s">${c}</span>`).join('')}</div>
    <div class="tnote" style="animation-delay:${.6+t.ch.length*.45}s">${t.note}</div>
    ${i===5||i===3?'<div class="hybrid">Câu hỏi lai: <i>Why has online shopping become so popular?</i> = Cause + Past vs Present → khung Cause, ngữ pháp hiện tại hoàn thành.</div>':''}`;
@@ -126,21 +126,63 @@ const GQ=[
  ['What are the advantages and disadvantages of working from home?',1],['Do you think people will work fewer hours in the future?',4],
  ['Why has online shopping become so popular?',5,3]];
 let gi=0;
-$('#gChips').innerHTML=TYPES.map((t,i)=>`<button class="gchip" style="--c:${t.c}" data-g="${i}">${i+1}. ${t.v}</button>`).join('');
+$('#gChips').innerHTML=TYPES.map((t,i)=>`<button class="gchip" style="--c:${t.c}" data-g="${i}">${t.n}</button>`).join('');
 function paintG(){const q=GQ[gi];const T=$('#gText');T.textContent=q[0];T.classList.remove('swap');void T.offsetWidth;T.classList.add('swap');
   $('#gNum').textContent=(gi+1)+' / '+GQ.length;$('#gAns').innerHTML='';$$('.gchip').forEach(c=>c.className='gchip');
   const tm=$('#sGuess .timer [data-t="reset"]');tm&&tm.click()}
 function ansG(){const q=GQ[gi],t=TYPES[q[1]];$$('.gchip').forEach(c=>{const k=+c.dataset.g;c.classList.remove('vote');c.classList.toggle('right',k===q[1]||k===q[2]);c.classList.toggle('wrong',k!==q[1]&&k!==q[2])});
-  let h=`<span class="tag" style="--c:${t.c}">${t.n}</span>`;if(q[2]!=null)h+=`<span class="tag" style="--c:${TYPES[q[2]].c};animation-delay:.25s">+ ${TYPES[q[2]].n}</span>`;
+  let h=`<span class="ttag" style="--c:${t.c}">${t.n}</span>`;if(q[2]!=null)h+=`<span class="ttag" style="--c:${TYPES[q[2]].c};animation-delay:.25s">+ ${TYPES[q[2]].n}</span>`;
   h+=`<span class="fw">${t.ch.join(' → ')}</span>`;$('#gAns').innerHTML=h;SFX.ding()}
 $('#gChips').addEventListener('click',e=>{const c=e.target.closest('.gchip');if(!c)return;c.classList.toggle('vote');SFX.tick()});
 paintG();
 
-/* ---------- PREB build ---------- */
-const PSEC=[0,6,16,28,36];
-STEP.sPreb=(s,n)=>{$$('.pb',s).forEach((b,i)=>b.classList.toggle('in',i<n));const sec=PSEC[Math.min(n,4)];
-  $('#prebArc').style.strokeDashoffset=276.5*(1-sec/45);$('#prebSec').textContent=sec+'″';
-  $$('.goal',s).forEach(g=>g.classList.toggle('in',n>=5));if(n){n>=5?SFX.chime():SFX.pop(n+1)}};
+/* ---------- answer with the frame: frame -> idea -> linked sentences ---------- */
+const FR=[
+ {t:0,name:'Opinion',q:'Do you think children should learn to cook at school?',rows:[
+  ['P','Point','Yes – at a basic level','Yes, <em>I’d say</em> cooking deserves a place in the curriculum, at least at a basic level.'],
+  ['R','Reason','useful life skill · can’t cook → fast food','<em>The main reason is that</em> it’s a useful life skill – sooner or later everyone has to feed themselves, and kids who can’t cook tend to rely on fast food.'],
+  ['E','Example','VN students leave home at 18 → takeaways','A lot of university students in Vietnam, <em>for instance</em>, move away from home at eighteen and end up living on takeaways.'],
+  ['B','Back','a few lessons → health + wallet','<em>So</em> a few practical lessons a month would pay off in the long run, both for their health and their wallet.']]},
+ {t:5,name:'Cause',q:'Why do many young people move to big cities?',rows:[
+  ['C','Cause','jobs · well-paid positions','<em>It largely comes down to</em> jobs – big cities simply have far more well-paid positions.'],
+  ['E','Effect','graduates leave hometowns','<em>As a result,</em> most graduates leave their hometowns as soon as they finish university.'],
+  ['E','Example','Hanoi: tech, finance in the centre','<em>In Hanoi, for instance,</em> most tech and finance companies are based in the centre.'],
+  ['+','Ý đối lập','high rents → moving back','<em>That said,</em> more people are now moving back to their hometowns because rents are so high.']]},
+ {t:3,name:'Past vs Present',q:'How have public spaces in your city changed over the last ten years?',rows:[
+  ['1','Then','10 years ago: old parks, motorbikes on pavements','Quite dramatically. <em>Ten years ago</em>, most public spaces were fairly basic – a few old parks and pavements that were mostly taken over by motorbikes.'],
+  ['2','Now','pedestrian areas · Hoan Kiem walking street','<em>These days, though,</em> the city has invested a lot more in pedestrian areas, like the walking street around Hoan Kiem Lake.'],
+  ['3','Why','liveable city → tourism, investment','<em>What’s driven this change, I think, is that</em> local authorities have realised that liveable cities attract tourism and investment.'],
+  ['+','Ý đối lập','only in the centre · suburbs not yet','<em>That said,</em> most of the newer spaces are in the centre, so people in the suburbs haven’t really benefited yet.']]},
+ {t:0,name:'Opinion · hai mặt',q:'Do you think shopping malls are replacing traditional public spaces?',rows:[
+  ['1','Depends','to some extent · young people','<em>To some extent</em>, yes, particularly among young people.'],
+  ['A','Case A','cool, safe, all in one place','Malls are air-conditioned, safe and have everything in one place, <em>so</em> on a hot afternoon they’re far more appealing than a park.'],
+  ['B','Case B','cost money · old & low-income → parks','<em>Having said that,</em> you’re expected to spend money there, so older people and low-income families still rely heavily on parks.'],
+  ['=','Overall','competing, not replacing','<em>So on balance,</em> I’d say malls are competing with public spaces rather than replacing them.']]},
+ {t:6,name:'Problem – Solution',q:'What can local authorities do to make cities more liveable?',rows:[
+  ['S','Solution','invest in public transport','<em>One practical step would be to</em> invest seriously in public transport.'],
+  ['M','Mechanism','good buses/metro → fewer motorbikes → less traffic','<em>If</em> buses and the metro were reliable and affordable, far fewer people would ride motorbikes, <em>which would</em> cut congestion and pollution.'],
+  ['E','Example','Singapore metro','Singapore is <em>a case in point</em>: its efficient metro is a big part of why the city feels so clean and orderly.'],
+  ['+','Giải pháp 2','unused land → small parks','<em>Beyond that,</em> authorities could turn unused plots of land into small neighbourhood parks.']]},
+ {t:7,name:'Hypothetical',q:'What would cities be like if there were no public parks?',rows:[
+  ['A','Accept','unbearable','<em>I suppose</em> they’d become pretty unbearable places to live, to be honest.'],
+  ['C','Consequence','no free exercise → stress · children hit hardest','<em>Without parks,</em> people would have nowhere to exercise or unwind for free, and children would be hit hardest.'],
+  ['C','Consequence','hotter cities · trees cool the air','<em>On top of that,</em> cities would get noticeably hotter, because trees play a big role in cooling the air.'],
+  ['V','Verdict','still function, hardly liveable','<em>So all in all,</em> a city without parks would still function, but it would hardly be liveable.']]}];
+const FC=['#1F5FD6','#C25E0C','#18794E','#5B3EA6'];
+let fi=0;
+$('#fTabs').innerHTML=FR.map((f,i)=>`<button data-f="${i}">${f.name}</button>`).join('');
+function paintF(){const f=FR[fi],S=$('#sFrame');$$('#fTabs button').forEach(b=>b.classList.toggle('on',+b.dataset.f===fi));
+  $('#fTitle').textContent=f.name;
+  const q=$('#fQ .qx');q.textContent=f.q;q.classList.remove('swap');void q.offsetWidth;q.classList.add('swap');
+  $('#fStack').innerHTML=f.rows.map((r,i)=>{const lk=(r[3].match(/<em>(.*?)<\/em>/)||[])[1]||'';const c=r[0]==='+'?'#16213A':FC[i%4];
+    return `<div class="frow" style="--c:${c}" data-i="${i}">${i?`<span class="lkpill">${lk}</span>`:''}<button class="flab"><b>${r[0]}</b><span>${r[1]}</span></button><div class="fbody"><span class="fidea">${r[2]}</span><span class="fsent">${r[3]}</span></div></div>`}).join('');
+  S.dataset.steps=f.rows.length+1;S.dataset.step=0;$('#fStack').classList.remove('linked')}
+function stepF(n){const rows=$$('.frow');rows.forEach((r,i)=>r.classList.toggle('in',i<n));$('#fStack').classList.toggle('linked',n>rows.length);$('[data-act="f-link"]').classList.toggle('on',n>rows.length)}
+STEP.sFrame=(s,n)=>{stepF(n);if(n){n>FR[fi].rows.length?(SFX.zip(),setTimeout(()=>SFX.chime(),400)):SFX.pop(n+1)}};
+$('#fTabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;fi=+b.dataset.f;paintF();stepF(0);SFX.whoosh()});
+$('#fStack').addEventListener('click',e=>{const l=e.target.closest('.flab');if(!l)return;const r=l.closest('.frow');r.classList.toggle('in');
+  $('#sFrame').dataset.step=$$('.frow.in').length;SFX.pop(+r.dataset.i+2)});
+paintF();
 
 /* ---------- ranking ---------- */
 const RANK=[
@@ -177,7 +219,7 @@ const GRAM=[
 function stairs(listId,stId,data,sid){const L=$(listId),S=$(stId);let sel=0;
   L.innerHTML=data.map((d,i)=>`<button data-i="${i}">${d[0]}</button>`).join('');
   function paint(){const d=data[sel];$$('button',L).forEach(b=>b.classList.toggle('on',+b.dataset.i===sel));
-    S.innerHTML=`<div class="st5"><span class="bl">Band 5 · nên bỏ</span><span class="tx">${d[1]}</span></div><div class="st6"><span class="bl">Band 6 · dùng được</span><span class="tx">${d[2]}</span></div><div class="st7"><span class="bl">Band 7 · nên hướng tới</span><span class="tx">${d[3]}</span><span class="why">${d[4]}</span></div>`;
+    S.innerHTML=`<div class="st5"><span class="bl">Band 5</span><span class="tx">${d[1]}</span></div><div class="st6"><span class="bl">Band 6</span><span class="tx">${d[2]}</span></div><div class="st7"><span class="bl">Band 7</span><span class="tx">${d[3]}</span><span class="why">${d[4]}</span></div>`;
     lv(stepOf($('#'+sid)))}
   function lv(n){const [a,b,c]=$$('div',S);requestAnimationFrame(()=>{a.classList.add('in');a.classList.toggle('x',n>=1);b.classList.toggle('in',n>=1);c.classList.toggle('in',n>=2)})}
   L.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;sel=+b.dataset.i;$('#'+sid).dataset.step=0;paint();SFX.thud()});
@@ -202,18 +244,42 @@ const ERR=[
  ['Hoảng khi bị ngắt / hỏi xoáy','Ngập ngừng, nghĩ mình trả lời sai','Ngập ngừng kéo FC xuống','Giám khảo ngắt vì đã đủ bằng chứng hoặc muốn thử band cao hơn; trả lời câu mới bình thường'],
  ['Nói quá dài, ngữ pháp rối','Hơn 1,5 phút, câu nhiều mệnh đề','Mất mạch ý, lỗi GRA tăng','Mỗi câu chỉ 1 cấu trúc phức; dừng sau B'],
  ['Đều đều, đuối sức cuối bài','Mất âm cuối -s, -ed; giọng đều','Câu dài khó hiểu, P kẹt ở 5–6','Chia cụm, nhấn từ khóa, giữ âm cuối; luyện mock đủ 11–14 phút']];
-$('#errGrid').innerHTML=ERR.map((e,i)=>`<button class="eflip${i<3?' top':''}"><span class="in2"><span class="fr">${i<3?'<span class="badge3">Top 3</span>':''}<span class="en">#${i+1}</span><span class="et">${e[0]}</span><span class="es">${e[1]}</span></span><span class="bk"><b>Mất điểm vì</b>${e[2]}<b style="margin-top:.4cqi">Khắc phục</b>${e[3]}</span></span></button>`).join('');
-$('#errGrid').addEventListener('click',e=>{const f=e.target.closest('.eflip');if(!f)return;f.classList.toggle('on');SFX.whoosh(f.classList.contains('on'))});
+/* ---------- errors, one at a time ---------- */
+let curE=-1;
+$('#eDots').innerHTML=ERR.map((_,i)=>`<button data-e="${i}" class="${i<3?'t3':''}">${i+1}</button>`).join('');
+const AV='<svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="14" r="8" fill="#16213A"/><path d="M5 38c2-9 8-13 15-13s13 4 15 13z" fill="#16213A"/></svg>';
+function paintE(n){const i=Math.min(11,Math.floor(n/3)),k=n%3,e=ERR[i],B=$('#err1');
+  if(i!==curE){curE=i;B.innerHTML=`<div class="eleft"><div class="enum">#${i+1}${i<3?'<span class="top3">Top 3</span>':''}</div><div class="etitle">${e[0]}</div>
+    <div class="esay"><span class="eav">${AV}</span><span class="ebub">${e[1]}</span></div></div>
+    <div class="eright"><div class="ewhy"><b>Mất điểm vì</b><span>${e[2]}</span></div><div class="efix"><b>Khắc phục</b><span>${e[3]}</span></div></div>`}
+  $('.ewhy',B).classList.toggle('in',k>=1);$('.efix',B).classList.toggle('in',k>=2);
+  $$('#eDots button').forEach((d,j)=>{d.classList.toggle('on',j===i);d.classList.toggle('done',j<i)})}
+STEP.sErr=(s,n)=>{const k=n%3;paintE(n);if(n===0&&curE===0)return;k===0?SFX.thud():k===1?SFX.buzz():SFX.chime()};
+$('#eDots').addEventListener('click',e=>{const d=e.target.closest('[data-e]');if(!d)return;setStep($('#sErr'),+d.dataset.e*3)});
 
-/* ---------- lens wheel ---------- */
+/* ---------- lens wheel + frame ---------- */
 const LENS=[
- {n:'Tiền',e:'Money',c:'#9A6400',w:'families on a tight budget',y:'it costs / saves money',r:'…which means people spend more / less'},
- {n:'Sức khoẻ',e:'Health',c:'#18794E',w:'children and older people',y:'it affects physical or mental health',r:'…which takes a toll on / improves well-being'},
- {n:'Thời gian',e:'Time',c:'#1F5FD6',w:'busy office workers',y:'it saves / wastes time',r:'…so people have more time for family'},
- {n:'Công nghệ',e:'Technology',c:'#5B3EA6',w:'young people who grew up online',y:'apps and the internet make it easier',r:'…as a result, habits have changed'},
- {n:'Môi trường',e:'Environment',c:'#0E7490',w:'people living in big cities',y:'it creates waste / pollution',r:'…which makes cities less liveable'},
- {n:'Quan hệ XH',e:'Relationships',c:'#BE185D',w:'families and local communities',y:'people spend more / less time together',r:'…so social bonds get stronger / weaker'}];
-const LQ=['Why do people like to collect things?','Should museums be free for everyone?','How will festivals be celebrated in the future?','Why do some people prefer to live alone?','What can be done to encourage people to read more?'];
+ {n:'Tiền',e:'Money',a:'financial',c:'#9A6400',w:'families on a tight budget',y:'it costs or saves money',r:'people spend more or less'},
+ {n:'Sức khoẻ',e:'Health',a:'health',c:'#18794E',w:'children and older people',y:'it affects physical and mental health',r:'people’s well-being improves or suffers'},
+ {n:'Thời gian',e:'Time',a:'practical',c:'#1F5FD6',w:'busy office workers',y:'it saves or wastes time',r:'people have more or less free time'},
+ {n:'Công nghệ',e:'Technology',a:'technological',c:'#5B3EA6',w:'young people who grew up online',y:'apps and the internet make it easier',r:'habits change very quickly'},
+ {n:'Môi trường',e:'Environment',a:'environmental',c:'#0E7490',w:'people living in big cities',y:'it creates or reduces waste and pollution',r:'cities become more or less liveable'},
+ {n:'Quan hệ XH',e:'Relationships',a:'social',c:'#BE185D',w:'families and local communities',y:'people spend more or less time together',r:'social bonds get stronger or weaker'}];
+const LQ=[
+ {q:'Should museums be free for everyone?',t:0,p:'Yes, <em>I’d say so</em>, at least to some extent – mainly for {A} reasons.'},
+ {q:'Why do people like to collect things?',t:5},
+ {q:'How will festivals be celebrated in the future?',t:4,p:'<em>I think</em> festivals are likely to change quite a lot, mostly for {A} reasons.'},
+ {q:'What can be done to encourage people to read more?',t:6,p:'<em>One practical step would be to</em> tackle the {A} side of the problem.'},
+ {q:'What would happen if there were no cinemas?',t:7,p:'<em>I suppose</em> life would change quite a bit, especially on the {A} side.'}];
+const LROLE={0:['point','why','who','result'],5:['cause','result','who'],4:['point','why','result'],6:['point','why','who'],7:['point','result','verdict']};
+const RCHIP={point:'Ý chính',cause:'WHY',why:'WHY',who:'WHO',result:'RESULT',verdict:'Kết'};
+function lSent(role,L,Q){const A=`<b>${L.a}</b>`;switch(role){
+  case 'point':return Q.p.replace('{A}',A);
+  case 'cause':return `<em>It largely comes down to</em> ${A} reasons – <b>${L.y}</b>.`;
+  case 'why':return `<em>The main reason is that</em> <b>${L.y}</b>.`;
+  case 'who':return `<em>Take</em> <b>${L.w}</b>, <em>for example</em>.`;
+  case 'result':return `<em>As a result,</em> <b>${L.r}</b>.`;
+  case 'verdict':return `<em>So all in all,</em> the ${A} side would matter most.`}}
 let lqi=0,wrot=0,lensSel=-1;
 (function(){const svg=$('#wheel'),NS='http://www.w3.org/2000/svg',R=110,n=LENS.length;
   LENS.forEach((l,i)=>{const a0=-Math.PI/2-Math.PI/n+i*2*Math.PI/n,a1=a0+2*Math.PI/n;
@@ -221,8 +287,15 @@ let lqi=0,wrot=0,lensSel=-1;
     const am=(a0+a1)/2,t=document.createElementNS(NS,'text');t.setAttribute('x',Math.cos(am)*70);t.setAttribute('y',Math.sin(am)*70+5);t.setAttribute('text-anchor','middle');
     t.setAttribute('transform',`rotate(${am*180/Math.PI+90} ${Math.cos(am)*70} ${Math.sin(am)*70+5})`);t.textContent=l.n;svg.appendChild(t)});
   const c=document.createElementNS(NS,'circle');c.setAttribute('r',20);c.setAttribute('fill','#16213A');svg.appendChild(c)})();
-function paintLQ(){const q=$('#lQ');q.textContent=LQ[lqi];q.classList.remove('swap');void q.offsetWidth;q.classList.add('swap')}
-function resetW(){$$('.wbox').forEach((b,i)=>{b.classList.remove('on');const sp=$('.wex',b);sp&&sp.remove()})}
+function paintLQ(){const Q=LQ[lqi],T=TYPES[Q.t],q=$('#lQ .qx');q.textContent=Q.q;q.classList.remove('swap');void q.offsetWidth;q.classList.add('swap');
+  const roles=LROLE[Q.t];
+  $('#lFrame').innerHTML=roles.map((r,i)=>`<button class="lrow" style="--c:${FC[i%4]}" data-i="${i}"><span class="llab"><b>${T.ch[i]}</b><span class="role">${RCHIP[r]}</span></span><span class="lbody"></span></button>`).join('');
+  paintPick()}
+function paintPick(){const T=TYPES[LQ[lqi].t];let h=`<span class="ltype" style="--c:${T.c}">${T.n}</span>`;
+  if(lensSel>=0){const l=LENS[lensSel];h+=`<span class="lplus">+</span><span class="lz" style="background:${l.c}">${l.n} · ${l.e}</span>`}$('#lPick').innerHTML=h}
+function resetW(){$$('.lrow').forEach(r=>{r.classList.remove('on');$('.lbody',r).innerHTML=''})}
+$('#lFrame').addEventListener('click',e=>{const r=e.target.closest('.lrow');if(!r)return;if(lensSel<0){SFX.buzz();return}
+  const i=+r.dataset.i,Q=LQ[lqi];$('.lbody',r).innerHTML='<span>'+lSent(LROLE[Q.t][i],LENS[lensSel],Q)+'</span>';r.classList.add('on');SFX.pop(i+3)});
 paintLQ();
 
 /* ---------- goals ---------- */
@@ -253,7 +326,7 @@ const EXA=[
   pr:['Lặp nguyên văn câu hỏi','Không đưa ra giải pháp cụ thể (do something)','Không có cơ chế hay ví dụ'],
   good:[['P','Solution','I think the most effective measure would be to tighten emission standards for vehicles, because motorbikes and old trucks are among the biggest sources of pollution in Vietnamese cities.'],['R','Mechanism','If older, high-emission vehicles were gradually phased out, air quality would improve fairly quickly.'],['E','Example','Several European cities have done this by setting up low-emission zones where polluting cars simply aren’t allowed.'],['X','+','On top of that, the government could subsidise electric motorbikes to make the switch more affordable.']]}];
 let ai=0,aStep=0;
-function paintA(){const a=EXA[ai];$$('#aTabs button').forEach(b=>b.classList.toggle('on',+b.dataset.a===ai));$('#aQ').textContent='Q: '+a.q;
+function paintA(){const a=EXA[ai];$$('#aTabs button').forEach(b=>b.classList.toggle('on',+b.dataset.a===ai));$('#aQ .qx').textContent=a.q;
   const B=$('#aBad');B.innerHTML='A: '+a.bad;B.classList.remove('show');$('#aProb').innerHTML='';aStep=0;$('#aGood').innerHTML='<div class="ph7">Band 7</div>'}
 $('#aTabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;ai=+b.dataset.a;paintA();SFX.tick()});
 paintA();
@@ -263,11 +336,14 @@ const EXB=[['Technology',[0,1,2,3]],['Education',[4,5,6,7]],['Environment',[8,9,
 const CHECK=['Câu đầu tiên trả lời thẳng câu hỏi','Có ít nhất một lý do rõ ràng','Có một ví dụ cụ thể','Nói về mọi người / xã hội, không chỉ về bản thân','Có ít nhất 1 câu điều kiện hoặc mệnh đề quan hệ','Dùng đúng thì theo dạng câu hỏi','Không lặp nguyên văn từ khóa của câu hỏi','Câu trả lời dài 30–45 giây'];
 let bt=0;
 $('#bTabs').innerHTML=EXB.map((t,i)=>`<button data-b="${i}">Topic ${i+1} · ${t[0]}</button>`).join('');
+let bq=-1;
+function pickB(qi){bq=qi;$$('.bq2').forEach(x=>x.classList.toggle('on',+x.dataset.q===qi));const q=$('#bQ .qx');q.textContent=GQ[qi][0];q.classList.remove('swap');void q.offsetWidth;q.classList.add('swap');
+  $('#bFw').innerHTML='<button class="b" data-act="b-ty">Dạng & khung?</button>';$('#bTimer [data-s="reset"]').click()}
 function paintB(){$$('#bTabs button').forEach(b=>b.classList.toggle('on',+b.dataset.b===bt));
-  $('#bQs').innerHTML=EXB[bt][1].map((qi,k)=>{const t=TYPES[GQ[qi][1]];return `<div class="bq" data-q="${qi}" role="button" tabindex="0"><span class="qn">${k+1}</span><span class="qt">${GQ[qi][0]}</span><span><span class="ty" style="--c:${t.c}">${t.n}</span> <button class="tyb" data-act="b-ty">Dạng?</button></span></div>`}).join('')}
+  $('#bQs').innerHTML=EXB[bt][1].map((qi,k)=>`<button class="bq2" data-q="${qi}"><span class="qn">${k+1}</span><span>${GQ[qi][0]}</span></button>`).join('');pickB(EXB[bt][1][0])}
 $('#bTabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;bt=+b.dataset.b;paintB();SFX.tick()});
-$('#bQs').addEventListener('click',e=>{const ty=e.target.closest('[data-act="b-ty"]');if(ty){const t=$('.ty',ty.parentNode);t.classList.toggle('show');SFX.pop(3);return}
-  const q=e.target.closest('.bq');if(!q)return;$$('.bq').forEach(x=>x.classList.toggle('on',x===q&&!x.classList.contains('on')));SFX.whoosh()});
+$('#bQs').addEventListener('click',e=>{const q=e.target.closest('.bq2');if(!q)return;pickB(+q.dataset.q);SFX.whoosh()});
+const fwHTML=(t,list)=>`<span class="ttag" style="--c:${t.c}">${t.n}</span><span class="chain2">${list.map((c,k)=>`<span class="lk" style="--c:${FC[k%4]};animation-delay:${.15+k*.2}s">${c}</span>`).join('<i>→</i>')}</span>`;
 paintB();
 function mkCheck(box){box.insertAdjacentHTML('beforeend',CHECK.map(c=>`<button class="ck2"><i>✓</i><span>${c}</span></button>`).join('')+'<div class="cksum"><span>Đạt</span><span class="ckn">0/8</span><button class="b sm" data-act="ck-reset">↺</button></div>');
   box.addEventListener('click',e=>{if(e.target.closest('[data-act="ck-reset"]')){$$('.ck2',box).forEach(c=>c.classList.remove('on'));$('.ckn',box).textContent='0/8';return}
@@ -296,10 +372,10 @@ const EXC=[
 $('#cList').innerHTML=EXC.map((c,i)=>`<button class="ce" data-c="${i}"><b>${i+1}. ${c[0]}</b>${c[1]?'<span class="fu">+ câu hỏi xoáy</span>':''}</button>`).join('');
 $('#cList').addEventListener('click',e=>{const b=e.target.closest('.ce');if(!b)return;const i=+b.dataset.c,c=EXC[i];
   $$('.ce').forEach(x=>{if(x.classList.contains('on')&&x!==b)x.classList.add('done');x.classList.toggle('on',x===b)});
-  $('#cNow').innerHTML=`<div class="cq">${c[0]}</div>`+(c[1]?`<div class="cfu"><button class="b sm" data-act="c-fu">Hỏi xoáy ▸</button></div>`:'');
+  $('#cNow').innerHTML=`<div class="cq">${c[0]}</div>`+`<div class="cfu">${c[1]?'<button class="b sm" data-act="c-fu">Hỏi xoáy ▸</button>':''}<button class="b sm" data-act="c-fw">Khung?</button></div>`;
   $('#cTimer [data-s="reset"]').click();SFX.whoosh()});
 document.addEventListener('click',e=>{const b=e.target.closest('[data-act="c-fu"]');if(!b)return;const i=+$('.ce.on').dataset.c;
-  b.parentNode.innerHTML=`<span class="bub">${EXC[i][1]}</span>`;$('#cTimer [data-s="reset"]').click();SFX.pop(4)});
+  b.outerHTML=`<span class="bub">${EXC[i][1]}</span>`;$('#cTimer [data-s="reset"]').click();SFX.pop(4)});
 
 /* ---------- model answers ---------- */
 const MOD=[
@@ -325,7 +401,7 @@ const MOD=[
   gap:'Thiếu câu kết đánh giá; <b>very unpleasant</b> thay cho <b>unbearable, be hit hardest</b>.'}];
 let mi=0;
 $('#mTabs').innerHTML=MOD.map((_,i)=>`<button data-m="${i}">${i+1}</button>`).join('');
-function paintM(){const m=MOD[mi];$$('#mTabs button').forEach(b=>b.classList.toggle('on',+b.dataset.m===mi));$('#mTitle').textContent=EXC[mi][0];
+function paintM(){const m=MOD[mi];$$('#mTabs button').forEach(b=>b.classList.toggle('on',+b.dataset.m===mi));const mq=$('#mQ .qx');mq.textContent=EXC[mi][0];mq.classList.remove('swap');void mq.offsetWidth;mq.classList.add('swap');
   $('#m6').innerHTML=m.m6;$('#m7').innerHTML=m.m7;$('#mFw').textContent=m.fw;$('#mGap').innerHTML='<b>Khác ở đâu:</b> '+m.gap;
   $$('#m6,#m7').forEach(x=>{x.style.animation='none';void x.offsetWidth;x.style.animation=''})}
 $('#mTabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;mi=+b.dataset.m;paintM();SFX.tick()});
@@ -358,18 +434,18 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(
     case 'r-sort':RL.classList.add('sorted');placeR(true);SFX.zip();setTimeout(()=>SFX.chime(),900);break;
     case 'r-shuffle':RL.classList.remove('sorted');$$('.rk',RL).forEach(k=>k.classList.remove('open'));rOrder=rOrder.slice().sort(()=>Math.random()-.5);placeR(false);SFX.whoosh(false);break;
     case 'lv-up':next();break;
-    case 'flip-all':{const all=$$('.eflip'),on=!all.every(f=>f.classList.contains('on'));all.forEach((f,i)=>setTimeout(()=>f.classList.toggle('on',on),i*45));SFX.whoosh();break}
-    case 'l-q':lqi=(lqi+1)%LQ.length;paintLQ();resetW();lensSel=-1;$('#lPick').innerHTML='Bấm <b>Quay</b> để chọn một lăng kính.';SFX.tick();break;
+    case 'f-link':{const S=$('#sFrame'),m=+S.dataset.steps;setStep(S,stepOf(S)===m?m-1:m);break}
+    case 'b-ty':{const t=TYPES[GQ[bq][1]];$('#bFw').innerHTML=fwHTML(t,t.ch);SFX.pop(3);break}
+    case 'c-fw':{const i=+$('.ce.on').dataset.c;b.outerHTML=`<span class="fwpill">${MOD[i].fw}</span>`;SFX.pop(5);break}
+    case 'l-q':lqi=(lqi+1)%LQ.length;lensSel=-1;paintLQ();SFX.tick();break;
     case 'l-spin':{resetW();const k=Math.floor(Math.random()*LENS.length);wrot+=360*4+((-k*60-(wrot%360))%360+360)%360;
-      $('#wheel').style.transform=`rotate(${wrot}deg)`;$('#lPick').textContent='…';SFX.zip();
+      $('#wheel').style.transform=`rotate(${wrot}deg)`;lensSel=-1;paintPick();SFX.zip();
       for(let i=0;i<10;i++)setTimeout(()=>SFX.tick(),200+i*i*28);
-      setTimeout(()=>{lensSel=k;const l=LENS[k];$('#lPick').innerHTML=`Nhìn qua lăng kính <span class="lz" style="background:${l.c}">${l.n} · ${l.e}</span>`;SFX.ding()},3200);break}
+      setTimeout(()=>{lensSel=k;paintPick();SFX.ding()},3200);break}
     case 'a-err':{$('#aBad').classList.add('show');const P=$('#aProb');if(!P.children.length){EXA[ai].pr.forEach((p,i)=>P.insertAdjacentHTML('beforeend',`<div style="animation-delay:${i*.25}s">${p}</div>`));SFX.buzz()}break}
     case 'a-fix':{const g=EXA[ai].good,G=$('#aGood');if(aStep===0)G.innerHTML='';if(aStep<g.length){const [c,l,t]=g[aStep];G.insertAdjacentHTML('beforeend',`<span class="sn ${c}"><i>${l}</i>${t}</span> `);aStep++;SFX.pop(aStep+1);if(aStep===g.length)setTimeout(()=>SFX.chime(),300)}break}
     case 'm-hl':$('.model2').classList.toggle('hl');b.classList.toggle('on');SFX.ding();break;
     case 'm-gap':$('#mGap').classList.toggle('on');b.classList.toggle('on');SFX.pop(4);break}});
-$('#wwr').addEventListener('click',e=>{const w=e.target.closest('.wbox');if(!w)return;if(lensSel<0){SFX.buzz();return}
-  const l=LENS[lensSel],k=+w.dataset.w,txt=[l.w,l.y,l.r][k];w.classList.add('on');if(!$('.wex',w))w.insertAdjacentHTML('beforeend',`<span class="wex">${txt}</span>`);SFX.pop(k+3)});
 
 Object.keys(STEP).forEach(id=>{const s=$('#'+id);if(s)setStep(s,0)});
 SFX.stop();

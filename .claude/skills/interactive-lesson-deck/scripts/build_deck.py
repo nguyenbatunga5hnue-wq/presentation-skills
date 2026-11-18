@@ -12,6 +12,9 @@ LESSON_DIR holds (see examples/map-labelling):
   extra.css      optional: lesson-specific styles
   media/         optional: images and audio the slides reference (copied next to the page)
 
+Edit mode (assets/editmode.js + editmode.css) is built in unless --no-edit: a ✎ button lets the
+teacher retype any text on the slides; publish with capabilities {db:{}, user:{}} so edits are shared.
+
 OUT_DIR receives index.html plus the media files. Publish index.html as an Artifact with
 the media files in `files`, or run pack_offline.py for a single self-contained file.
 """
@@ -21,11 +24,12 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 A = os.path.join(HERE, '..', 'assets')
 ap = argparse.ArgumentParser()
 ap.add_argument('lesson'); ap.add_argument('out'); ap.add_argument('--title', default='Lesson')
+ap.add_argument('--no-edit', action='store_true', help='leave out the ✎ edit mode')
 a = ap.parse_args()
 L = lambda f: os.path.join(a.lesson, f)
 rd = lambda p: open(p, encoding='utf-8').read()
 
-css = rd(os.path.join(A, 'components.css')) + (rd(L('extra.css')) if os.path.exists(L('extra.css')) else '')
+css = rd(os.path.join(A, 'components.css')) + ('' if a.no_edit else rd(os.path.join(A, 'editmode.css'))) + (rd(L('extra.css')) if os.path.exists(L('extra.css')) else '')
 head = rd(os.path.join(A, 'base-head.html')).replace('{{TITLE}}', a.title).replace('</style>', css + '\n</style>', 1)
 slides = rd(L('slides.html'))
 if '{{EXERCISES}}' in slides:
@@ -54,8 +58,9 @@ scripts = []
 if os.path.exists(L('maps.js')): scripts.append(rd(L('maps.js')))
 if 'TownMap' in rd(L('main.js')): scripts.append(rd(os.path.join(A, 'townmap-engine.js')))
 scripts.append(rd(L('main.js')))
-for f in sorted(os.listdir(a.lesson)):  # extra modules (e.g. editmode.js) run after main.js
+for f in sorted(os.listdir(a.lesson)):  # lesson-specific extra modules run after main.js
     if f.endswith('.js') and f not in ('main.js', 'maps.js'): scripts.append(rd(L(f)))
+if not a.no_edit: scripts.append(rd(os.path.join(A, 'editmode.js')))  # last: it scans what the lesson rendered
 page = head + slides + bar + runtime + ''.join(f'<script>\n{s}\n</script>\n' for s in scripts)
 os.makedirs(a.out, exist_ok=True)
 open(os.path.join(a.out, 'index.html'), 'w', encoding='utf-8').write(page)

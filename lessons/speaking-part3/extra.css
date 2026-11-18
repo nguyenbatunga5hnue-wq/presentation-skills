@@ -360,12 +360,6 @@
 .wheelbox svg{pointer-events:none}
 
 /* ===== v2: big question cards ===== */
-.qcard2{display:flex;align-items:center;gap:1.6cqi;background:var(--night);color:#fff;border-radius:16px;padding:1.4cqi 2cqi;flex:none;box-shadow:0 .6cqi 1.6cqi rgba(16,26,48,.18)}
-.qcard2 .qk{flex:none;width:4.2cqi;height:4.2cqi;border-radius:12px;background:#F2B84B;color:var(--night);font:700 2.4cqi var(--f-head);display:flex;align-items:center;justify-content:center}
-.qcard2 .qx{flex:1;font:600 3cqi/1.22 var(--f-head);text-wrap:balance}
-.qcard2 .qx.swap{animation:rise .45s both}
-.qcard2.big .qx{font-size:3.4cqi}
-.qcard2.sm{padding:1cqi 1.4cqi}.qcard2.sm .qk{width:3.2cqi;height:3.2cqi;font-size:1.8cqi}.qcard2.sm .qx{font-size:2.3cqi}
 .tdetail .qcard2{animation:rise .4s both}
 .gtext{font-size:4cqi}
 .zsay .qcard2 .qx{font-size:2.5cqi}
@@ -455,25 +449,4 @@
 #fTitle{font-size:2.6cqi;color:var(--ink);white-space:nowrap}
 #fTabs{flex-wrap:nowrap}
 
-/* ===== edit mode ===== */
-.editmode #stage [data-ok]{outline:1.5px dashed rgba(31,95,214,.55);outline-offset:2px;cursor:text}
-.editmode #stage .dark [data-ok],.editmode #stage .qcard2 [data-ok],.editmode #stage .gq [data-ok],.editmode #stage .cnow [data-ok]{outline-color:rgba(242,184,75,.7)}
-.editmode #stage button [data-ok]{cursor:pointer}
-.editmode #stage [data-ok]:empty{display:inline-block;min-width:3em;min-height:1em}
-#stage [data-ok][contenteditable]{outline:2.5px solid #F2B84B!important;background:rgba(255,243,201,.25);border-radius:4px}
-#editBtn.on{background:#F2B84B!important;color:var(--ink)!important;border-color:#F2B84B!important}
-#editPanel{position:fixed;left:50%;top:10px;transform:translateX(-50%);z-index:30;display:flex;align-items:center;gap:8px;background:var(--ink);color:#fff;border-radius:12px;padding:8px 12px;font:600 14px var(--f-body);box-shadow:0 10px 28px rgba(0,0,0,.25)}
-#editPanel[hidden],#editPop[hidden]{display:none}
-#editPanel b{color:#F2B84B;margin-right:4px}
-#editPanel button,#editPop button{font:700 13px var(--f-body);border:1px solid #33467A;background:#22305A;color:#fff;border-radius:8px;padding:5px 10px;cursor:pointer}
-#editPanel button.pri,#editPop button.pri{background:#F2B84B;border-color:#F2B84B;color:var(--ink)}
-#editMsg{font-size:13px;color:#9BE3BC;min-width:120px}#editMsg.bad{color:#FFB4A8}
-#editPop{position:fixed;left:50%;bottom:70px;transform:translateX(-50%);z-index:31;width:min(560px,calc(100vw - 32px));background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.25);padding:12px;display:flex;flex-direction:column;gap:10px}
-#editPop .ep-box{min-height:60px;border:2px solid #F2B84B;border-radius:10px;padding:10px 12px;font:500 17px/1.45 var(--f-body);color:var(--ink);outline:none}
-#editPop .ep-row{display:flex;justify-content:flex-end;gap:8px}
-#editPop button{background:var(--card);color:var(--ink);border-color:var(--line)}
-.fsent,.lkpill{pointer-events:none}
-.fstack.linked .fsent,.fstack.linked .lkpill{pointer-events:auto}
 .fstack.linked .fidea{pointer-events:none}
-#editPanel{top:auto;bottom:58px;left:16px;transform:none}
-#editPop{bottom:auto;top:12px}

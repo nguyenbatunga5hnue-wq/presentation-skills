@@ -343,3 +343,11 @@
 .exans .opt2.ok{border-color:var(--green);background:var(--green-soft);color:var(--green);animation:pop .4s both}
 .exans .opt2.pick:not(.ok){border-color:var(--red);background:var(--red-soft);text-decoration:line-through}
 .extip[hidden]{display:none}
+
+/* ---------- big question card: every question the class must read ---------- */
+.qcard2{display:flex;align-items:center;gap:1.6cqi;background:var(--night);color:#fff;border-radius:16px;padding:1.4cqi 2cqi;flex:none;box-shadow:0 .6cqi 1.6cqi rgba(16,26,48,.18)}
+.qcard2 .qk{flex:none;width:4.2cqi;height:4.2cqi;border-radius:12px;background:#F2B84B;color:var(--night);font:700 2.4cqi var(--f-head);display:flex;align-items:center;justify-content:center}
+.qcard2 .qx{flex:1;font:600 3cqi/1.22 var(--f-head);text-wrap:balance}
+.qcard2 .qx.swap{animation:rise .45s both}
+.qcard2.big .qx{font-size:3.4cqi}
+.qcard2.sm{padding:1cqi 1.4cqi}.qcard2.sm .qk{width:3.2cqi;height:3.2cqi;font-size:1.8cqi}.qcard2.sm .qx{font-size:2.3cqi}

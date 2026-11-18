@@ -2,9 +2,9 @@
    (or kept in this browser when the page runs offline) ---------- */
 (function(){
 const STAGE=document.getElementById('stage'),BAR=document.getElementById('bar');
-const EXCL='#sScore,.timer,.sctl,.stt,.secs,#vFC,#vGRA,.gnum,.cnt,.ckn,.rn,.qn,.tn,.qk,svg,.edots,.ph7,.titlewave,.bandrow,.cksum';
+const EXCL='#sScore,.timer,.sctl,.stt,.qn,.qk,svg,.edots,[data-noedit]'+(window.EDIT_EXCLUDE?','+window.EDIT_EXCLUDE:'');
 const INL=new Set(['B','I','EM','U','STRONG','BR','MARK','SPAN','SMALL','SUB','SUP','CODE']);
-const OV={},ORIG={};const LSK='sp3-edits';
+const OV={},ORIG={};const LSK='deck-edits:'+document.title;
 let db=null,mode='local',editing=false,cur=null;
 
 const hash=s=>{let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))|0;return 'k'+(h>>>0).toString(36)+s.length.toString(36)};

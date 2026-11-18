@@ -1,4 +1,5 @@
 (function(){
+window.EDIT_EXCLUDE='.secs,#vFC,#vGRA,.gnum,.cnt,.ckn,.rn,.tn,.ph7,.titlewave,.bandrow,.cksum';
 const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
 const slides=$$('.slide');let cur=0;
 

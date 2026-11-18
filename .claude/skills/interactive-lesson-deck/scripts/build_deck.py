@@ -6,6 +6,7 @@
 LESSON_DIR holds (see examples/map-labelling):
   slides.html    every <section class="slide"> of the lesson; may contain {{EXERCISES}}
   main.js        the lesson controller (navigation, steps, interactions)
+  *.js           optional extra modules, loaded after main.js in name order
   maps.js        optional: window.MAPDATA for the town-map engine
   exercises.py   optional: html() returns the book-exercise slides that replace {{EXERCISES}}
   extra.css      optional: lesson-specific styles
@@ -53,6 +54,8 @@ scripts = []
 if os.path.exists(L('maps.js')): scripts.append(rd(L('maps.js')))
 if 'TownMap' in rd(L('main.js')): scripts.append(rd(os.path.join(A, 'townmap-engine.js')))
 scripts.append(rd(L('main.js')))
+for f in sorted(os.listdir(a.lesson)):  # extra modules (e.g. editmode.js) run after main.js
+    if f.endswith('.js') and f not in ('main.js', 'maps.js'): scripts.append(rd(L(f)))
 page = head + slides + bar + runtime + ''.join(f'<script>\n{s}\n</script>\n' for s in scripts)
 os.makedirs(a.out, exist_ok=True)
 open(os.path.join(a.out, 'index.html'), 'w', encoding='utf-8').write(page)

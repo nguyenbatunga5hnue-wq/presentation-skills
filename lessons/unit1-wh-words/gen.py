@@ -91,6 +91,42 @@ def gaps(sid, heading, rows, start, bank):
 </section>'''
 
 
+VW = re.compile(r'\*\*(.+?)\|(.+?)\*\*')
+
+
+def vwords(t):
+    out, last = [], 0
+    for m in VW.finditer(t):
+        out.append(e(t[last:m.start()]))
+        out.append(f'<button class="vw" data-vi="{e(m.group(2))}" data-say="{e(m.group(1))}">{e(m.group(1))}</button>')
+        last = m.end()
+    out.append(e(t[last:]))
+    return ''.join(out)
+
+
+def cooking():
+    tabs = ''.join(f'<button class="b sm{" on" if i == 0 else ""}" data-dish="{i}">{e(n)}</button>' for i, (k, n, vi, req, ok, good) in enumerate(DISHES_COOK))
+    pantry = ''.join(f'<button class="ing" data-k="{k}">{pic("ing-" + k)}<b>{e(n)}</b></button>' for k, n, vi, bad in INGREDIENTS)
+    data = {'ing': {k: {'n': n, 'vi': vi, 'bad': bad} for k, n, vi, bad in INGREDIENTS},
+            'dish': [dict(k=k, n=n, vi=vi, req=req, ok=ok, good=good) for k, n, vi, req, ok, good in DISHES_COOK]}
+    return f'''<section class="slide cook" id="sCook" data-title="Cooking show">
+ <div class="hdr"><h2>Cooking show</h2><div class="tools">{tabs}</div></div>
+ <div class="cookgrid">
+  <div class="pantry">{pantry}</div>
+  <div class="kitchen">
+   <div class="potbox"><div class="bubble2"></div>{pic("pot")}<div class="inpot"></div><div class="steam"></div></div>
+   <div class="kside">
+    <div class="rcard"><b class="rname"></b><small class="rvi"></small><div class="slots"></div></div>
+    <div class="judge pic"></div>
+    <div class="kbtns"><button class="b pri" data-act="cook-serve">Nếm thử</button><button class="b" data-act="cook-hint">Gợi ý</button><button class="b" data-act="cook-empty">Đổ đi</button></div>
+   </div>
+   <div class="served"><div class="sdish pic"></div><div class="sadj"></div><p class="ssent"></p><button class="b sm spk" data-act="cook-say">{SPK} Nghe</button></div>
+  </div>
+ </div>
+ <script type="application/json" id="cookData">{json.dumps(data, ensure_ascii=False)}</script>
+</section>'''
+
+
 def flower(center, fid):
     n = len(WH)
     ps = ''.join(f'<button class="petal" data-p="{k}" style="--a:{i*360/n}deg"><span class="ptx" style="--a:{i*360/n}deg">{icon(k)}<b>{e(lb)}</b></span></button>'
@@ -113,12 +149,32 @@ S.append(vocab('vFood1', 'Food vocabulary (1)', FOOD_WORDS[:8]))
 S.append(vocab('vFood2', 'Food vocabulary (2)', FOOD_WORDS[8:]))
 S.append(vocab('vFood3', 'Food collocations', FOOD_COLLOC))
 S.append(guess('gFood', 'Lật ô đoán từ', 'tiles', [FOOD_WORDS[i] for i in (0, 3, 6, 7, 10, 13)] + [FOOD_COLLOC[2], FOOD_COLLOC[5]]))
+good = ''.join(f'<button class="tw" data-say="{e(w)}"><b>{e(w)}</b><small>{e(vi)}</small></button>' for w, vi in TASTE_GOOD)
+bad = ''.join(f'<button class="tw bad" data-say="{e(w)}"><b>{e(w)}</b><small>{e(vi)}</small></button>' for w, vi in TASTE_BAD)
+S.append(f'''<section class="slide" id="sTasteWords" data-title="Ngon hay dở?">
+ <div class="hdr"><h2>Delicious or disgusting?</h2></div>
+ <div class="twgrid"><div class="twcol">{pic("judge-yum")}<div class="twlist">{good}</div></div><div class="twcol">{pic("judge-yuck")}<div class="twlist">{bad}</div></div></div>
+</section>''')
+S.append(cooking())
 bank2 = [k for _, k, _ in EX2]
 S.append(gaps('x2a', 'Exercise 2 (1–5)', EX2[:5], 1, sorted(bank2[:5])))
 S.append(gaps('x2b', 'Exercise 2 (6–10)', EX2[5:], 6, sorted(bank2[5:])))
 
 # ================= DAILY ACTIVITIES =================
 S.append(title('Daily activities'))
+for part in (0, 1):
+    panels = ''.join(f'''<div class="panel" style="--i:{j}">{pic(sc)}<div class="cap"><b>{e(tm)}</b> {vwords(nar)}</div><div class="bub{" r" if j % 2 else ""}"><i>{e(who)}:</i> {vwords(txt)}</div></div>'''
+                     for j, (sc, tm, nar, (who, txt)) in enumerate(COMIC[part*4:part*4+4]))
+    S.append(f'''<section class="slide comic" id="cm{part+1}" data-title="A day in Minh’s life ({part+1})" data-steps="4">
+ <div class="hdr"><h2>A day in Minh’s life ({part+1}/2)</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="cgrid">{panels}</div>
+</section>''')
+mini = ''.join(f'''<div class="mini">{pic(sc)}<b>{e(tm)}</b><div class="mkw">{"".join(f"<span>{e(m.group(1))}</span>" for m in VW.finditer(nar + " " + txt))}</div></div>'''
+               for sc, tm, nar, (who, txt) in COMIC)
+S.append(f'''<section class="slide" id="cmRetell" data-title="Kể lại ngày của Minh">
+ <div class="hdr"><h2>Kể lại ngày của Minh</h2><div class="tools minitimers"><div class="timer sm2" data-sec="120" data-label="Kể chuyện"></div></div></div>
+ <div class="mgrid2">{mini}</div>
+</section>''')
 S.append(photos('pRoutine', 'Exercise 3: Daily routine', ROUTINE, 3, sorted(l for _, l in ROUTINE)))
 S.append(vocab('vDay1', 'Daily-life vocabulary (1)', DAILY_WORDS[:8]))
 S.append(vocab('vDay2', 'Daily-life vocabulary (2)', DAILY_WORDS[8:]))

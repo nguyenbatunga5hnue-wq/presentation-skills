@@ -207,3 +207,48 @@ PRACTICE = [
         ('why', 'because we can [[let off steam]] together.'),
         ('what you do', 'We often go to the cinema or try new [[street food]] in town.')]),
 ]
+
+# ---------------- Cooking show ----------------
+# key, English name, Vietnamese, what it tastes like when it does NOT belong in the dish
+INGREDIENTS = [
+    ('noodles', 'rice noodles', 'bánh phở', 'soggy'), ('beef', 'beef', 'thịt bò', 'greasy'),
+    ('onion', 'onion', 'hành tây', 'pungent'), ('ginger', 'ginger', 'gừng', 'too spicy'),
+    ('anise', 'star anise', 'hoa hồi', 'bitter'), ('herbs', 'herbs', 'rau thơm', 'grassy'),
+    ('lime', 'lime', 'chanh', 'too sour'), ('chilli', 'chilli', 'ớt', 'burning hot'),
+    ('fishsauce', 'fish sauce', 'nước mắm', 'too salty'), ('riceflour', 'rice flour', 'bột gạo', 'gluey'),
+    ('pork', 'pork', 'thịt lợn', 'greasy'), ('mushroom', 'wood ear mushroom', 'mộc nhĩ', 'rubbery'),
+    ('shallots', 'fried shallots', 'hành phi', 'oily'), ('baguette', 'baguette', 'bánh mì', 'soggy'),
+    ('pate', 'pâté', 'pa-tê', 'too rich'), ('cucumber', 'cucumber', 'dưa chuột', 'watery'),
+    ('egg', 'egg', 'trứng', 'eggy'), ('mango', 'mango', 'xoài', 'too sweet'),
+    ('milk', 'milk', 'sữa', 'sour'), ('ice', 'ice', 'đá', 'watery'),
+    ('sugar', 'sugar', 'đường', 'sickly sweet'), ('chocolate', 'chocolate', 'sô-cô-la', 'bitter'),
+    ('cheese', 'cheese', 'phô mai', 'greasy'), ('ketchup', 'ketchup', 'tương cà', 'weird'),
+]
+# key, name, Vietnamese, required, also fine, good adjectives
+DISHES_COOK = [
+    ('pho', 'Phở bò', 'beef noodle soup', ['noodles', 'beef', 'onion', 'ginger', 'anise', 'herbs'], ['lime', 'chilli', 'egg'],
+     ['savory', 'aromatic', 'mouth-watering', 'hearty']),
+    ('banhcuon', 'Bánh cuốn', 'steamed rice rolls', ['riceflour', 'pork', 'mushroom', 'shallots', 'fishsauce'], ['herbs', 'chilli', 'cucumber', 'lime'],
+     ['soft', 'delicate', 'savory', 'melt-in-your-mouth']),
+    ('banhmi', 'Bánh mì', 'Vietnamese sandwich', ['baguette', 'pate', 'pork', 'cucumber', 'herbs'], ['chilli', 'egg'],
+     ['crunchy', 'savory', 'tasty', 'filling']),
+    ('smoothie', 'Sinh tố xoài', 'mango smoothie', ['mango', 'milk', 'ice', 'sugar'], ['lime'],
+     ['sweet', 'refreshing', 'creamy', 'juicy']),
+]
+TASTE_GOOD = [('savory', 'đậm đà'), ('aromatic', 'thơm'), ('mouth-watering', 'ngon chảy nước miếng'), ('hearty', 'no nê, ấm bụng'),
+              ('delicate', 'thanh, tinh tế'), ('crunchy', 'giòn'), ('refreshing', 'mát, sảng khoái'), ('creamy', 'béo ngậy, mịn')]
+TASTE_BAD = [('bland', 'nhạt nhẽo'), ('greasy', 'ngấy mỡ'), ('soggy', 'ỉu, nhũn'), ('bitter', 'đắng'),
+             ('too salty', 'mặn quá'), ('sickly sweet', 'ngọt gắt'), ('watery', 'loãng, nhạt'), ('burning hot', 'cay xé')]
+
+# ---------------- Comic: a day in Minh's life ----------------
+# scene, time, narration, speech bubble (speaker, text); **word|nghĩa** marks vocabulary
+COMIC = [
+    ('c1', '11:30 pm', 'Minh is **a night owl|người hay thức khuya**.', ('Minh', 'Just one more episode! I love to **binge-watch|xem liền nhiều tập** this show.')),
+    ('c2', '7:15 am', 'The alarm rings. Minh woke up late again.', ('Minh', 'Oh no! I have to **rush|vội vã** to school!')),
+    ('c3', '7:20 am', 'He has no time to **have breakfast|ăn sáng**.', ('Mum', 'Take this toast! A good breakfast will **kick-start|khởi động** your day.')),
+    ('c4', '9:00 am', 'In class, Minh is sleepy. Staying up late is a **bad habit|thói quen xấu**.', ('Teacher', 'Minh, please **concentrate|tập trung**!')),
+    ('c5', '5:00 pm', 'After school, he **hangs out with friends|đi chơi với bạn bè** and plays football.', ('Minh', 'Football helps me **let off steam|xả hơi**!')),
+    ('c6', '7:00 pm', 'Mum **makes dinner|nấu bữa tối**. Minh does the **daily chores|việc nhà hằng ngày**.', ('Mum', 'I love this **quality time|thời gian bên nhau** with you.')),
+    ('c7', '9:00 pm', 'Minh finishes his homework and **meets the deadline|kịp hạn chót**.', ('Minh', 'I feel so **productive|năng suất** today!')),
+    ('c8', '10:00 pm', 'He goes to bed early to **unwind|thư giãn** and rest.', ('Minh', 'Tomorrow I will be **an early bird|người dậy sớm**!')),
+]

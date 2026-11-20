@@ -3,6 +3,7 @@ const $=(s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelect
 const slides=$$('.slide');let cur=0;
 $$('[data-pic]').forEach(x=>{x.innerHTML=(window.PICS||{})[x.dataset.pic]||''});
 $$('[data-icon]').forEach(x=>{x.innerHTML=(window.ICONS||{})[x.dataset.icon]||''});
+$$('.panel .pic svg').forEach(x=>x.setAttribute('preserveAspectRatio','xMidYMid slice'));
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 
@@ -124,6 +125,55 @@ STEP.sStrat=(s,n)=>{$$('.stbox .gk',s).forEach(g=>g.classList.toggle('show',n>=1
 $$('.nslide').forEach(s=>{STEP[s.id]=(s,n)=>{$$('.nrow',s).forEach((r,i)=>{r.classList.toggle('n-in',n>=2*i+1);r.classList.toggle('s-in',n>=2*i+2)});
   if(n)n%2?SFX.pop(3):SFX.ding()}});
 
+/* ---------- comic ---------- */
+$$('.comic').forEach(s=>{STEP[s.id]=(s,n)=>{$$('.panel',s).forEach((x,i)=>x.classList.toggle('in',i<n));if(n)SFX.pop(n+1)}});
+
+/* ---------- cooking show ---------- */
+const CK=$('#cookData')?JSON.parse($('#cookData').textContent):null;
+const ck={d:0,pot:[]};
+function cookDish(i){const s=$('#sCook');if(!s)return;ck.d=i;ck.pot=[];const D=CK.dish[i];
+  $$('[data-dish]',s).forEach(b=>b.classList.toggle('on',+b.dataset.dish===i));
+  $('.rname',s).textContent=D.n;$('.rvi',s).textContent=D.vi;
+  $('.slots',s).innerHTML=D.req.map(k=>`<span class="slot2" data-k="${k}">?</span>`).join('');
+  $('.inpot',s).innerHTML='';$$('.ing',s).forEach(b=>b.classList.remove('used'));
+  s.classList.remove('bad','won','hint');cookJudge('wait');cookSay('');}
+function cookJudge(m){const j=$('#sCook .judge');j.innerHTML=PICS['judge-'+m]||''}
+function cookSay(t,cls){const b=$('#sCook .bubble2');b.className='bubble2'+(cls?' '+cls:'');b.innerHTML=t;if(t){void b.offsetWidth;b.classList.add('in')}}
+function cookBad(){const D=CK.dish[ck.d];return ck.pot.filter(k=>!D.req.includes(k)&&!D.ok.includes(k))}
+function cookAdd(k){const s=$('#sCook'),D=CK.dish[ck.d],I=CK.ing[k];if(ck.pot.includes(k)||s.classList.contains('won')){SFX.minus();return}
+  ck.pot.push(k);$(`.ing[data-k="${k}"]`,s).classList.add('used');say(I.n);
+  const it=document.createElement('button');it.className='pi';it.dataset.k=k;it.title=I.n;it.innerHTML=PICS['ing-'+k];
+  it.style.setProperty('--x',(10+Math.random()*70)+'%');it.style.setProperty('--r',(Math.random()*40-20)+'deg');$('.inpot',s).appendChild(it);
+  const good=D.req.includes(k)||D.ok.includes(k);
+  if(good){const sl=$(`.slot2[data-k="${k}"]`,s);if(sl){sl.textContent=I.n;sl.classList.add('on')}
+    cookSay(`<b>${esc(I.n)}</b> ✓`,'good');SFX.ding();if(!cookBad().length){s.classList.remove('bad');cookJudge('wait')}}
+  else{s.classList.add('bad');cookJudge('yuck');cookSay(`Yuck! ${esc(I.n)}? It’s <b>${esc(I.bad)}</b>!`,'bad');SFX.buzz()}}
+function cookRemove(k){const s=$('#sCook');ck.pot=ck.pot.filter(x=>x!==k);const it=$(`.pi[data-k="${k}"]`,s);if(it)it.remove();
+  $(`.ing[data-k="${k}"]`,s).classList.remove('used');const sl=$(`.slot2[data-k="${k}"]`,s);if(sl){sl.classList.remove('on');sl.textContent=s.classList.contains('hint')?CK.ing[k].n:'?'}
+  if(!cookBad().length){s.classList.remove('bad');cookJudge('wait');cookSay('')}SFX.whoosh(false)}
+function cookServe(){const s=$('#sCook'),D=CK.dish[ck.d],bad=cookBad(),miss=D.req.filter(k=>!ck.pot.includes(k));
+  if(bad.length){const w=[...new Set(bad.map(k=>CK.ing[k].bad))];cookJudge('yuck');cookSay(`Yuck! This ${esc(D.n)} is <b>${esc(w.join(' and '))}</b>.`,'bad');SFX.buzz();return}
+  if(miss.length){cookJudge('wait');cookSay(`Hmm… it’s <b>bland</b>. ${miss.length} ingredient${miss.length>1?'s are':' is'} missing.`,'meh');SFX.minus();return}
+  s.classList.add('won');cookJudge('yum');const g=D.good;
+  $('.sdish',s).innerHTML=PICS['dish-'+D.k];$('.sadj',s).innerHTML=g.map((w,i)=>`<span style="--i:${i}">${esc(w)}</span>`).join('');
+  const sent=`Wow! This ${D.n} is ${g[0]} and ${g[1]}. It’s really ${g[2]}!`;$('.ssent',s).textContent=sent;$('.ssent',s).dataset.say=sent;
+  cookSay('');SFX.cheer();setTimeout(()=>say(sent),600)}
+if(CK){cookDish(0);
+  /* drag an ingredient into the pot (a tap adds it too) */
+  let drag=null;
+  document.addEventListener('pointerdown',e=>{const b=e.target.closest('#sCook .ing');if(!b||b.classList.contains('used'))return;e.preventDefault();
+    const r=b.getBoundingClientRect(),g=b.cloneNode(true);g.classList.add('ghost');g.style.width=r.width+'px';g.style.height=r.height+'px';
+    g.style.left=r.left+'px';g.style.top=r.top+'px';document.body.appendChild(g);
+    drag={k:b.dataset.k,g,x0:e.clientX,y0:e.clientY,dx:e.clientX-r.left,dy:e.clientY-r.top,moved:false};SFX.tick()});
+  document.addEventListener('pointermove',e=>{if(!drag)return;if(Math.abs(e.clientX-drag.x0)+Math.abs(e.clientY-drag.y0)>6)drag.moved=true;
+    drag.g.style.left=(e.clientX-drag.dx)+'px';drag.g.style.top=(e.clientY-drag.dy)+'px';
+    const pr=$('#sCook .potbox').getBoundingClientRect();$('#sCook .potbox').classList.toggle('over',e.clientX>pr.left&&e.clientX<pr.right&&e.clientY>pr.top&&e.clientY<pr.bottom)});
+  document.addEventListener('pointerup',e=>{if(!drag)return;const pb=$('#sCook .potbox'),pr=pb.getBoundingClientRect();pb.classList.remove('over');
+    const inPot=e.clientX>pr.left&&e.clientX<pr.right&&e.clientY>pr.top&&e.clientY<pr.bottom;drag.g.remove();
+    if(inPot||!drag.moved)cookAdd(drag.k);drag=null});
+  document.addEventListener('pointercancel',()=>{if(drag){drag.g.remove();drag=null}});
+}
+
 /* ---------- label the pictures ---------- */
 function phAll(s){const all=$$('.phc',s),on=!all.every(x=>x.classList.contains('show'));all.forEach((x,i)=>setTimeout(()=>x.classList.toggle('show',on),i*120));if(on)SFX.chime()}
 
@@ -172,9 +222,13 @@ function pick(){if(spinning)return;const on=$$('[data-pt].on').map(b=>b.dataset.
 /* ---------- clicks ---------- */
 document.addEventListener('click',e=>{
   const s=slides[cur],T=e.target;
+  const vw=T.closest('.vw');if(vw){const on=!vw.classList.contains('on');$$('.vw.on').forEach(x=>x.classList.remove('on'));vw.classList.toggle('on',on);say(vw.dataset.say);return}
+  const tw=T.closest('.tw');if(tw){tw.classList.toggle('on');say(tw.dataset.say);SFX.tick();return}
   const sp=T.closest('[data-say]');if(sp){e.stopPropagation();say(sp.dataset.say);return}
   const v=T.closest('.vc');if(v){v.classList.toggle('on');SFX.tick();return}
   const mc=T.closest('.mc');if(mc){mc.classList.toggle('on');mc.classList.contains('on')?SFX.tick():(SFX.ding(),say(mc.dataset.w));return}
+  const pi=T.closest('.pi');if(pi){cookRemove(pi.dataset.k);return}
+  const dsh=T.closest('[data-dish]');if(dsh){cookDish(+dsh.dataset.dish);SFX.whoosh();return}
   const ph=T.closest('.phc');if(ph){ph.classList.toggle('show');if(ph.classList.contains('show'))SFX.ding();return}
   const ck=T.closest('.chunk');if(ck){const to=ck.parentNode.classList.contains('rpool')?$('.rline',s):$('.rpool',s);to.appendChild(ck);$('.rline',s).classList.remove('ok','bad');SFX.tick();rCheck(s);return}
   const ri=T.closest('[data-ri]');if(ri&&ri.tagName==='BUTTON'){rInit(s,+ri.dataset.ri);SFX.whoosh();return}
@@ -217,6 +271,10 @@ document.addEventListener('click',e=>{
     case 'log-clear':if(b.dataset.sure){LOG=[];saveLog(LOG);ENTER.sLog();delete b.dataset.sure;b.textContent='Xoá sổ';SFX.whoosh(false)}else{b.dataset.sure='1';b.textContent='Bấm lần nữa để xoá'}break;
     case 'pick':pick();break;
     case 'ph-all':phAll(s);break;
+    case 'cook-serve':cookServe();break;
+    case 'cook-empty':cookDish(ck.d);SFX.splash();break;
+    case 'cook-hint':{s.classList.toggle('hint');const on=s.classList.contains('hint');$$('.slot2:not(.on)',s).forEach(x=>x.textContent=on?CK.ing[x.dataset.k].n:'?');SFX.pop(2);break}
+    case 'cook-say':say($('.ssent',s).dataset.say||'');break;
     case 'r-reset':rInit(s,+s.dataset.ri);SFX.whoosh(false);break;
     case 'r-ans':rAnswer(s);break;
     case 'pick-hint':if(picked){pickCard.classList.toggle('hint');SFX.pop(2)}break;

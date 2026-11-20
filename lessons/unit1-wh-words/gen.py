@@ -105,19 +105,25 @@ def vwords(t):
 
 
 def cooking():
-    tabs = ''.join(f'<button class="b sm{" on" if i == 0 else ""}" data-dish="{i}">{e(n)}</button>' for i, (k, n, vi, req, ok, good) in enumerate(DISHES_COOK))
-    pantry = ''.join(f'<button class="ing" data-k="{k}">{pic("ing-" + k)}<b>{e(n)}</b></button>' for k, n, vi, bad in INGREDIENTS)
-    data = {'ing': {k: {'n': n, 'vi': vi, 'bad': bad} for k, n, vi, bad in INGREDIENTS},
-            'dish': [dict(k=k, n=n, vi=vi, req=req, ok=ok, good=good) for k, n, vi, req, ok, good in DISHES_COOK]}
+    tabs = ''.join(f'<button class="b sm{" on" if i == 0 else ""}" data-dish="{i}">{e(d[1])}</button>' for i, d in enumerate(DISHES_COOK))
+    pantry = ''.join(f'<div class="ing" data-k="{k}" title="{e(vi)}">{pic("ing-" + k)}<b>{e(n)}</b></div>' for k, n, vi, fl, w in INGREDIENTS)
+    meters = ''.join(f'<div class="fm" data-f="{f}"><span>{f}</span><div class="fbar"><i class="zone"></i><i class="lvl"></i></div></div>' for f in FLAVOURS)
+    data = {'flav': FLAVOURS,
+            'ing': {k: {'n': n, 'vi': vi, 'f': fl, 'w': w} for k, n, vi, fl, w in INGREDIENTS},
+            'dish': [dict(k=k, n=n, vi=vi, items=it, target=tg, book=bk, more=mo) for k, n, vi, it, tg, bk, mo in DISHES_COOK]}
     return f'''<section class="slide cook" id="sCook" data-title="Cooking show">
- <div class="hdr"><h2>Cooking show</h2><div class="tools">{tabs}</div></div>
+ <div class="hdr"><h2>Cooking show with Chef Blaze</h2><div class="tools">{tabs}</div></div>
  <div class="cookgrid">
   <div class="pantry">{pantry}</div>
   <div class="kitchen">
-   <div class="potbox"><div class="bubble2"></div>{pic("pot")}<div class="inpot"></div><div class="steam"></div></div>
+   <div class="stage2">
+    <div class="bubble2"></div>
+    <div class="chef pic"></div>
+    <div class="potbox">{pic("pot")}<div class="inpot"></div><div class="steam"></div></div>
+   </div>
    <div class="kside">
     <div class="rcard"><b class="rname"></b><small class="rvi"></small><div class="slots"></div></div>
-    <div class="judge pic"></div>
+    <div class="meters">{meters}</div>
     <div class="kbtns"><button class="b pri" data-act="cook-serve">Nếm thử</button><button class="b" data-act="cook-hint">Gợi ý</button><button class="b" data-act="cook-empty">Đổ đi</button></div>
    </div>
    <div class="served"><div class="sdish pic"></div><div class="sadj"></div><p class="ssent"></p><button class="b sm spk" data-act="cook-say">{SPK} Nghe</button></div>
@@ -149,11 +155,16 @@ S.append(vocab('vFood1', 'Food vocabulary (1)', FOOD_WORDS[:8]))
 S.append(vocab('vFood2', 'Food vocabulary (2)', FOOD_WORDS[8:]))
 S.append(vocab('vFood3', 'Food collocations', FOOD_COLLOC))
 S.append(guess('gFood', 'Lật ô đoán từ', 'tiles', [FOOD_WORDS[i] for i in (0, 3, 6, 7, 10, 13)] + [FOOD_COLLOC[2], FOOD_COLLOC[5]]))
-good = ''.join(f'<button class="tw" data-say="{e(w)}"><b>{e(w)}</b><small>{e(vi)}</small></button>' for w, vi in TASTE_GOOD)
-bad = ''.join(f'<button class="tw bad" data-say="{e(w)}"><b>{e(w)}</b><small>{e(vi)}</small></button>' for w, vi in TASTE_BAD)
-S.append(f'''<section class="slide" id="sTasteWords" data-title="Ngon hay dở?">
- <div class="hdr"><h2>Delicious or disgusting?</h2></div>
- <div class="twgrid"><div class="twcol">{pic("judge-yum")}<div class="twlist">{good}</div></div><div class="twcol">{pic("judge-yuck")}<div class="twlist">{bad}</div></div></div>
+def tws(items, cls=''):
+    return ''.join(f'<button class="tw{cls}" data-say="{e(w)}"><b>{e(w)}</b><small>{e(vi)}</small></button>' for w, vi in items)
+
+
+S.append(f'''<section class="slide" id="sTasteWords" data-title="Ngon hay dở?" data-steps="1">
+ <div class="hdr"><h2>Delicious or disgusting?</h2><div class="tools"><button class="b pri" data-act="step">Từ mở rộng ▸</button></div></div>
+ <div class="twgrid">
+  <div class="twcol good">{pic("chef-yum")}<div class="twlist"><span class="twh">Trong sách</span>{tws(TASTE_GOOD_BOOK)}<span class="twh more">Mở rộng</span>{tws(TASTE_GOOD_MORE, ' more')}</div></div>
+  <div class="twcol bad">{pic("chef-yuck")}<div class="twlist"><span class="twh">Trong sách</span>{tws(TASTE_BAD_BOOK, ' bad')}<span class="twh more">Mở rộng</span>{tws(TASTE_BAD_MORE, ' bad more')}</div></div>
+ </div>
 </section>''')
 S.append(cooking())
 bank2 = [k for _, k, _ in EX2]

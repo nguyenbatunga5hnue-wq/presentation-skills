@@ -130,49 +130,70 @@ $$('.comic').forEach(s=>{STEP[s.id]=(s,n)=>{$$('.panel',s).forEach((x,i)=>x.clas
 
 /* ---------- cooking show ---------- */
 const CK=$('#cookData')?JSON.parse($('#cookData').textContent):null;
-const ck={d:0,pot:[]};
-function cookDish(i){const s=$('#sCook');if(!s)return;ck.d=i;ck.pot=[];const D=CK.dish[i];
+const ck={d:0,pot:{}};const SCALE=8;
+const cS=()=>$('#sCook');
+function cookChef(m){$('.chef',cS()).innerHTML=PICS['chef-'+m]||''}
+function cookSay(t,cls){const b=$('.bubble2',cS());b.className='bubble2'+(cls?' '+cls:'');b.innerHTML=t;if(t){void b.offsetWidth;b.classList.add('in')}}
+function levels(){const L={};CK.flav.forEach(f=>L[f]=0);Object.entries(ck.pot).forEach(([k,n])=>Object.entries(CK.ing[k].f).forEach(([f,v])=>L[f]+=v*n));return L}
+function mainFlav(k){const f=Object.entries(CK.ing[k].f).sort((a,b)=>b[1]-a[1])[0];return f?f[0]:''}
+function badWord(k){const f=mainFlav(k);return f?'too '+f:CK.ing[k].w}
+function problems(){const D=CK.dish[ck.d],L=levels(),out=[];
+  Object.entries(ck.pot).forEach(([k,n])=>{const r=D.items[k];if(!r)out.push({k,type:'wrong',word:badWord(k)});else if(n>r[1])out.push({k,type:'much',word:mainFlav(k)?'too '+mainFlav(k):'too much '+CK.ing[k].n})});
+  CK.flav.forEach(f=>{if(L[f]>D.target[f][1])out.push({f,type:'flav',word:'too '+f})});return out}
+function cookPaint(){const s=cS(),D=CK.dish[ck.d],L=levels();
+  CK.flav.forEach(f=>{const m=$(`.fm[data-f="${f}"]`,s),[lo,hi]=D.target[f];
+    $('.zone',m).style.left=(lo/SCALE*100)+'%';$('.zone',m).style.width=Math.max(4,(hi-lo)/SCALE*100)+'%';
+    $('.lvl',m).style.width=(Math.min(L[f],SCALE)/SCALE*100)+'%';
+    m.classList.toggle('over',L[f]>hi);m.classList.toggle('low',L[f]<lo);m.classList.toggle('ok',L[f]>=lo&&L[f]<=hi&&L[f]>0)});
+  $$('.slot2',s).forEach(x=>{const k=x.dataset.k,n=ck.pot[k]||0,[lo]=D.items[k];x.classList.toggle('on',n>=lo);
+    x.innerHTML=(n>=lo||s.classList.contains('hint')?esc(CK.ing[k].n):'?')+(n?` <i>×${n}</i>`:'')});
+  s.classList.toggle('bad',problems().length>0)}
+function cookDish(i){const s=cS();if(!s)return;ck.d=i;ck.pot={};const D=CK.dish[i];
   $$('[data-dish]',s).forEach(b=>b.classList.toggle('on',+b.dataset.dish===i));
   $('.rname',s).textContent=D.n;$('.rvi',s).textContent=D.vi;
-  $('.slots',s).innerHTML=D.req.map(k=>`<span class="slot2" data-k="${k}">?</span>`).join('');
-  $('.inpot',s).innerHTML='';$$('.ing',s).forEach(b=>b.classList.remove('used'));
-  s.classList.remove('bad','won','hint');cookJudge('wait');cookSay('');}
-function cookJudge(m){const j=$('#sCook .judge');j.innerHTML=PICS['judge-'+m]||''}
-function cookSay(t,cls){const b=$('#sCook .bubble2');b.className='bubble2'+(cls?' '+cls:'');b.innerHTML=t;if(t){void b.offsetWidth;b.classList.add('in')}}
-function cookBad(){const D=CK.dish[ck.d];return ck.pot.filter(k=>!D.req.includes(k)&&!D.ok.includes(k))}
-function cookAdd(k){const s=$('#sCook'),D=CK.dish[ck.d],I=CK.ing[k];if(ck.pot.includes(k)||s.classList.contains('won')){SFX.minus();return}
-  ck.pot.push(k);$(`.ing[data-k="${k}"]`,s).classList.add('used');say(I.n);
-  const it=document.createElement('button');it.className='pi';it.dataset.k=k;it.title=I.n;it.innerHTML=PICS['ing-'+k];
-  it.style.setProperty('--x',(10+Math.random()*70)+'%');it.style.setProperty('--r',(Math.random()*40-20)+'deg');$('.inpot',s).appendChild(it);
-  const good=D.req.includes(k)||D.ok.includes(k);
-  if(good){const sl=$(`.slot2[data-k="${k}"]`,s);if(sl){sl.textContent=I.n;sl.classList.add('on')}
-    cookSay(`<b>${esc(I.n)}</b> ✓`,'good');SFX.ding();if(!cookBad().length){s.classList.remove('bad');cookJudge('wait')}}
-  else{s.classList.add('bad');cookJudge('yuck');cookSay(`Yuck! ${esc(I.n)}? It’s <b>${esc(I.bad)}</b>!`,'bad');SFX.buzz()}}
-function cookRemove(k){const s=$('#sCook');ck.pot=ck.pot.filter(x=>x!==k);const it=$(`.pi[data-k="${k}"]`,s);if(it)it.remove();
-  $(`.ing[data-k="${k}"]`,s).classList.remove('used');const sl=$(`.slot2[data-k="${k}"]`,s);if(sl){sl.classList.remove('on');sl.textContent=s.classList.contains('hint')?CK.ing[k].n:'?'}
-  if(!cookBad().length){s.classList.remove('bad');cookJudge('wait');cookSay('')}SFX.whoosh(false)}
-function cookServe(){const s=$('#sCook'),D=CK.dish[ck.d],bad=cookBad(),miss=D.req.filter(k=>!ck.pot.includes(k));
-  if(bad.length){const w=[...new Set(bad.map(k=>CK.ing[k].bad))];cookJudge('yuck');cookSay(`Yuck! This ${esc(D.n)} is <b>${esc(w.join(' and '))}</b>.`,'bad');SFX.buzz();return}
-  if(miss.length){cookJudge('wait');cookSay(`Hmm… it’s <b>bland</b>. ${miss.length} ingredient${miss.length>1?'s are':' is'} missing.`,'meh');SFX.minus();return}
-  s.classList.add('won');cookJudge('yum');const g=D.good;
-  $('.sdish',s).innerHTML=PICS['dish-'+D.k];$('.sadj',s).innerHTML=g.map((w,i)=>`<span style="--i:${i}">${esc(w)}</span>`).join('');
-  const sent=`Wow! This ${D.n} is ${g[0]} and ${g[1]}. It’s really ${g[2]}!`;$('.ssent',s).textContent=sent;$('.ssent',s).dataset.say=sent;
-  cookSay('');SFX.cheer();setTimeout(()=>say(sent),600)}
+  $('.slots',s).innerHTML=Object.entries(D.items).filter(([k,r])=>r[0]>0).map(([k])=>`<span class="slot2" data-k="${k}">?</span>`).join('');
+  $('.inpot',s).innerHTML='';s.classList.remove('won','hint');cookChef('wait');cookSay('');cookPaint()}
+function potItem(k){const s=cS();let it=$(`.pi[data-k="${k}"]`,s);
+  if(!it){it=document.createElement('button');it.className='pi';it.dataset.k=k;it.title=CK.ing[k].n;it.innerHTML=PICS['ing-'+k]+'<b class="dose"></b>';
+    const n=$$('.pi',s).length;it.style.setProperty('--x',((n*23)%78)+'%');it.style.setProperty('--y',((n*37)%50)+'%');it.style.setProperty('--r',((n*29)%40-20)+'deg');$('.inpot',s).appendChild(it)}
+  const n=ck.pot[k]||0;if(!n){it.remove();return}$('.dose',it).textContent='×'+n;it.classList.remove('bump');void it.offsetWidth;it.classList.add('bump')}
+function cookAdd(k){const s=cS(),D=CK.dish[ck.d],I=CK.ing[k];if(s.classList.contains('won'))return;
+  ck.pot[k]=(ck.pot[k]||0)+1;potItem(k);say(I.n);cookPaint();
+  const r=D.items[k],n=ck.pot[k],L=levels();
+  if(!r){cookChef('yuck');cookSay(`${esc(I.n[0].toUpperCase()+I.n.slice(1))} in ${esc(D.n)}?! No, no, no! It’s <b>${esc(badWord(k))}</b>!`,'bad');SFX.buzz();return}
+  if(n>r[1]){cookChef('yuck');cookSay(`Too much ${esc(I.n)}! It’s <b>${esc(mainFlav(k)?'too '+mainFlav(k):'too heavy')}</b>!`,'bad');SFX.buzz();return}
+  const over=CK.flav.filter(f=>L[f]>D.target[f][1]);
+  if(over.length){cookChef('yuck');cookSay(`Taste it! It’s <b>${over.map(f=>'too '+f).join(' and ')}</b>!`,'bad');SFX.buzz();return}
+  if(!problems().length){cookChef('wait');cookSay(`${esc(I.n[0].toUpperCase()+I.n.slice(1))}${n>1?' ×'+n:''} ✓`,'good');SFX.ding()}}
+function cookRemove(k){if(!ck.pot[k])return;ck.pot[k]--;if(!ck.pot[k])delete ck.pot[k];potItem(k);cookPaint();
+  if(!problems().length){cookChef('wait');cookSay('')}SFX.whoosh(false)}
+function cookServe(){const s=cS(),D=CK.dish[ck.d],P=problems(),L=levels();
+  if(P.length){const w=[...new Set(P.map(p=>p.word))];cookChef('yuck');cookSay(`This ${esc(D.n)} is <b>${esc(w.join(' and '))}</b>. Start again!`,'bad');SFX.buzz();return}
+  const miss=Object.entries(D.items).filter(([k,r])=>(ck.pot[k]||0)<r[0]).map(([k])=>CK.ing[k].n);
+  const low=CK.flav.filter(f=>L[f]<D.target[f][0]);
+  if(miss.length||low.length){cookChef('wait');
+    cookSay(`Hmm… it’s <b>bland</b>.`+(low.length?` Not <b>${low[0]}</b> enough.`:'')+(miss.length?` ${miss.length} ingredient${miss.length>1?'s are':' is'} missing.`:''),'meh');SFX.minus();return}
+  s.classList.add('won');cookChef('yum');
+  $('.sdish',s).innerHTML=PICS['dish-'+D.k];
+  $('.sadj',s).innerHTML=D.book.map((w,i)=>`<span class="book" style="--i:${i}">${esc(w)}</span>`).join('')+D.more.map((w,i)=>`<span class="more" style="--i:${i+D.book.length}">${esc(w)}</span>`).join('');
+  const b=D.book,sent=`Beautiful! This ${D.n} is ${b[0]} and ${b[1]}`+(b[2]?`, and it’s ${b[2]} too!`:'!');
+  $('.ssent',s).textContent=sent;$('.ssent',s).dataset.say=sent;cookSay('');SFX.cheer();setTimeout(()=>say(sent),600)}
 if(CK){cookDish(0);
-  /* drag an ingredient into the pot (a tap adds it too) */
+  /* drag an ingredient into the pot; every drop (or tap) adds one more dose */
   let drag=null;
-  document.addEventListener('pointerdown',e=>{const b=e.target.closest('#sCook .ing');if(!b||b.classList.contains('used'))return;e.preventDefault();
-    const r=b.getBoundingClientRect(),g=b.cloneNode(true);g.classList.add('ghost');g.style.width=r.width+'px';g.style.height=r.height+'px';
+  document.addEventListener('pointerdown',e=>{const b=e.target.closest('#sCook .ing');if(!b)return;e.preventDefault();
+    const r=$('.pic',b).getBoundingClientRect(),g=$('.pic',b).cloneNode(true);g.classList.add('ghost');g.style.width=r.width+'px';g.style.height=r.height+'px';
     g.style.left=r.left+'px';g.style.top=r.top+'px';document.body.appendChild(g);
     drag={k:b.dataset.k,g,x0:e.clientX,y0:e.clientY,dx:e.clientX-r.left,dy:e.clientY-r.top,moved:false};SFX.tick()});
+  const overPot=e=>{const pr=$('#sCook .potbox').getBoundingClientRect();return e.clientX>pr.left&&e.clientX<pr.right&&e.clientY>pr.top-40&&e.clientY<pr.bottom};
   document.addEventListener('pointermove',e=>{if(!drag)return;if(Math.abs(e.clientX-drag.x0)+Math.abs(e.clientY-drag.y0)>6)drag.moved=true;
-    drag.g.style.left=(e.clientX-drag.dx)+'px';drag.g.style.top=(e.clientY-drag.dy)+'px';
-    const pr=$('#sCook .potbox').getBoundingClientRect();$('#sCook .potbox').classList.toggle('over',e.clientX>pr.left&&e.clientX<pr.right&&e.clientY>pr.top&&e.clientY<pr.bottom)});
-  document.addEventListener('pointerup',e=>{if(!drag)return;const pb=$('#sCook .potbox'),pr=pb.getBoundingClientRect();pb.classList.remove('over');
-    const inPot=e.clientX>pr.left&&e.clientX<pr.right&&e.clientY>pr.top&&e.clientY<pr.bottom;drag.g.remove();
-    if(inPot||!drag.moved)cookAdd(drag.k);drag=null});
+    drag.g.style.left=(e.clientX-drag.dx)+'px';drag.g.style.top=(e.clientY-drag.dy)+'px';$('#sCook .potbox').classList.toggle('over',overPot(e))});
+  document.addEventListener('pointerup',e=>{if(!drag)return;$('#sCook .potbox').classList.remove('over');const hit=overPot(e);drag.g.remove();
+    if(hit||!drag.moved)cookAdd(drag.k);drag=null});
   document.addEventListener('pointercancel',()=>{if(drag){drag.g.remove();drag=null}});
 }
+
+STEP.sTasteWords=(s,n)=>{s.classList.toggle('more-in',n>=1);if(n)SFX.chime()};
 
 /* ---------- label the pictures ---------- */
 function phAll(s){const all=$$('.phc',s),on=!all.every(x=>x.classList.contains('show'));all.forEach((x,i)=>setTimeout(()=>x.classList.toggle('show',on),i*120));if(on)SFX.chime()}
@@ -273,7 +294,7 @@ document.addEventListener('click',e=>{
     case 'ph-all':phAll(s);break;
     case 'cook-serve':cookServe();break;
     case 'cook-empty':cookDish(ck.d);SFX.splash();break;
-    case 'cook-hint':{s.classList.toggle('hint');const on=s.classList.contains('hint');$$('.slot2:not(.on)',s).forEach(x=>x.textContent=on?CK.ing[x.dataset.k].n:'?');SFX.pop(2);break}
+    case 'cook-hint':s.classList.toggle('hint');cookPaint();SFX.pop(2);break;
     case 'cook-say':say($('.ssent',s).dataset.say||'');break;
     case 'r-reset':rInit(s,+s.dataset.ri);SFX.whoosh(false);break;
     case 'r-ans':rAnswer(s);break;

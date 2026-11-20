@@ -9,6 +9,8 @@ scenes = open(os.path.join(H, 'scenes.js'), encoding='utf-8').read()
 scenes = scenes[scenes.index('const P={'):]
 extra = open(os.path.join(H, 'scenes2.js'), encoding='utf-8').read()
 scenes += '\n' + extra[extra.index('const P2={'):]
+extra3 = open(os.path.join(H, 'scenes3.js'), encoding='utf-8').read()
+scenes += '\n' + extra3[extra3.index('function chef'):]
 tail = tail.replace('\n})();', "\nwindow.ICONS.how=window.ICONS.feel;\n})();")
 open(os.path.join(H, 'pics.js'), 'w', encoding='utf-8').write(head + scenes + tail)
 print('pics.js written')

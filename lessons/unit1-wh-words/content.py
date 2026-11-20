@@ -209,36 +209,55 @@ PRACTICE = [
 ]
 
 # ---------------- Cooking show ----------------
-# key, English name, Vietnamese, what it tastes like when it does NOT belong in the dish
+# Book flavour words drive the feedback; words from outside the book come second.
+FLAVOURS = ['salty', 'sour', 'sweet', 'spicy', 'peppery', 'pungent']
+# key, English name, Vietnamese, flavour per dose, word used when it does not belong (book word if it has a flavour)
 INGREDIENTS = [
-    ('noodles', 'rice noodles', 'bánh phở', 'soggy'), ('beef', 'beef', 'thịt bò', 'greasy'),
-    ('onion', 'onion', 'hành tây', 'pungent'), ('ginger', 'ginger', 'gừng', 'too spicy'),
-    ('anise', 'star anise', 'hoa hồi', 'bitter'), ('herbs', 'herbs', 'rau thơm', 'grassy'),
-    ('lime', 'lime', 'chanh', 'too sour'), ('chilli', 'chilli', 'ớt', 'burning hot'),
-    ('fishsauce', 'fish sauce', 'nước mắm', 'too salty'), ('riceflour', 'rice flour', 'bột gạo', 'gluey'),
-    ('pork', 'pork', 'thịt lợn', 'greasy'), ('mushroom', 'wood ear mushroom', 'mộc nhĩ', 'rubbery'),
-    ('shallots', 'fried shallots', 'hành phi', 'oily'), ('baguette', 'baguette', 'bánh mì', 'soggy'),
-    ('pate', 'pâté', 'pa-tê', 'too rich'), ('cucumber', 'cucumber', 'dưa chuột', 'watery'),
-    ('egg', 'egg', 'trứng', 'eggy'), ('mango', 'mango', 'xoài', 'too sweet'),
-    ('milk', 'milk', 'sữa', 'sour'), ('ice', 'ice', 'đá', 'watery'),
-    ('sugar', 'sugar', 'đường', 'sickly sweet'), ('chocolate', 'chocolate', 'sô-cô-la', 'bitter'),
-    ('cheese', 'cheese', 'phô mai', 'greasy'), ('ketchup', 'ketchup', 'tương cà', 'weird'),
+    ('noodles', 'rice noodles', 'bánh phở', {}, 'soggy'), ('beef', 'beef', 'thịt bò', {}, 'greasy'),
+    ('pork', 'pork', 'thịt lợn', {}, 'greasy'), ('egg', 'egg', 'trứng', {}, 'eggy'),
+    ('onion', 'onion', 'hành tây', {'pungent': 1}, ''), ('garlic', 'garlic', 'tỏi', {'pungent': 2}, ''),
+    ('ginger', 'ginger', 'gừng', {'spicy': 1, 'pungent': 1}, ''), ('anise', 'star anise', 'hoa hồi', {}, 'bitter'),
+    ('herbs', 'herbs', 'rau thơm', {}, 'grassy'), ('chilli', 'chilli', 'ớt', {'spicy': 2}, ''),
+    ('pepper', 'pepper', 'hạt tiêu', {'peppery': 2}, ''), ('lime', 'lime', 'chanh', {'sour': 2}, ''),
+    ('fishsauce', 'fish sauce', 'nước mắm', {'salty': 2}, ''), ('salt', 'salt', 'muối', {'salty': 3}, ''),
+    ('sugar', 'sugar', 'đường', {'sweet': 2}, ''), ('riceflour', 'rice flour', 'bột gạo', {}, 'gluey'),
+    ('mushroom', 'wood ear mushroom', 'mộc nhĩ', {}, 'rubbery'), ('shallots', 'fried shallots', 'hành phi', {}, 'oily'),
+    ('baguette', 'baguette', 'bánh mì', {}, 'soggy'), ('pate', 'pâté', 'pa-tê', {'salty': 1}, ''),
+    ('cucumber', 'cucumber', 'dưa chuột', {}, 'watery'), ('mango', 'mango', 'xoài', {'sweet': 2}, ''),
+    ('milk', 'milk', 'sữa', {'sweet': 1}, ''), ('ice', 'ice', 'đá', {}, 'watery'),
+    ('chocolate', 'chocolate', 'sô-cô-la', {'sweet': 2}, ''), ('cheese', 'cheese', 'phô mai', {'salty': 1}, ''),
+    ('ketchup', 'ketchup', 'tương cà', {'sweet': 1, 'sour': 1}, ''),
 ]
-# key, name, Vietnamese, required, also fine, good adjectives
+# key, name, Vietnamese, {ingredient: [min, max] doses} (min > 0 = must have), {flavour: [min, max]},
+# words from the book, extra words
 DISHES_COOK = [
-    ('pho', 'Phở bò', 'beef noodle soup', ['noodles', 'beef', 'onion', 'ginger', 'anise', 'herbs'], ['lime', 'chilli', 'egg'],
-     ['savory', 'aromatic', 'mouth-watering', 'hearty']),
-    ('banhcuon', 'Bánh cuốn', 'steamed rice rolls', ['riceflour', 'pork', 'mushroom', 'shallots', 'fishsauce'], ['herbs', 'chilli', 'cucumber', 'lime'],
-     ['soft', 'delicate', 'savory', 'melt-in-your-mouth']),
-    ('banhmi', 'Bánh mì', 'Vietnamese sandwich', ['baguette', 'pate', 'pork', 'cucumber', 'herbs'], ['chilli', 'egg'],
-     ['crunchy', 'savory', 'tasty', 'filling']),
-    ('smoothie', 'Sinh tố xoài', 'mango smoothie', ['mango', 'milk', 'ice', 'sugar'], ['lime'],
-     ['sweet', 'refreshing', 'creamy', 'juicy']),
+    ('pho', 'Phở bò', 'beef noodle soup',
+     {'noodles': [1, 2], 'beef': [1, 2], 'onion': [1, 2], 'ginger': [1, 1], 'anise': [1, 2], 'herbs': [1, 3], 'fishsauce': [1, 2],
+      'lime': [0, 1], 'chilli': [0, 2], 'pepper': [0, 1], 'egg': [0, 1], 'salt': [0, 1]},
+     {'salty': [2, 4], 'sour': [0, 2], 'sweet': [0, 0], 'spicy': [1, 5], 'peppery': [0, 2], 'pungent': [2, 3]},
+     ['savory', 'mouth-watering', 'nutritious'], ['aromatic', 'hearty']),
+    ('banhcuon', 'Bánh cuốn', 'steamed rice rolls',
+     {'riceflour': [1, 2], 'pork': [1, 2], 'mushroom': [1, 2], 'shallots': [1, 2], 'fishsauce': [1, 2],
+      'herbs': [0, 2], 'chilli': [0, 1], 'cucumber': [0, 1], 'lime': [0, 1], 'garlic': [0, 1], 'sugar': [0, 1], 'pepper': [0, 1]},
+     {'salty': [2, 4], 'sour': [0, 2], 'sweet': [0, 2], 'spicy': [0, 2], 'peppery': [0, 2], 'pungent': [0, 2]},
+     ['savory', 'melt-in-your-mouth', 'mouth-watering'], ['soft', 'delicate']),
+    ('banhmi', 'Bánh mì', 'Vietnamese sandwich',
+     {'baguette': [1, 1], 'pate': [1, 2], 'pork': [1, 2], 'cucumber': [1, 2], 'herbs': [1, 2],
+      'chilli': [0, 2], 'egg': [0, 1], 'pepper': [0, 1], 'salt': [0, 1]},
+     {'salty': [1, 3], 'sour': [0, 0], 'sweet': [0, 0], 'spicy': [0, 4], 'peppery': [0, 2], 'pungent': [0, 1]},
+     ['savory', 'mouth-watering'], ['crunchy', 'filling']),
+    ('smoothie', 'Sinh tố xoài', 'mango smoothie',
+     {'mango': [1, 2], 'milk': [1, 1], 'ice': [1, 2], 'sugar': [0, 2], 'lime': [0, 1]},
+     {'salty': [0, 0], 'sour': [0, 2], 'sweet': [3, 6], 'spicy': [0, 0], 'peppery': [0, 0], 'pungent': [0, 0]},
+     ['sweet', 'juicy', 'nutritious'], ['refreshing', 'creamy']),
 ]
-TASTE_GOOD = [('savory', 'đậm đà'), ('aromatic', 'thơm'), ('mouth-watering', 'ngon chảy nước miếng'), ('hearty', 'no nê, ấm bụng'),
-              ('delicate', 'thanh, tinh tế'), ('crunchy', 'giòn'), ('refreshing', 'mát, sảng khoái'), ('creamy', 'béo ngậy, mịn')]
-TASTE_BAD = [('bland', 'nhạt nhẽo'), ('greasy', 'ngấy mỡ'), ('soggy', 'ỉu, nhũn'), ('bitter', 'đắng'),
-             ('too salty', 'mặn quá'), ('sickly sweet', 'ngọt gắt'), ('watery', 'loãng, nhạt'), ('burning hot', 'cay xé')]
+# "Delicious or disgusting?": words from the book first, then words from outside the book
+TASTE_GOOD_BOOK = [('savory', 'đậm đà'), ('sweet', 'ngọt'), ('juicy', 'mọng nước'), ('mouth-watering', 'ngon chảy nước miếng'),
+                   ('nutritious', 'bổ dưỡng'), ('melt-in-your-mouth', 'tan chảy trong miệng')]
+TASTE_BAD_BOOK = [('too salty', 'mặn quá'), ('too sour', 'chua quá'), ('too sweet', 'ngọt quá'), ('too spicy', 'cay quá'),
+                  ('too peppery', 'nhiều tiêu quá'), ('too pungent', 'hăng quá')]
+TASTE_GOOD_MORE = [('aromatic', 'thơm'), ('crunchy', 'giòn'), ('refreshing', 'mát, sảng khoái'), ('creamy', 'béo, mịn'), ('hearty', 'no nê, ấm bụng')]
+TASTE_BAD_MORE = [('bland', 'nhạt nhẽo'), ('greasy', 'ngấy mỡ'), ('bitter', 'đắng'), ('soggy', 'ỉu, nhũn'), ('watery', 'loãng')]
 
 # ---------------- Comic: a day in Minh's life ----------------
 # scene, time, narration, speech bubble (speaker, text); **word|nghĩa** marks vocabulary

@@ -1,0 +1,407 @@
+<main id="viewport"><div id="stage">
+
+<section class="slide dark" data-title="Writing Task 1" style="justify-content:center"><h1>Writing Task 1<br>Overview &amp; Thân bài</h1></section>
+
+<section class="slide" id="sScore" data-title="Bảng điểm nhóm">
+ <div class="hdr"><h2>Bảng điểm nhóm</h2>
+  <div class="tools"><button class="b pri" id="scBack" hidden>↩ Quay lại</button><button class="b sm" data-act="sc-add">+ Thêm nhóm</button><button class="b sm" data-act="sc-del">− Bớt nhóm</button><button class="b sm" data-act="sc-reset">Về 0</button></div></div>
+ <div class="board" id="board"></div>
+</section>
+
+<section class="slide dark" data-title="Phần 1 · Ôn lý thuyết" style="justify-content:center"><h1>Phần 1<br>Overview &amp; ngôn ngữ so sánh</h1></section>
+
+<!-- dynamic or static -->
+<section class="slide" id="sType" data-title="Có xu hướng hay không?" data-steps="5">
+ <div class="hdr"><h2>Biểu đồ có xu hướng hay không?</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="types">
+  <div class="tcard"><h3>Jobs in four sectors, US</h3><div class="cbox"><svg id="tLine"></svg></div><div class="why" data-s="2">Trục thời gian 1960 → 2020</div><span class="stamp dy" data-st="2">DYNAMIC</span></div>
+  <div class="tcard"><h3>Household expenditure</h3><div class="cbox"><svg id="tBar"></svg></div><div class="why" data-s="3">Hai mốc thời gian: 1995 và 2005</div><span class="stamp dy" data-st="3">DYNAMIC</span></div>
+  <div class="tcard"><h3>TV viewership by age</h3><div class="cbox"><svg id="tPie"></svg></div><div class="why" data-s="4">Ba nhóm tuổi, không có thời gian</div><span class="stamp st" data-st="4">STATIC</span></div>
+ </div>
+ <div class="rule" data-s="5">
+  <div class="d"><span class="pillx dy">DYNAMIC</span> Có mốc thời gian → so <b>điểm đầu ↔ điểm cuối</b></div>
+  <div class="s"><span class="pillx st">STATIC</span> Không có thời gian → so <b>cao nhất ↔ thấp nhất</b></div>
+ </div>
+</section>
+
+<!-- overview formula -->
+<section class="slide" id="sOvF" data-title="Công thức Overview" data-steps="5">
+ <div class="hdr"><h2>Overview = 2 câu</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <table class="tb">
+  <tr><th style="width:14%"></th><th>Có xu hướng (Dynamic)</th><th>Không có xu hướng (Static)</th></tr>
+  <tr data-s="1"><td>Câu 1</td><td class="dyc"><b>General trend:</b> so điểm đầu với điểm cuối để thấy xu hướng chủ đạo</td><td class="stc"><b>Order:</b> mỗi đối tượng cao nhất / thấp nhất ở đâu</td></tr>
+  <tr data-s="2"><td>Câu 2</td><td class="dyc"><b>Key feature:</b> cao nhất ↔ thấp nhất; luôn cao nhất / luôn thấp nhất; vượt nhau</td><td class="stc"><b>Key feature:</b> số liệu bằng nhau; chênh lệch lớn nhất; so sánh tổng thể</td></tr>
+  <tr data-s="3"><td>Mở đầu</td><td class="eg">Overall, it is clear that… / Overall, what stands out from the chart is that…</td><td class="eg">Overall, it is noticeable that… / A noticeable feature from the chart is that…</td></tr>
+  <tr data-s="4"><td>Nối câu 2</td><td class="eg">In addition, / Moreover,</td><td class="eg">In addition,</td></tr>
+ </table>
+ <div class="nonum" data-s="5">Không đưa số liệu vào overview <s>16 million</s> <s>34%</s></div>
+</section>
+
+<!-- naming -->
+<section class="slide" id="sName" data-title="Gọi tên đối tượng" data-steps="4">
+ <div class="hdr"><h2>Trước khi viết: gọi tên cho đúng</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="ngrid">
+  <div></div>
+  <div class="hd"><i style="background:var(--man)"></i>Line · jobs</div>
+  <div class="hd"><i style="background:var(--y05)"></i>Bar · spending</div>
+  <div class="hd"><i style="background:#9ED8B8"></i>Pie · TV</div>
+  <div class="rh" data-s="1">Chủ ngữ</div>
+  <div class="c" data-s="1"><span class="bad">the orange line</span><span class="good">the number of jobs in manufacturing</span></div>
+  <div class="c" data-s="1"><span class="bad">the yellow bar</span><span class="good">the proportion spent on housing</span></div>
+  <div class="c" data-s="1"><span class="bad">the green part</span><span class="good">the percentage of viewers watching news</span></div>
+  <div class="rh" data-s="2">Tên gọi chung</div>
+  <div class="c" data-s="2"><span class="good" style="opacity:1">the four sectors / employment</span></div>
+  <div class="c" data-s="2"><span class="good" style="opacity:1">four categories of household expenditure</span></div>
+  <div class="c" data-s="2"><span class="good" style="opacity:1">five types of TV programmes</span></div>
+  <div class="rh" data-s="3">Đơn vị</div>
+  <div class="c" data-s="3"><span class="good" style="opacity:1">millions of jobs</span></div>
+  <div class="c" data-s="3"><span class="good" style="opacity:1">% of total spending</span></div>
+  <div class="c" data-s="3"><span class="good" style="opacity:1">% of viewers in each age group</span></div>
+  <div class="rh" data-s="4">Đổi cách gọi</div>
+  <div class="c" data-s="4"><span class="good eg" style="opacity:1">manufacturing jobs = employment in manufacturing</span></div>
+  <div class="c" data-s="4"><span class="good eg" style="opacity:1">spending on housing = how much was spent on housing</span></div>
+  <div class="c" data-s="4"><span class="good eg" style="opacity:1">news viewers = those who watched news</span></div>
+ </div>
+</section>
+
+<!-- dynamic overview on the line graph -->
+<section class="slide" id="sDyn" data-title="Overview Dynamic" data-steps="5">
+ <div class="hdr"><h2>Overview có xu hướng: biểu đồ đường</h2><div class="tools"><button class="b" data-act="hl">Tô màu đối tượng</button><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="two">
+  <div class="cbox"><svg id="dynLine"></svg></div>
+  <div class="side">
+   <div class="key2" data-s="2"><span class="pillx dy">BƯỚC 1</span><span>So <b>1960 ↔ 2020</b>: hai ngành tăng, hai ngành giảm</span></div>
+   <div class="sbox" data-s="3"><span class="lab">Câu 1 · General trend</span><span class="eg">Overall, it is clear that the number of jobs in <span class="mk o1">retail</span> and <span class="mk o3">healthcare</span> rose over the period, while the figures for <span class="mk o2">manufacturing</span> and <span class="mk o4">agriculture</span> fell.</span></div>
+   <div class="key2" data-s="4"><span class="pillx dy">BƯỚC 2</span><span>Tìm key feature: <b>vượt nhau</b> và <b>luôn thấp nhất</b></span></div>
+   <div class="sbox" data-s="5"><span class="lab">Câu 2 · Key feature</span><span class="eg">In addition, <span class="mk o2">manufacturing</span>, the biggest employer for most of the period, was overtaken by both <span class="mk o1">retail</span> and <span class="mk o3">healthcare</span> by 2020, while <span class="mk o4">agriculture</span> had the fewest jobs from 1980 onwards.</span></div>
+  </div>
+ </div>
+</section>
+
+<!-- static overview on the pies -->
+<section class="slide" id="sStat" data-title="Overview Static" data-steps="5">
+ <div class="hdr"><h2>Overview không có xu hướng: ba biểu đồ tròn</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="cbox" style="flex:1.15"><svg id="statPie"></svg></div>
+ <div class="two even" style="flex:1">
+  <div class="sbox" data-s="3"><span class="lab">Câu 1 · Order: cao nhất ở đâu</span><span class="eg">Overall, it is noticeable that while sport and cartoons were the most popular programmes among 10–15-year-olds, drama and news were favoured most by the 16–20 and 21–25 age groups respectively.</span></div>
+  <div class="sbox" data-s="5"><span class="lab">Câu 2 · Key feature: thấp nhất</span><span class="eg">In addition, news attracted the smallest share of the youngest viewers, whereas sport was the least watched programme among the two older groups.</span></div>
+ </div>
+</section>
+
+<!-- overview language + common errors -->
+<section class="slide" id="sOvL" data-title="Mẫu câu & lỗi hay gặp">
+ <div class="hdr"><h2>Mẫu câu overview và lỗi hay gặp</h2><div class="tools"><button class="b" data-act="flip-all">Lật tất cả</button></div></div>
+ <div class="two" style="grid-template-columns:.8fr 1.2fr">
+  <div class="olist">
+   <div><b>Dynamic · tất cả cùng xu hướng</b><span class="eg">…the figures for all four categories witnessed a rise over the period.</span></div>
+   <div><b>Dynamic · 2 xu hướng</b><span class="eg">…most types of… saw an increase, except for…</span></div>
+   <div><b>Luôn cao nhất</b><span class="eg">Moreover, X was consistently the highest…</span></div>
+   <div><b>Vượt nhau</b><span class="eg">In addition, from 2010 onwards, the figure for X was higher than that for Y.</span></div>
+   <div><b>Static · tránh lặp highest / lowest</b><span class="eg">the majority of · the most common · the most popular · the least</span></div>
+  </div>
+  <div class="fgrid c3">
+   <button class="fc err"><span class="in2"><span class="f"><b>saw an increased</b><span>Sai dạng từ</span></span><span class="bk">saw an <em>increase</em> (N)</span></span></button>
+   <button class="fc err"><span class="in2"><span class="f"><b>rose sharp</b><span>Sai dạng từ</span></span><span class="bk">rose <em>sharply</em> (Adv)</span></span></button>
+   <button class="fc err"><span class="in2"><span class="f"><b>Overall, healthcare jobs rose from 2 to 16 million.</b><span>Overview có số liệu</span></span><span class="bk">Overall, healthcare employment <em>rose over the period</em>.</span></span></button>
+   <button class="fc err"><span class="in2"><span class="f"><b>the number of… the number of… the number of…</b><span>Lặp chủ ngữ</span></span><span class="bk">the number of jobs → <em>this figure</em> → <em>employment in</em>…</span></span></button>
+   <button class="fc err"><span class="in2"><span class="f"><b>the consumption of A</b><span>Đổi dạng từ để paraphrase</span></span><span class="bk"><em>how much A was consumed</em></span></span></button>
+   <button class="fc err"><span class="in2"><span class="f"><b>the orange line increased</b><span>Gọi tên theo màu</span></span><span class="bk"><em>the number of manufacturing jobs</em> increased</span></span></button>
+  </div>
+ </div>
+</section>
+
+<!-- comparison language -->
+<section class="slide" id="sCmp" data-title="Ngôn ngữ so sánh">
+ <div class="hdr"><h2>Ngôn ngữ so sánh theo chức năng</h2><div class="tools"><button class="b" data-act="flip-all">Lật tất cả</button></div></div>
+ <div class="fgrid c4">
+  <button class="fc"><span class="in2"><span class="f"><b>Cao / thấp nhất</b><span>the highest / lowest among…; the most / least + adj + N</span></span><span class="bk">Drama was <em>the most watched programme</em> among 16–20-year-olds.</span></span></button>
+  <button class="fc"><span class="in2"><span class="f"><b>Đứng thứ hai</b><span>followed by + N + at + số; the second-highest</span></span><span class="bk">Food and drinks took up 32%, <em>followed by housing at 28%</em>.</span></span></button>
+  <button class="fc"><span class="in2"><span class="f"><b>Khoảng cách lớn</b><span>distantly followed by; far more significant</span></span><span class="bk">In 1980, manufacturing had 20 million jobs, <em>distantly followed by</em> retail at 10 million.</span></span></button>
+  <button class="fc"><span class="in2"><span class="f"><b>Gấp bao nhiêu lần</b><span>double the figure for; more than doubling; eightfold</span></span><span class="bk">Retail had 10 million jobs, <em>double the figure for</em> healthcare.</span></span></button>
+  <button class="fc"><span class="in2"><span class="f"><b>Bằng nhau</b><span>equalling; the same as</span></span><span class="bk">Healthcare reached 16 million, <em>equalling</em> the figure for retail.</span></span></button>
+  <button class="fc"><span class="in2"><span class="f"><b>Vượt qua</b><span>surpass; overtake; emerge as</span></span><span class="bk">Housing <em>overtook</em> food and drinks, <em>emerging as</em> the largest expense.</span></span></button>
+  <button class="fc"><span class="in2"><span class="f"><b>Đối lập</b><span>while / whereas; In contrast,; on the other hand</span></span><span class="bk">26% of 10–15-year-olds watched sport, <em>whereas</em> only 4% of 21–25-year-olds did.</span></span></button>
+  <button class="fc"><span class="in2"><span class="f"><b>Hai xu hướng ngược</b><span>exhibit opposite trends; a corresponding fall / rise</span></span><span class="bk">Spending on housing rose, with <em>a corresponding fall</em> in spending on food.</span></span></button>
+  <button class="fc"><span class="in2"><span class="f"><b>Giống nhau</b><span>Similarly,; A relatively similar pattern could be observed in…</span></span><span class="bk"><em>A similar pattern could be observed in</em> transport, which rose to 19%.</span></span></button>
+  <button class="fc"><span class="in2"><span class="f"><b>Vẫn giữ vị trí</b><span>However, it was still…; securing its position as…</span></span><span class="bk">Transport rose to 19%. <em>However, it was still</em> the smallest category.</span></span></button>
+  <button class="fc"><span class="in2"><span class="f"><b>Song song</b><span>Over the same period,…; their trends were almost mirrored</span></span><span class="bk"><em>Over the same period,</em> healthcare jobs also rose sharply.</span></span></button>
+  <button class="fc"><span class="in2"><span class="f"><b>Thay chủ ngữ</b><span>this figure; the former / the latter</span></span><span class="bk">Manufacturing peaked at 20 million; <em>this figure</em> then fell to 13 million.</span></span></button>
+ </div>
+</section>
+
+<!-- numbers -->
+<section class="slide" id="sNum" data-title="Diễn đạt số liệu" data-steps="8">
+ <div class="hdr"><h2>Diễn đạt số liệu</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="two even">
+  <div class="side">
+   <div class="fracs">
+    <div class="frac" data-s="1"><svg data-pct="33" data-c="#9ED8B8"></svg><div><b>33%</b><span><em>a third</em> of 21–25-year-olds</span></div></div>
+    <div class="frac" data-s="2"><svg data-pct="26" data-c="#EE8A4E"></svg><div><b>26%</b><span><em>just over a quarter</em></span></div></div>
+    <div class="frac" data-s="3"><svg data-pct="34" data-c="#F2C14E"></svg><div><b>34%</b><span><em>just over a third</em> of spending</span></div></div>
+    <div class="frac" data-s="4"><svg data-pct="4" data-c="#EE8A4E"></svg><div><b>4%</b><span><em>a mere</em> 4% · <em>only</em> 4%</span></div></div>
+   </div>
+   <div class="verbs" data-s="4"><span>account for</span><span>make up</span><span>constitute</span><span>hold a …% share</span><span>take up</span></div>
+   <div class="preps">
+    <div data-s="5"><b>at</b> + số · điểm đứng<br><span class="eg">at 15 million in 1960</span></div>
+    <div data-s="6"><b>to</b> + số · đích đến<br><span class="eg">rose to 20 million</span></div>
+    <div data-s="7"><b>of</b> + số · mức thay đổi<br><span class="eg">a rise of 5 million</span></div>
+    <div data-s="8"><b>by</b> + mốc · thì hoàn thành<br><span class="eg">by 2020, it had fallen to 13 million</span></div>
+   </div>
+  </div>
+  <div class="cbox"><svg id="numLine"></svg></div>
+ </div>
+</section>
+
+<section class="slide dark" data-title="Phần 2 · Luyện tập" style="justify-content:center"><h1>Phần 2<br>Luyện tập nhanh</h1></section>
+
+<!-- practice 1 -->
+<section class="slide" id="sP1" data-title="Bài 1 · Chọn overview">
+ <div class="hdr"><h2>Bài 1 · Chọn overview đúng</h2><div class="minitimers"><div class="timer sm2" data-sec="120" data-label="Thời gian"></div></div><div class="tools"><button class="b pri" data-act="reveal">Đáp án</button></div></div>
+ <div class="two" style="grid-template-columns:1fr 1.15fr">
+  <div class="cbox"><svg id="p1Bar"></svg></div>
+  <div class="choices">
+   <button class="choice wrong"><b>A</b><span class="eg">Overall, households spent 34% on housing in 2005, which was the highest figure.<span class="why2">✗ Có số liệu, chỉ nói một năm</span></span></button>
+   <button class="choice right"><b>B</b><span class="eg">Overall, it is clear that the proportions spent on housing and transport rose, while those for food and drinks and other goods and services fell. In addition, housing replaced food and drinks as the largest expense.<span class="why2">✓ Câu 1 xu hướng, câu 2 vượt nhau, không số</span></span></button>
+   <button class="choice wrong"><b>C</b><span class="eg">Overall, it is noticeable that housing was the highest in all years, and transport was the lowest.<span class="why2">✗ Viết như static; năm 1995 food and drinks mới cao nhất</span></span></button>
+  </div>
+ </div>
+</section>
+
+<!-- practice 2 -->
+<section class="slide" id="sP2" data-title="Bài 2 · Sửa lỗi">
+ <div class="hdr"><h2>Bài 2 · Tìm và sửa lỗi</h2><div class="minitimers"><div class="timer sm2" data-sec="180" data-label="Thời gian"></div></div></div>
+ <div class="fixes">
+  <button class="fix"><i>1</i><span>The number of retail jobs saw an <span class="er">increased</span><span class="co">increase</span> from 6 to 16 million.<span class="note">saw / experienced + a + N</span></span></button>
+  <button class="fix"><i>2</i><span>Manufacturing employment fell <span class="er">steady</span><span class="co">steadily</span> after 1980.<span class="note">Động từ + trạng từ</span></span></button>
+  <button class="fix"><i>3</i><span>In 2005, housing was the <span class="er">most highest</span><span class="co">highest</span> category of spending.<span class="note">Tính từ ngắn: -est, không thêm most</span></span></button>
+  <button class="fix"><i>4</i><span>Healthcare jobs rose eightfold, <span class="er">reached</span><span class="co">reaching</span> 16 million in 2020.<span class="note">…, reaching / ending at + số</span></span></button>
+  <button class="fix"><i>5</i><span>By 2000, the number of retail jobs <span class="er">has risen</span><span class="co">had risen</span> to 15 million.<span class="note">By + mốc quá khứ → had + V3</span></span></button>
+  <button class="fix"><i>6</i><span>Spending on food and drinks <span class="er">accounted</span><span class="co">accounted for</span> 32% in 1995.<span class="note">account for + %</span></span></button>
+ </div>
+</section>
+
+<!-- practice 3 -->
+<section class="slide" id="sP3" data-title="Bài 3 · Điền cấu trúc">
+ <div class="hdr"><h2>Bài 3 · Điền cấu trúc so sánh</h2><div class="minitimers"><div class="timer sm2" data-sec="180" data-label="Thời gian"></div></div><div class="tools"><button class="b" data-act="gaps-all">Hiện tất cả</button></div></div>
+ <div class="bank" id="bank"><span>followed by</span><span>eightfold</span><span>double</span><span>equalling</span><span>overtook</span><span>the most watched</span><span>corresponding</span><span>at</span></div>
+ <div class="gaps">
+  <p><i>1</i>In 1995, food and drinks took up 32% of spending, <b class="blank">followed by</b> housing at 28%.</p>
+  <p><i>2</i>Healthcare jobs rose from 2 to 16 million, an <b class="blank">eightfold</b> increase.</p>
+  <p><i>3</i>In 1980, retail employed 10 million people, <b class="blank">double</b> the figure for healthcare.</p>
+  <p><i>4</i>By 2020, healthcare employment had reached 16 million, <b class="blank">equalling</b> that of retail.</p>
+  <p><i>5</i>Housing <b class="blank">overtook</b> food and drinks to become the largest expense in 2005.</p>
+  <p><i>6</i>Drama was <b class="blank">the most watched</b> programme among 16–20-year-olds, at 30%.</p>
+  <p><i>7</i>Spending on housing rose, with a <b class="blank">corresponding</b> fall in spending on food and drinks.</p>
+  <p><i>8</i>News was the least popular choice for 10–15-year-olds, <b class="blank">at</b> only 6%.</p>
+ </div>
+</section>
+
+<section class="slide dark" data-title="Phần 3 · Thân bài" style="justify-content:center"><h1>Phần 3<br>Viết thân bài</h1></section>
+
+<!-- process -->
+<section class="slide" id="sProc" data-title="Quy trình 5 bước" data-steps="5">
+ <div class="hdr"><h2>Quy trình 5 bước</h2><div class="tools"><button class="b pri" data-act="step">Bước tiếp ▸</button></div></div>
+ <div class="proc">
+  <ol class="stepper" id="procList">
+   <li>Xác định đối tượng và các cách gọi tên</li>
+   <li>Xác định key feature cho overview</li>
+   <li>Tìm điểm cần so sánh: cao nhất, thấp nhất, vượt nhau, bằng nhau</li>
+   <li>Chia 2 đoạn thân bài, lập outline</li>
+   <li>Viết: mỗi câu có số liệu + xu hướng/thời gian + so sánh</li>
+  </ol>
+  <div class="cbox"><svg id="procLine"></svg></div>
+ </div>
+</section>
+
+<!-- 3 parts in a sentence -->
+<section class="slide" id="sSent" data-title="Câu đủ 3 thành phần" data-steps="4">
+ <div class="hdr"><h2>Mỗi câu thân bài cần đủ 3 thành phần</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="sbox" data-s="1"><span class="lab">Chỉ liệt kê</span><span class="eg">In 1980, the number of manufacturing jobs rose to 20 million.</span>
+  <div class="parts"><span class="y">✓ Số liệu</span><span class="y">✓ Xu hướng + thời gian</span><span class="x" id="noCmp">✗ So sánh</span></div></div>
+ <div class="sbox" data-s="2"><span class="lab">Thêm so sánh</span><span class="eg">In 1980, the number of manufacturing jobs rose to 20 million, <b class="flyin" data-fly="2">twice as many as in retail</b>.</span>
+  <div class="parts"><span class="y">✓ Số liệu</span><span class="y">✓ Xu hướng + thời gian</span><span class="y">✓ So sánh</span></div></div>
+ <div class="ladder">
+  <div class="l2" data-s="3"><b>Band 6+</b><span class="eg">In 1960, the number of manufacturing jobs was the highest, at 15 million.</span></div>
+  <div class="l3" data-s="4"><b>Band 7+</b><span class="eg">In 1960, manufacturing was <b>the largest employer</b>, with 15 million jobs.</span></div>
+ </div>
+</section>
+
+<!-- horizontal vs vertical -->
+<section class="slide" id="sHV" data-title="Viết ngang / viết dọc" data-steps="3">
+ <div class="hdr"><h2>Viết ngang hay viết dọc?</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="hv">
+  <div class="side">
+   <table class="dg" id="dg">
+    <tr><th></th><th>Sport</th><th>Cartoon</th><th>Film</th><th>News</th><th>Drama</th></tr>
+    <tr><th class="r">10–15</th><td>26</td><td>26</td><td>19</td><td>6</td><td>23</td></tr>
+    <tr><th class="r">16–20</th><td>14</td><td>15</td><td>23</td><td>18</td><td>30</td></tr>
+    <tr><th class="r">21–25</th><td>4</td><td>20</td><td>21</td><td>33</td><td>22</td></tr>
+   </table>
+   <table class="tb" data-s="3">
+    <tr><th>Biểu đồ</th><th>Cách mặc định</th><th>Khi nào đổi</th></tr>
+    <tr><td>Line / bar theo thời gian</td><td>Ngang: từng đối tượng, đầu → cuối</td><td>Dọc (theo giai đoạn) khi có điểm giao nhau rõ</td></tr>
+    <tr><td>Pie / bảng không có thời gian</td><td>Ngang cho hàng cùng pattern</td><td>Dọc cho các hàng cần so trực tiếp</td></tr>
+   </table>
+  </div>
+  <div class="plan">
+   <div class="pb b1" data-s="1"><b>Viết ngang</b>Đi hết một đối tượng rồi sang đối tượng khác.<br><span class="eg">Among 10–15-year-olds, sport and cartoons… whereas news…</span></div>
+   <div class="pb b2" data-s="2"><b>Viết dọc</b>So nhiều đối tượng ở cùng một hạng mục / mốc.<br><span class="eg">Sport attracted 26% of the youngest group, 14% of… and only 4% of…</span></div>
+  </div>
+ </div>
+</section>
+
+<!-- line grouping -->
+<section class="slide" id="sLineG" data-title="Line: 2 cách chia đoạn" data-steps="5">
+ <div class="hdr"><h2>Biểu đồ đường: 2 cách chia thân bài</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="two">
+  <div class="cbox"><svg id="lgLine"></svg></div>
+  <div class="plan">
+   <div class="key2" data-s="1"><span class="pillx dy">CÁCH 1</span><b>Viết ngang, chia theo xu hướng</b></div>
+   <div class="pb b1" data-s="1"><b>Body 1 · giảm</b>Manufacturing + Agriculture</div>
+   <div class="pb b2" data-s="2"><b>Body 2 · tăng</b>Retail + Healthcare</div>
+   <div class="key2" data-s="3"><span class="pillx st">CÁCH 2</span><b>Viết dọc, chia theo giai đoạn</b></div>
+   <div class="pb b1" data-s="3"><b>Body 1 · 1960–2000</b>Manufacturing dẫn đầu; các ngành khác so với nó</div>
+   <div class="pb b2" data-s="4"><b>Body 2 · 2000–2020</b>Retail, healthcare vượt manufacturing</div>
+   <div class="verdict2" data-s="5">Cách 1 là mặc định, dễ viết. Cách 2 dùng khi các đường giao nhau rõ ở giữa kỳ.</div>
+  </div>
+ </div>
+</section>
+
+<!-- linking two trends -->
+<section class="slide" id="sLink" data-title="Nối 2 xu hướng" data-steps="8">
+ <div class="hdr"><h2>Nối hai xu hướng trong một câu</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="two" style="grid-template-columns:1.25fr .9fr">
+  <table class="tb" style="font-size:1.18cqi">
+   <tr><th style="width:30%">Cấu trúc</th><th>Ví dụ</th></tr>
+   <tr data-s="1"><td>After + V-ing, S + V</td><td class="eg">After rising to 20 million in 1980, manufacturing employment fell steadily.</td></tr>
+   <tr data-s="2"><td>…, followed by + N</td><td class="eg">Manufacturing jobs rose to 20 million in 1980, followed by a steady decline.</td></tr>
+   <tr data-s="3"><td>…, which then + V</td><td class="eg">The number of manufacturing jobs rose to 20 million, which then fell to 17 million by 2000.</td></tr>
+   <tr data-s="4"><td>…, after which it + V</td><td class="eg">Manufacturing employment peaked in 1980, after which it fell steadily.</td></tr>
+   <tr data-s="5"><td>By + mốc, S + had + V3</td><td class="eg">By 2020, this figure had fallen to 13 million.</td></tr>
+   <tr data-s="6"><td>Over the following + time</td><td class="eg">Over the following four decades, manufacturing lost 7 million jobs.</td></tr>
+   <tr data-s="7"><td>…, reaching / ending at + số</td><td class="eg">…fell steadily, ending at 13 million in 2020.</td></tr>
+   <tr data-s="8"><td>remain stable … before + V-ing</td><td class="eg">Agriculture remained stable at 3 million until 2000 before dipping to 2 million.</td></tr>
+  </table>
+  <div class="cbox"><svg id="linkLine"></svg></div>
+ </div>
+</section>
+
+<!-- line body 1 -->
+<section class="slide" id="sLB1" data-title="Line · Body 1" data-steps="4">
+ <div class="hdr"><h2>Body 1 (viết ngang): Manufacturing + Agriculture</h2><div class="tools"><button class="b hb" data-hl="n">Số liệu</button><button class="b hb" data-hl="t">Xu hướng</button><button class="b hb" data-hl="c">So sánh</button><button class="b pri" data-act="step">Câu tiếp ▸</button></div></div>
+ <div class="two">
+  <div class="cbox"><svg id="b1Line"></svg></div>
+  <div class="sents">
+   <p class="sent" data-s="1"><i class="g">Câu 1 · Điểm bắt đầu + so sánh</i>In 1960, manufacturing was <span class="c">the largest sector</span>, employing <span class="n">15 million</span> people.</p>
+   <p class="sent" data-s="2"><i class="g">Câu 2 · Hai chặng xu hướng + điểm kết thúc</i><span class="t">After rising to a peak</span> of <span class="n">20 million</span> in 1980, this figure <span class="t">fell steadily</span>, ending at <span class="n">13 million</span> in 2020, <span class="c">only the third-largest</span>.</p>
+   <p class="sent" data-s="3"><i class="g">Câu 3 · Đối tượng 2: điểm bắt đầu + so sánh</i>Agriculture, by contrast, started at <span class="n">6 million</span>, <span class="c">the same as retail</span>, before <span class="t">halving</span> to <span class="n">3 million</span> by 1980.</p>
+   <p class="sent" data-s="4"><i class="g">Câu 4 · Xu hướng tiếp + điểm kết thúc + so sánh</i>It then <span class="t">remained stable</span> for two decades and <span class="t">dipped</span> to just <span class="n">2 million</span> in 2020, <span class="c">the lowest of all four sectors</span>.</p>
+  </div>
+ </div>
+</section>
+
+<!-- line body 2 -->
+<section class="slide" id="sLB2" data-title="Line · Body 2" data-steps="4">
+ <div class="hdr"><h2>Body 2 (viết ngang): Retail + Healthcare</h2><div class="tools"><button class="b hb" data-hl="n">Số liệu</button><button class="b hb" data-hl="t">Xu hướng</button><button class="b hb" data-hl="c">So sánh</button><button class="b pri" data-act="step">Câu tiếp ▸</button></div></div>
+ <div class="two">
+  <div class="cbox"><svg id="b2Line"></svg></div>
+  <div class="sents">
+   <p class="sent" data-s="1"><i class="g">Câu 1 · Điểm bắt đầu của 2 đối tượng + so sánh</i>Retail employed <span class="n">6 million</span> people in 1960, <span class="c">three times as many as healthcare</span>, which had just <span class="n">2 million</span> jobs.</p>
+   <p class="sent" data-s="2"><i class="g">Câu 2 · Retail: hai chặng xu hướng</i>Over the following four decades, retail jobs <span class="t">rose steadily</span> to <span class="n">15 million</span>, after which the figure <span class="t">increased only slightly</span> to <span class="n">16 million</span>.</p>
+   <p class="sent" data-s="3"><i class="g">Câu 3 · Healthcare: xu hướng + so sánh</i>Healthcare saw <span class="c">an even more dramatic</span> <span class="t">rise</span>, <span class="t">more than doubling</span> every twenty years to reach <span class="n">11 million</span> in 2000.</p>
+   <p class="sent" data-s="4"><i class="g">Câu 4 · Điểm kết thúc + vượt nhau / bằng nhau</i>By 2020, it <span class="t">had climbed</span> to <span class="n">16 million</span>, <span class="c">equalling the figure for retail and overtaking manufacturing</span>.</p>
+  </div>
+ </div>
+</section>
+
+<!-- bar grouping -->
+<section class="slide" id="sBarG" data-title="Bar: 2 cách nhóm" data-steps="4">
+ <div class="hdr"><h2>Biểu đồ cột hai mốc: 2 cách nhóm</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="two">
+  <div class="cbox"><svg id="bgBar"></svg></div>
+  <div class="plan">
+   <div class="key2" data-s="1"><span class="pillx dy">CÁCH 1</span><b>Theo xu hướng</b></div>
+   <div class="pb b1" data-s="1"><b>Body 1 · tăng</b>Housing + Transport</div>
+   <div class="pb b2" data-s="1"><b>Body 2 · giảm</b>Food and drinks + Other goods and services</div>
+   <div class="key2" data-s="2"><span class="pillx st">CÁCH 2</span><b>Theo độ lớn + quan hệ</b></div>
+   <div class="pb b1" data-s="2"><b>Body 1 · hai khoản lớn</b>Food and drinks + Housing: đổi ngôi đầu bảng</div>
+   <div class="pb b2" data-s="3"><b>Body 2 · hai khoản nhỏ</b>Other goods and services + Transport</div>
+   <div class="verdict2" data-s="4">Cách 2 tạo ra so sánh “vượt nhau” ngay trong Body 1, dễ đạt band cao hơn.</div>
+  </div>
+ </div>
+</section>
+
+<!-- bar body 1 -->
+<section class="slide" id="sBB1" data-title="Bar · Body 1" data-steps="4">
+ <div class="hdr"><h2>Body 1 (cách 2): Food and drinks + Housing</h2><div class="tools"><button class="b hb" data-hl="n">Số liệu</button><button class="b hb" data-hl="t">Xu hướng</button><button class="b hb" data-hl="c">So sánh</button><button class="b pri" data-act="step">Câu tiếp ▸</button></div></div>
+ <div class="two">
+  <div class="cbox"><svg id="bb1Bar"></svg></div>
+  <div class="sents">
+   <p class="sent" data-s="1"><i class="g">Câu 1 · Điểm bắt đầu + xếp hạng</i>In 1995, food and drinks accounted for <span class="c">the largest share</span> of household spending, at <span class="n">32%</span>, <span class="c">followed by housing</span> at <span class="n">28%</span>.</p>
+   <p class="sent" data-s="2"><i class="g">Câu 2 · Câu chuyển: báo hiệu xu hướng ngược</i>Over the next ten years, however, these two categories <span class="c">exhibited opposite trends</span>.</p>
+   <p class="sent" data-s="3"><i class="g">Câu 3 · Đối tượng 1: xu hướng + kết thúc + vượt</i>The proportion spent on housing <span class="t">rose</span> by <span class="n">6 percentage points</span> to <span class="n">34%</span>, <span class="c">making it the biggest expense</span> in 2005.</p>
+   <p class="sent" data-s="4"><i class="g">Câu 4 · Đối tượng 2: xu hướng + kết thúc + xếp hạng</i><span class="c">In contrast</span>, spending on food and drinks <span class="t">fell</span> to <span class="n">just under a quarter (24%)</span>, <span class="c">dropping to second place</span>.</p>
+  </div>
+ </div>
+</section>
+
+<!-- pie grouping -->
+<section class="slide" id="sPieG" data-title="Pie: 2 cách nhóm" data-steps="4">
+ <div class="hdr"><h2>Biểu đồ tròn không có thời gian: 2 cách nhóm</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="cbox" style="flex:1.2"><svg id="pgPie"></svg></div>
+ <div class="two even" style="flex:1;grid-template-columns:1fr 1fr">
+  <div class="plan">
+   <div class="key2" data-s="1"><span class="pillx dy">CÁCH 1</span><b>Viết ngang theo nhóm tuổi</b></div>
+   <div class="pb b1" data-s="1"><b>Body 1</b>10–15: sport, cartoon đứng đầu; news thấp nhất</div>
+   <div class="pb b2" data-s="2"><b>Body 2</b>16–20 và 21–25: drama, news lên đầu; sport cuối</div>
+  </div>
+  <div class="plan">
+   <div class="key2" data-s="3"><span class="pillx st">CÁCH 2</span><b>Viết dọc theo chương trình</b></div>
+   <div class="pb b1" data-s="3"><b>Body 1 · ngược chiều</b>Sport giảm dần theo tuổi, News tăng dần</div>
+   <div class="pb b2" data-s="4"><b>Body 2 · ổn định hơn</b>Drama, Film, Cartoon: khoảng 15–30%</div>
+  </div>
+ </div>
+</section>
+
+<!-- pie body 1 -->
+<section class="slide" id="sPB1" data-title="Pie · Body 1" data-steps="4">
+ <div class="hdr"><h2>Body 1 (viết dọc): Sport + News</h2><div class="tools"><button class="b hb" data-hl="n">Số liệu</button><button class="b hb" data-hl="c">So sánh</button><button class="b pri" data-act="step">Câu tiếp ▸</button></div></div>
+ <div class="cbox" style="flex:1"><svg id="pbPie"></svg></div>
+ <div class="sents" style="display:grid;grid-template-columns:1fr 1fr;gap:.7cqi">
+  <p class="sent" data-s="1"><i class="g">Câu 1 · Sport ở nhóm trẻ nhất + so sánh</i>Sport attracted <span class="n">26%</span> of 10–15-year-olds, <span class="c">equalling cartoons as their favourite programme</span>.</p>
+  <p class="sent" data-s="2"><i class="g">Câu 2 · Sport ở 2 nhóm còn lại</i>This figure was <span class="c">almost halved</span> to <span class="n">14%</span> for viewers aged 16–20, and <span class="n">a mere 4%</span> of the oldest group watched sport, <span class="c">the lowest figure in all three charts</span>.</p>
+  <p class="sent" data-s="3"><i class="g">Câu 3 · News: báo hiệu pattern ngược</i>News showed <span class="c">the opposite pattern</span>: just <span class="n">6%</span> of the youngest group chose it, <span class="c">compared with</span> <span class="n">18%</span> of 16–20-year-olds.</p>
+  <p class="sent" data-s="4"><i class="g">Câu 4 · News ở nhóm lớn nhất + so sánh</i>Among those aged 21–25, news was <span class="c">the most watched programme</span>, at <span class="n">a third (33%)</span>, <span class="c">more than five times the figure for the youngest viewers</span>.</p>
+ </div>
+</section>
+
+<!-- practice: write body 2 -->
+<section class="slide" id="sP4" data-title="Bài 4 · Viết Body 2">
+ <div class="hdr"><h2>Bài 4 · Viết Body 2</h2><div class="minitimers"><div class="timer sm2" data-sec="480" data-label="Viết"></div></div><div class="tools"><button class="b" data-act="show" data-t="mA">Bài mẫu A</button><button class="b" data-act="show" data-t="mB">Bài mẫu B</button></div></div>
+ <div class="two even">
+  <div class="side">
+   <div class="task"><b>Nhóm lẻ · Bar chart</b><br>Other goods and services + Transport (25% → 23%; 15% → 19%). Viết 3 câu, có ít nhất 2 cấu trúc so sánh.</div>
+   <div class="cbox" style="flex:1"><svg id="p4Bar"></svg></div>
+   <div class="model" id="mA" hidden><b class="t">Bài mẫu A</b>The remaining two categories made up smaller proportions. Other goods and services accounted for a quarter of spending in 1995, considerably more than transport, at 15%. Over the next decade, the former decreased marginally to 23%, whereas the share spent on transport rose to 19%; however, it was still the smallest category.</div>
+  </div>
+  <div class="side">
+   <div class="task"><b>Nhóm chẵn · Pie charts</b><br>Drama + Film + Cartoon. Viết dọc theo từng chương trình, 3 câu.</div>
+   <div class="cbox" style="flex:1"><svg id="p4Pie"></svg></div>
+   <div class="model" id="mB" hidden><b class="t">Bài mẫu B</b>Drama was the favourite programme of 16–20-year-olds, at 30%, while it accounted for a similar proportion of the other two groups (23% and 22%). Film was consistently watched by around a fifth of each group, ranging from 19% to 23%. Cartoons were most popular among the youngest viewers (26%), dropping to 15% among 16–20-year-olds before rising to a fifth of those aged 21–25.</div>
+  </div>
+ </div>
+</section>
+
+<!-- checklist -->
+<section class="slide" id="sChk" data-title="Checklist" data-steps="6">
+ <div class="hdr"><h2>Checklist trước khi nộp bài</h2><div class="tools"><button class="b pri" data-act="step">Tiếp ▸</button></div></div>
+ <div class="chk">
+  <div data-s="1"><span><b>Overview 2 câu</b>, không có số liệu</span></div>
+  <div data-s="2"><span>Gọi tên đối tượng theo đề, <b>không theo màu</b></span></div>
+  <div data-s="3"><span><b>2 đoạn thân bài</b>, nhóm đối tượng có lý do</span></div>
+  <div data-s="4"><span>Mỗi câu: <b>số liệu + xu hướng/thời gian + so sánh</b></span></div>
+  <div data-s="5"><span>Đổi chủ ngữ: <b>this figure, the former, the latter</b></span></div>
+  <div data-s="6"><span>Đúng thì: quá khứ đơn; <b>By + mốc → had + V3</b></span></div>
+ </div>
+</section>
+
